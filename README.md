@@ -1,6 +1,7 @@
 # InOutTracker
 
-brief description .....
+Tracker for mall management capacity, that keeps track of entrances and exits of the stores in pandemic context.
+It allows people to see if the mall is overloaded with other people so they can decide wheter to go or not.
 
 ## Students identification 
 
