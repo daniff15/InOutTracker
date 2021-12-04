@@ -1,6 +1,7 @@
 package ies.ua.inouttracker.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentHomeBinding
 
@@ -40,7 +42,6 @@ class HomeFragment : Fragment() {
         val store: AutoCompleteTextView = view.findViewById(R.id.choose_store)
         val actv_mall: ImageView = view.findViewById(R.id.actv1)
         val actv_store: ImageView = view.findViewById(R.id.actv)
-
 
         mall.threshold = 2
         store.threshold = 2

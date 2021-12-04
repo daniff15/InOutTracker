@@ -23,21 +23,24 @@
         android:id="@+id/choose_mall_search"
         android:layout_width="162dp"
         android:layout_height="43dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:hint="Mall"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="29dp" />
+        android:text="Mall1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/store_count_search"
+        android:id="@+id/mall_count_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:text="0"
+        android:layout_marginEnd="16dp"
+        android:text="1000"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/choose_mall_search"
-        app:layout_constraintStart_toEndOf="@+id/choose_mall_search"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/choose_mall_search"
-        app:layout_constraintVertical_bias="0.541" />
+        app:layout_constraintVertical_bias="0.583" />
 
     <View
         android:id="@+id/divider"
@@ -45,17 +48,19 @@
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="@+id/store_count_search"
+        app:layout_constraintEnd_toEndOf="@+id/mall_count_search"
         app:layout_constraintStart_toStartOf="@+id/choose_mall_search"
-        app:layout_constraintTop_toBottomOf="@+id/store_count_search" />
+        app:layout_constraintTop_toBottomOf="@+id/mall_count_search" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/stores_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/divider"
-        app:layout_constraintStart_toStartOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

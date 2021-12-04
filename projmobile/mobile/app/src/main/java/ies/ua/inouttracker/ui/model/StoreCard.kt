@@ -1,4 +1,4 @@
 package ies.ua.inouttracker.ui.model
 
-class StopModel(var name: String, var times: String, var op: Boolean = false) {
+class StoreCard(var logo: Int, var name: String, var count: String, var maxCap: String) {
 }
