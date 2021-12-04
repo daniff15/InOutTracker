@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <AutoCompleteTextView
+        android:id="@+id/choose_mall"
+        android:layout_width="162dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="164dp"
+        android:hint="Mall"
+        app:layout_constraintEnd_toStartOf="@+id/choose_store"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/actv1"
+        android:layout_width="27dp"
+        android:layout_height="24dp"
+        android:padding="5dp"
+        android:src="@drawable/abc_vector_test"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_mall"
+        app:layout_constraintEnd_toEndOf="@+id/choose_mall"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="@+id/choose_mall"
+        app:layout_constraintTop_toTopOf="@+id/choose_mall"
+        app:srcCompat="@android:drawable/alert_dark_frame" />
+
+    <ImageView
+        android:id="@+id/actv"
+        android:layout_width="24dp"
+        android:layout_height="28dp"
+        android:padding="5dp"
+        android:src="@drawable/abc_vector_test"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_store"
+        app:layout_constraintEnd_toEndOf="@+id/choose_store"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="@+id/choose_store"
+        app:layout_constraintTop_toTopOf="@+id/choose_store"
+        app:srcCompat="@android:drawable/alert_dark_frame" />
+
+    <TextView
+        android:id="@+id/mall_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="0"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/choose_mall"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/choose_mall"
+        app:layout_constraintTop_toBottomOf="@+id/choose_mall" />
+
+    <AutoCompleteTextView
+        android:id="@+id/choose_store"
+        android:layout_width="162dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="32dp"
+        android:hint="Store"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_mall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/choose_mall"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/store_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="0"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/choose_store"
+        app:layout_constraintStart_toStartOf="@+id/choose_store"
+        app:layout_constraintTop_toBottomOf="@+id/choose_store" />
+
+    <View
+        android:id="@+id/divider_home"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="52dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/choose_store"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/choose_mall"
+        app:layout_constraintTop_toBottomOf="@+id/store_count" />
+
+    <TextView
+        android:id="@+id/fav_store_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favourite Stores"
+        app:layout_constraintBottom_toTopOf="@+id/divider_home"
+        app:layout_constraintStart_toStartOf="@+id/divider_home" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/divider_home"
+        app:layout_constraintStart_toStartOf="@+id/divider_home"
+        app:layout_constraintTop_toBottomOf="@+id/divider_home" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
