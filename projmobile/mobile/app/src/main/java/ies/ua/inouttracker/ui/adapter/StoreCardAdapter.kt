@@ -27,7 +27,7 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         holder.max.text = store.maxCap
         holder.name.text = store.name
         holder.click.setOnClickListener {
-            //TODO: open Store Page
+            DashboardFragment().openStorePage(holder.itemView)
         }
 
         //holder.logo.setImageResource(store.logo)

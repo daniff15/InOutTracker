@@ -6,56 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <TextView
+        android:id="@+id/home_info2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:text="Current Capacity"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/mall_count"
+        app:layout_constraintEnd_toEndOf="@+id/LOGO"
+        app:layout_constraintHorizontal_bias="0.565"
+        app:layout_constraintStart_toStartOf="@+id/LOGO" />
+
     <AutoCompleteTextView
         android:id="@+id/choose_mall"
         android:layout_width="162dp"
         android:layout_height="43dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="172dp"
         android:hint="Mall"
         app:layout_constraintEnd_toStartOf="@+id/choose_store"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Mall3" />
-
-    <ImageView
-        android:id="@+id/actv1"
-        android:layout_width="27dp"
-        android:layout_height="24dp"
-        android:padding="5dp"
-        android:src="@drawable/abc_vector_test"
-        app:layout_constraintBottom_toBottomOf="@+id/choose_mall"
-        app:layout_constraintEnd_toEndOf="@+id/choose_mall"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="@+id/choose_mall"
-        app:layout_constraintTop_toTopOf="@+id/choose_mall"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
-
-    <ImageView
-        android:id="@+id/actv"
-        android:layout_width="24dp"
-        android:layout_height="28dp"
-        android:padding="5dp"
-        android:src="@drawable/abc_vector_test"
-        app:layout_constraintBottom_toBottomOf="@+id/choose_store"
-        app:layout_constraintEnd_toEndOf="@+id/choose_store"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="@+id/choose_store"
-        app:layout_constraintTop_toTopOf="@+id/choose_store"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
-
-    <TextView
-        android:id="@+id/mall_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="364"
-        android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="@+id/choose_mall"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="@+id/choose_mall"
-        app:layout_constraintTop_toBottomOf="@+id/choose_mall" />
 
     <AutoCompleteTextView
         android:id="@+id/choose_store"
@@ -69,14 +44,51 @@
         app:layout_constraintVertical_bias="0.0"
         tools:text="Store4" />
 
+    <ImageView
+        android:id="@+id/actv1"
+        android:layout_width="27dp"
+        android:layout_height="24dp"
+        android:padding="5dp"
+        android:src="@drawable/baseline_arrow_drop_down_24"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_mall"
+        app:layout_constraintEnd_toEndOf="@+id/choose_mall"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="@+id/choose_mall"
+        app:layout_constraintTop_toTopOf="@+id/choose_mall" />
+
+    <ImageView
+        android:id="@+id/actv"
+        android:layout_width="24dp"
+        android:layout_height="28dp"
+        android:padding="5dp"
+        android:src="@drawable/baseline_arrow_drop_down_24"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_store"
+        app:layout_constraintEnd_toEndOf="@+id/choose_store"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="@+id/choose_store"
+        app:layout_constraintTop_toTopOf="@+id/choose_store" />
+
+    <TextView
+        android:id="@+id/mall_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="364"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/choose_mall"
+        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintStart_toStartOf="@+id/choose_mall"
+        app:layout_constraintTop_toBottomOf="@+id/choose_mall" />
+
     <TextView
         android:id="@+id/store_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:text="12"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="@+id/choose_store"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="@+id/choose_store"
         app:layout_constraintTop_toBottomOf="@+id/choose_store" />
 
@@ -104,10 +116,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/divider_home"
-        app:layout_constraintStart_toStartOf="@+id/divider_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider_home" />
 
     <TextView

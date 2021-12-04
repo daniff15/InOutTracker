@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
 
-    <ImageView
-        android:id="@+id/actv2"
-        android:layout_width="27dp"
-        android:layout_height="24dp"
-        android:padding="5dp"
-        android:src="@drawable/abc_vector_test"
-        app:layout_constraintBottom_toBottomOf="@+id/choose_mall_search"
-        app:layout_constraintEnd_toEndOf="@+id/choose_mall_search"
-        app:layout_constraintHorizontal_bias="0.933"
-        app:layout_constraintStart_toStartOf="@+id/choose_mall_search"
-        app:layout_constraintTop_toTopOf="@+id/choose_mall_search"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
-
     <AutoCompleteTextView
         android:id="@+id/choose_mall_search"
         android:layout_width="162dp"
@@ -30,12 +17,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/actv_dashboard"
+        android:layout_width="27dp"
+        android:layout_height="24dp"
+        android:padding="5dp"
+        android:src="@drawable/baseline_arrow_drop_down_24"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_mall_search"
+        app:layout_constraintEnd_toEndOf="@+id/choose_mall_search"
+        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintStart_toStartOf="@+id/choose_mall_search"
+        app:layout_constraintTop_toTopOf="@+id/choose_mall_search" />
+
     <TextView
         android:id="@+id/mall_count_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="1000"
+        android:text="364"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/choose_mall_search"
         app:layout_constraintEnd_toEndOf="parent"
