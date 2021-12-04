@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +15,7 @@ import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentDashboardBinding
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
 import ies.ua.inouttracker.ui.model.StoreCard
+import ies.ua.inouttracker.ui.store.StorePageFragment
 import java.util.ArrayList
 
 class DashboardFragment : Fragment() {
@@ -45,7 +44,7 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val mall: AutoCompleteTextView = view.findViewById(R.id.choose_mall_search)
         val store: TextView = view.findViewById(R.id.mall_count_search)
-        val actv_mall: ImageView = view.findViewById(R.id.actv2)
+        val actv_mall: ImageView = view.findViewById(R.id.actv_dashboard)
 
         createCards(view)
 
@@ -75,6 +74,18 @@ class DashboardFragment : Fragment() {
             rv?.adapter = adapter
         }
 
+    }
+
+    fun openStorePage(view: View){
+        val ctx: AppCompatActivity = view?.context as AppCompatActivity
+        val f : Fragment = StorePageFragment()
+        val t = ctx.supportFragmentManager.beginTransaction()
+
+        if (t != null) {
+            t.replace(R.id.nav_host_fragment_activity_main, f)
+            t.addToBackStack(null)
+            t.commit()
+        }
     }
 
     override fun onDestroyView() {

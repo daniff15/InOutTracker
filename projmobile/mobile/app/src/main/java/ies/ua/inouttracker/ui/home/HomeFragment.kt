@@ -9,9 +9,13 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentHomeBinding
+import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
+import ies.ua.inouttracker.ui.model.StoreCard
+import java.util.ArrayList
 
 
 class HomeFragment : Fragment() {
@@ -43,6 +47,11 @@ class HomeFragment : Fragment() {
         val actv_mall: ImageView = view.findViewById(R.id.actv1)
         val actv_store: ImageView = view.findViewById(R.id.actv)
 
+        mall.setText("Mall1")
+        store.setText("Store3")
+
+        createCards(view)
+
         mall.threshold = 2
         store.threshold = 2
 
@@ -58,6 +67,24 @@ class HomeFragment : Fragment() {
         actv_store.setOnClickListener {
             store.showDropDown()
         }
+    }
+
+    private fun createCards(view: View?){
+        val rv = view?.findViewById<RecyclerView>(R.id.home_rv)
+        var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
+
+        for (i in 1..3){
+            cards.add(StoreCard(R.drawable.ic_launcher_background, "Store$i", (0..10).random().toString(), (10..20).random().toString()))
+        }
+
+        Log.d("DEBUG:", cards.toString())
+
+        if (rv != null) {
+            rv.layoutManager = LinearLayoutManager(view?.context)
+            var adapter = StoreCardAdapter(view.context, cards as ArrayList<StoreCard>)
+            rv?.adapter = adapter
+        }
+
     }
 
     override fun onDestroyView() {
