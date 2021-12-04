@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toStartOf="@+id/choose_store"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mall3" />
 
     <ImageView
         android:id="@+id/actv1"
@@ -49,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="0"
+        android:text="364"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="@+id/choose_mall"
         app:layout_constraintHorizontal_bias="0.507"
@@ -65,14 +66,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/choose_mall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/choose_mall"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Store4" />
 
     <TextView
         android:id="@+id/store_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="0"
+        android:text="12"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="@+id/choose_store"
         app:layout_constraintStart_toStartOf="@+id/choose_store"
@@ -98,6 +100,7 @@
         app:layout_constraintStart_toStartOf="@+id/divider_home" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
@@ -106,5 +109,15 @@
         app:layout_constraintEnd_toEndOf="@+id/divider_home"
         app:layout_constraintStart_toStartOf="@+id/divider_home"
         app:layout_constraintTop_toBottomOf="@+id/divider_home" />
+
+    <TextView
+        android:id="@+id/LOGO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="In Out Tracker"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/choose_store"
+        app:layout_constraintStart_toStartOf="@+id/choose_mall"
+        tools:layout_editor_absoluteY="59dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

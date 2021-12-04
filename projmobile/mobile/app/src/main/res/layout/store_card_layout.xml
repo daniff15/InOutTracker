@@ -1,100 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/route_origin"
+        android:id="@+id/current_capacity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="From"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/store_logo"
         app:layout_constraintTop_toTopOf="@+id/go_to_route_page" />
 
     <TextView
-        android:id="@+id/route_time"
+        android:id="@+id/max_capacity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="00h00"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/route_id"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/route_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="ID"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/go_to_route_page"
-        app:layout_constraintTop_toTopOf="@+id/go_to_route_page" />
-
-    <TextView
-        android:id="@+id/route_destination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:text="To"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/route_origin"
-        app:layout_constraintTop_toTopOf="@+id/go_to_route_page" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="16dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginBottom="16dp"
+        android:text="0"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/go_to_route_page"
-        app:layout_constraintStart_toStartOf="@+id/go_to_route_page"
-        app:layout_constraintTop_toTopOf="@+id/go_to_route_page"
-        app:layout_constraintVertical_bias="0.444"
-        app:srcCompat="@drawable/ic_baseline_arrow_downward_24" />
-
-    <ImageView
-        android:id="@+id/route_company"
-        android:layout_width="93dp"
-        android:layout_height="43dp"
-        app:layout_constraintBottom_toTopOf="@+id/route_destination"
-        app:layout_constraintEnd_toStartOf="@+id/route_time"
-        app:layout_constraintHorizontal_bias="0.858"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/route_origin"
-        app:layout_constraintVertical_bias="0.444"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintStart_toEndOf="@+id/store_logo" />
 
     <Button
         android:id="@+id/go_to_route_page"
         android:layout_width="339dp"
         android:layout_height="114dp"
+        android:backgroundTint="#00FFFFFF"
         android:clickable="true"
-        app:backgroundTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/remove_fav_home"
+    <ImageView
+        android:id="@+id/store_logo"
+        android:layout_width="83dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/go_to_route_page"
+        app:layout_constraintStart_toStartOf="@+id/go_to_route_page"
+        app:layout_constraintTop_toTopOf="@+id/go_to_route_page"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/max_capacity"
+        app:layout_constraintEnd_toEndOf="@+id/max_capacity"
+        app:layout_constraintStart_toStartOf="@+id/max_capacity"
+        app:layout_constraintTop_toBottomOf="@+id/current_capacity" />
+
+    <TextView
+        android:id="@+id/store_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#00FFFFFF"
-        android:src="@android:drawable/ic_menu_delete"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/route_time"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/go_to_route_page"
+        app:layout_constraintEnd_toStartOf="@+id/divider3"
+        app:layout_constraintHorizontal_bias="0.261"
+        app:layout_constraintStart_toEndOf="@+id/store_logo"
         app:layout_constraintTop_toTopOf="@+id/go_to_route_page" />
 
 

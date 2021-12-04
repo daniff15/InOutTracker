@@ -22,21 +22,10 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
         // to set data to textview and imageview of each card layout
         val store: StoreCard = StoreCards[position]
-        /** TEMPLATE FOR THE STORE CARD
-        holder.from.text = route.from
-        holder.to.text = route.to
-        holder.time.text = route.time
-        holder.id.tag = route.unique_id
-
-        route.img?.let { holder.company.setImageResource(it) }
-        holder.click.setOnClickListener {
-            if (op == 2){
-                HomeFragment().openFavRoute(holder.from.text.toString(), holder.to.text.toString(), holder.itemView)
-            }
-            else
-                route.info?.let { it1 -> SearchFragment().openRoutePage(holder.id.text.toString(), holder.from.text.toString(), holder.to.text.toString(), holder.time.text.toString(), holder.itemView, op, day, info = it1, unique_id = route.unique_id) }
-        }
-        **/
+        holder.current.text = store.count
+        holder.max.text = store.maxCap
+        holder.name.text = store.name
+        //holder.logo.setImageResource(store.logo)
     }
 
     override fun getItemCount(): Int {
@@ -48,27 +37,17 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
     // View holder class for initializing of
     // your views such as TextView and Imageview.
     inner class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /** TEMPLATE FOR THE STORE CARD
-
-        val id: TextView
-        val from: TextView
-        val to: TextView
-        val time: TextView
-        val company: ImageView
-        val click: Button
-        val delete: ImageButton
+        val logo: ImageView
+        val current: TextView
+        val max: TextView
+        val name: TextView
 
         init {
-            id = itemView.findViewById(R.id.route_id)
-            from = itemView.findViewById(R.id.route_origin)
-            to = itemView.findViewById(R.id.route_destination)
-            time = itemView.findViewById(R.id.route_time)
-            company = itemView.findViewById(R.id.route_company)
-            click = itemView.findViewById(R.id.go_to_route_page)
-            delete = itemView.findViewById(R.id.remove_fav_home)
-
+            logo = itemView.findViewById((R.id.store_logo))
+            name = itemView.findViewById(R.id.store_name)
+            current = itemView.findViewById(R.id.current_capacity)
+            max = itemView.findViewById(R.id.max_capacity)
         }
-        **/
     }
 
 }
