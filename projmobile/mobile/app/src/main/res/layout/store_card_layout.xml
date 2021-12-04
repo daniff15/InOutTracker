@@ -14,7 +14,7 @@
         android:text="0"
         android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/store_logo"
-        app:layout_constraintTop_toTopOf="@+id/go_to_route_page" />
+        app:layout_constraintTop_toTopOf="@+id/go_to_store_page" />
 
     <TextView
         android:id="@+id/max_capacity"
@@ -24,11 +24,11 @@
         android:layout_marginBottom="16dp"
         android:text="0"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/go_to_route_page"
+        app:layout_constraintBottom_toBottomOf="@+id/go_to_store_page"
         app:layout_constraintStart_toEndOf="@+id/store_logo" />
 
     <Button
-        android:id="@+id/go_to_route_page"
+        android:id="@+id/go_to_store_page"
         android:layout_width="339dp"
         android:layout_height="114dp"
         android:backgroundTint="#00FFFFFF"
@@ -43,9 +43,9 @@
         android:layout_width="83dp"
         android:layout_height="55dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/go_to_route_page"
-        app:layout_constraintStart_toStartOf="@+id/go_to_route_page"
-        app:layout_constraintTop_toTopOf="@+id/go_to_route_page"
+        app:layout_constraintBottom_toBottomOf="@+id/go_to_store_page"
+        app:layout_constraintStart_toStartOf="@+id/go_to_store_page"
+        app:layout_constraintTop_toTopOf="@+id/go_to_store_page"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <View
@@ -64,11 +64,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/go_to_route_page"
+        app:layout_constraintBottom_toBottomOf="@+id/go_to_store_page"
         app:layout_constraintEnd_toStartOf="@+id/divider3"
         app:layout_constraintHorizontal_bias="0.261"
         app:layout_constraintStart_toEndOf="@+id/store_logo"
-        app:layout_constraintTop_toTopOf="@+id/go_to_route_page" />
+        app:layout_constraintTop_toTopOf="@+id/go_to_store_page" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

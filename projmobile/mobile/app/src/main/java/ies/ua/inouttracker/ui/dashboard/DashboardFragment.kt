@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentDashboardBinding
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
 import ies.ua.inouttracker.ui.model.StoreCard
+import ies.ua.inouttracker.ui.store.StorePageFragment
 import java.util.ArrayList
 
 class DashboardFragment : Fragment() {

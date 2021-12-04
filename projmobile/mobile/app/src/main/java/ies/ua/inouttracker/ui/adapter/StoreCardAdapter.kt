@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.R
+import ies.ua.inouttracker.ui.dashboard.DashboardFragment
 import ies.ua.inouttracker.ui.model.StoreCard
 import java.util.ArrayList
 
@@ -25,6 +26,10 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         holder.current.text = store.count
         holder.max.text = store.maxCap
         holder.name.text = store.name
+        holder.click.setOnClickListener {
+            //TODO: open Store Page
+        }
+
         //holder.logo.setImageResource(store.logo)
     }
 
@@ -41,12 +46,14 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         val current: TextView
         val max: TextView
         val name: TextView
+        val click: Button
 
         init {
             logo = itemView.findViewById((R.id.store_logo))
             name = itemView.findViewById(R.id.store_name)
             current = itemView.findViewById(R.id.current_capacity)
             max = itemView.findViewById(R.id.max_capacity)
+            click = itemView.findViewById(R.id.go_to_store_page)
         }
     }
 
