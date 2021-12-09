@@ -1,4 +1,4 @@
-package in.out.tracker.InOutTracker.exception;
+package in.out.tracker.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

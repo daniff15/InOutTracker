@@ -1,6 +1,6 @@
-package in.out.tracker.InOutTracker.repository;
+package in.out.tracker.repository;
 
-import in.out.tracker.InOutTracker.model.User;
+import in.out.tracker.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

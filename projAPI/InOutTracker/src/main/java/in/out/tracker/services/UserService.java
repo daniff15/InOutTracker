@@ -1,7 +1,8 @@
-package in.out.tracker.InOutTracker.services;
+package in.out.tracker.services;
 
-import in.out.tracker.InOutTracker.model.User;
-import in.out.tracker.InOutTracker.repository.UserRepository;
+import in.out.tracker.exception.ResourceNotFoundException;
+import in.out.tracker.model.User;
+import in.out.tracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 

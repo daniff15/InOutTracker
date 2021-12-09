@@ -1,4 +1,4 @@
-package in.out.tracker.InOutTracker.exception;
+package in.out.tracker.exception;
 
 
 import java.util.Date;

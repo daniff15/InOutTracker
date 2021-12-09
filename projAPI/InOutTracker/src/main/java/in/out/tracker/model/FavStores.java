@@ -1,4 +1,4 @@
-package in.out.tracker.InOutTracker.model;
+package in.out.tracker.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
