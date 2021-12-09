@@ -32,4 +32,6 @@ public class User {
     @Column(name = "password", nullable = true)
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+
 }
