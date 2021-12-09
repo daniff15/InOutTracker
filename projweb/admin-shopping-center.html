@@ -34,53 +34,51 @@
     </nav>
 
     <!-- Shops -->
-    <div class="container" style="margin-top: 30px;">
-        <div class="row" style="margin-bottom: 30px;">
-            <div class="col-12" style="text-align: center;">
-                <img src="imgs/shopping_map.jpg" style="width: 75%;">
-            </div>
+    <div class="container">
+        <div class="row map-row">
+            <img class="map-img mx-auto" src="imgs/shopping_map.jpg">
         </div>
         <div class="row">
-            <a href="add-shop.html" style="margin: 0 auto;">
+            <a href="add-shop.html" class="add-shop-button">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add Shop</button>
             </a>
         </div>
         <div class="row justify-content-center">
-            <table class="table table-borderless" style="width: 50%;">
+            <table class="table table-borderless shops-table">
                 <thead>
                   <tr>
-                    <th scope="col"></th>
+                    <th scope="col" class="edit-shop-column"></th>
                     <th scope="col">Shop Name</th>
                     <th scope="col" class="text-right">Capacity</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td style="width: 30px;">
-                        <a href="edit-shop.html" class="btn btn-primary" style="float: right;">
+                    <td>
+                        <a href="edit-shop.html" class="btn btn-primary edit-shop-button">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
                     </td>
-                    <th scope="row" style="vertical-align: middle;">Fnac</th>
-                    <td class="text-right" style="vertical-align: middle;">20/30</td>
+                    <th scope="row" class="table-cell">Fnac</th>
+                    <td class="text-right" class="table-cell">20/30</td>
                   </tr>
                   <tr>
                     <td>
-                        <a href="edit-shop.html" class="btn btn-primary" style="float: right;">
+                        <a href="edit-shop.html" class="btn btn-primary edit-shop-button">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
                     </td>
-                    <th scope="row" style="vertical-align: middle;">Worten</th>
-                    <td class="text-right" style="vertical-align: middle;">11/25</td>
+                    <th scope="row" class="table-cell">Worten</th>
+                    <td class="text-right" class="table-cell">11/25</td>
                   </tr>
                   <tr>
                     <td>
-                        <a href="edit-shop.html" class="btn btn-primary" style="float: right;">
+                        <a href="edit-shop.html" class="btn btn-primary edit-shop-button">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
                     </td>
-                    <th scope="row" style="vertical-align: middle;">Zara</th>
-                    <td class="text-right" style="vertical-align: middle;">33/35</td>
+                    <th scope="row" class="table-cell">Zara</th>
+                    <td class="text-right" class="table-cell">33/35</td>
                   </tr>
                 </tbody>
               </table>
