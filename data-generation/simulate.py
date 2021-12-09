@@ -1,7 +1,8 @@
 class Data_gen:
     def __init__(self, mall_limit, store_limit):
         #Se calhar cada pessoa vai ter de ter um status, para vermos em q situacao esta (waiting_mall, waiting_store, inside_mall, inside_store)
-        #paciente = dont_want_to_wait/dont_mind_wait
+        #Basicamente o atributo pacient, estaria ligado a uma pessoa e permite ver se a pessoa se importa ou nao de esperar na fila (mall ou store)
+        #pacient = dont_want_to_wait/dont_mind_wait
         self.people_inside_mall = 0
         self.people_inside_store = 0
         self.people_waiting_mall = 0
