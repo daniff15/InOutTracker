@@ -19,7 +19,8 @@ public class UserController {
     public List<User> getAllUsers() { return service.getUsers(); }
 
     @GetMapping("/api/v1/users/{id}")
-    public ResponseEntity<User> getUser(@PathVariable(value = "id") long id) throws ResourceNotFoundException{
+    public ResponseEntity<User> getUser(@PathVariable(value = "id") long id)
+            throws ResourceNotFoundException{
         return service.getUserById(id);
     }
 

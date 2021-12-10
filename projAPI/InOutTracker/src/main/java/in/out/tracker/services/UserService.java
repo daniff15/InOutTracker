@@ -5,9 +5,11 @@ import in.out.tracker.model.User;
 import in.out.tracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
