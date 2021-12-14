@@ -29,8 +29,13 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getStores()
-        viewModel.myResponse.observe(this, Observer { response ->
+        viewModel.myResponse_Stores.observe(this, Observer { response ->
             Datasource().setAllStores(response)
+        })
+
+        viewModel.getShoppings()
+        viewModel.myResponse_Shoppings.observe(this, Observer { response ->
+            Datasource().setAllShoppings(response)
         })
 
 

@@ -45,26 +45,32 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val store_capacity: TextView = view.findViewById(R.id.store_count)
+        val mall_capacity: TextView = view.findViewById(R.id.mall_count)
 
         val mall: AutoCompleteTextView = view.findViewById(R.id.choose_mall)
         val store: AutoCompleteTextView = view.findViewById(R.id.choose_store)
         val actv_mall: ImageView = view.findViewById(R.id.actv1)
         val actv_store: ImageView = view.findViewById(R.id.actv)
 
-        createCards(view)
+        //createCards(view)
 
         mall.threshold = 2
         store.threshold = 2
 
         val stores = Datasource().getAllStores()
+        val shoppings = Datasource().getAllShoppings()
 
-        val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, listOf("Fórum Aveiro"))
+        val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
         mall.setAdapter(adapter1)
         val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, stores)
         store.setAdapter(adapter2)
 
+        mall.setOnItemClickListener { parent, view, position, id ->
+            mall_capacity.text = Datasource().getShoppingCurrentCount(shoppings[position])
+        }
+
         store.setOnItemClickListener { parent, view, position, id ->
-            store_capacity.text = Datasource().getCurrentCount(stores[position])
+            store_capacity.text = Datasource().getStoreCurrentCount(stores[position])
         }
 
         actv_mall.setOnClickListener {
