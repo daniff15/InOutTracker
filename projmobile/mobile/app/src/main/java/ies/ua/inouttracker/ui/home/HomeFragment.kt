@@ -16,6 +16,7 @@ import ies.ua.inouttracker.databinding.FragmentHomeBinding
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
 import ies.ua.inouttracker.ui.model.StoreCard
 import ies.ua.inouttracker.util.Datasource
+import org.w3c.dom.Text
 import java.util.ArrayList
 
 
@@ -43,6 +44,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val store_capacity: TextView = view.findViewById(R.id.store_count)
+
         val mall: AutoCompleteTextView = view.findViewById(R.id.choose_mall)
         val store: AutoCompleteTextView = view.findViewById(R.id.choose_store)
         val actv_mall: ImageView = view.findViewById(R.id.actv1)
@@ -53,10 +56,16 @@ class HomeFragment : Fragment() {
         mall.threshold = 2
         store.threshold = 2
 
+        val stores = Datasource().getAllStores()
+
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, listOf("Fórum Aveiro"))
         mall.setAdapter(adapter1)
-        val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, Datasource().getAllStores())
+        val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, stores)
         store.setAdapter(adapter2)
+
+        store.setOnItemClickListener { parent, view, position, id ->
+            store_capacity.text = Datasource().getCurrentCount(stores[position])
+        }
 
         actv_mall.setOnClickListener {
             mall.showDropDown()

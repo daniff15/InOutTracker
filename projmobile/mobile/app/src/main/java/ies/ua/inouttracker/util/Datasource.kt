@@ -13,10 +13,17 @@ public class Datasource {
         return storesName
     }
 
-    fun setAllStores(stores: List<Store>) {
+    fun setAllStores(stores_list: List<Store>) {
+        stores = stores_list as MutableList<Store>
         for (store in stores)
             if (store.name != null)
                 storesName.add(store.name)
     }
 
+    fun getCurrentCount(STORE: String): String {
+        for (store in stores)
+            if (store.name == STORE)
+                return store.people_count.toString()
+        return "0"
+    }
 }
