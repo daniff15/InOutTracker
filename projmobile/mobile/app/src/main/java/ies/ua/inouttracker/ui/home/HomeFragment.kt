@@ -55,6 +55,7 @@ class HomeFragment : Fragment() {
         mall.threshold = 2
         store.threshold = 2
 
+
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, listOf("Mall1", "Mall2", "Mall3", "Mall4", "Mall5"))
         mall.setAdapter(adapter1)
         val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, listOf("Store1", "Store2", "Store3", "Store4", "Store5"))
