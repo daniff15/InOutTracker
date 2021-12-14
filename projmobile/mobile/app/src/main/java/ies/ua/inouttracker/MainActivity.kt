@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import ies.ua.inouttracker.databinding.ActivityMainBinding
 import ies.ua.inouttracker.repository.Repository
+import ies.ua.inouttracker.util.Datasource
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getStores()
         viewModel.myResponse.observe(this, Observer { response ->
-            Log.d("Response", response.toString())
+            Datasource().setAllStores(response)
         })
 
 

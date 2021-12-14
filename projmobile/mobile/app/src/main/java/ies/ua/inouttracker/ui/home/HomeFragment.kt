@@ -15,6 +15,7 @@ import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentHomeBinding
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
 import ies.ua.inouttracker.ui.model.StoreCard
+import ies.ua.inouttracker.util.Datasource
 import java.util.ArrayList
 
 
@@ -47,18 +48,14 @@ class HomeFragment : Fragment() {
         val actv_mall: ImageView = view.findViewById(R.id.actv1)
         val actv_store: ImageView = view.findViewById(R.id.actv)
 
-        mall.setText("Mall1")
-        store.setText("Store3")
-
         createCards(view)
 
         mall.threshold = 2
         store.threshold = 2
 
-
-        val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, listOf("Mall1", "Mall2", "Mall3", "Mall4", "Mall5"))
+        val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, listOf("Fórum Aveiro"))
         mall.setAdapter(adapter1)
-        val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, listOf("Store1", "Store2", "Store3", "Store4", "Store5"))
+        val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, Datasource().getAllStores())
         store.setAdapter(adapter2)
 
         actv_mall.setOnClickListener {
