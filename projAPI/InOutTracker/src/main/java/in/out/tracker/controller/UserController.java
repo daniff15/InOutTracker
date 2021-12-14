@@ -18,12 +18,12 @@ public class UserController {
     @GetMapping("/api/v1/users")
     public List<User> getAllUsers() { return service.getUsers(); }
 
-    @GetMapping("/api/v1/users/{id}")
+    @GetMapping("/api/v1/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable(value = "id") long id)
             throws ResourceNotFoundException{
         return service.getUserById(id);
     }
 
-    @PostMapping("/api/v1/movies")
+    @PostMapping("/api/v1/users")
     public User addUser(@Valid @RequestBody User user) { return service.createUser(user); }
 }
