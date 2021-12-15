@@ -1,8 +1,26 @@
 import random
+import requests
 from simulate import *
 from random import randint, choices
 import time
 
+try:
+    response_malls = requests.get('http://localhost:8000/api/v1/shoppings')
+    response_stores = requests.get('http://localhost:8000/api/v1/stores')
+    response_malls = response_malls.json()
+    response_stores = response_stores.json()
+except requests.exceptions.ConnectionError:
+    print("Server is not running")
+    exit(1)
+
+stores = []
+for store in response_stores:
+    stores.append(Store(store['name'], store['max_capacity'], store['opening_time'], store['closing_time']))
+
+for mall in response_malls:  
+    mall1 = Mall(mall["name"], 50, stores, mall['opening_time'], mall['closing_time'])
+    
+"""
 store1_1 = Store("Zara", 5, "10:00:00", "23:00:00")
 store2_1 = Store("Sport Zone", 10, "10:00:00", "22:00:00")
 store3_1 = Store("Primark", 10, "10:00:00", "23:00:00")
@@ -19,6 +37,7 @@ mall1 = Mall("Mall 1", 50, [store1_1, store2_1,
 mall2 = Mall("Mall 2", 350, [store1_2, store2_2,
              store3_2, store4_2], "10:00:00", "23:00:00")
 mall3 = Mall("Mall 3", 250, [store1_3, store1_3], "9:30:00", "22:00:00")
+"""
 
 if __name__ == '__main__':
 
