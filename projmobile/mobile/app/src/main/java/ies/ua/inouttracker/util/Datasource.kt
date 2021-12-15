@@ -1,6 +1,6 @@
 package ies.ua.inouttracker.util
 
-import android.util.Log
+import ies.ua.inouttracker.MainActivity
 import ies.ua.inouttracker.ui.model.Shopping
 import ies.ua.inouttracker.ui.model.Store
 
@@ -8,6 +8,8 @@ var stores: MutableList<Store> = mutableListOf()
 var shoppings: MutableList<Shopping> = mutableListOf()
 var storesName: MutableList<String> = mutableListOf()
 var shoppingsName: MutableList<String> = mutableListOf()
+
+var SELF : MainActivity? = null
 
 
 public class Datasource {
@@ -18,7 +20,7 @@ public class Datasource {
     fun setAllStores(stores_list: List<Store>) {
         stores = stores_list as MutableList<Store>
         for (store in stores)
-            if (store.name != null)
+            if (store.name != null && store.name !in storesName)
                 storesName.add(store.name)
     }
 
@@ -36,7 +38,7 @@ public class Datasource {
     fun setAllShoppings(response: List<Shopping>?) {
         shoppings = response as MutableList<Shopping>
         for (shopping in shoppings)
-            if (shopping.name != null)
+            if (shopping.name != null && shopping.name !in shoppingsName)
                 shoppingsName.add(shopping.name)
     }
 
@@ -46,4 +48,7 @@ public class Datasource {
                 return store.people_count.toString()
         return "0"
     }
+
+    fun getSELF(): MainActivity? { return SELF }
+    fun setSELF(self: MainActivity){ SELF = self}
 }

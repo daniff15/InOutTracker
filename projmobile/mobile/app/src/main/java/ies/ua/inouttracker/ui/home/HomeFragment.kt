@@ -1,6 +1,7 @@
 package ies.ua.inouttracker.ui.home
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ies.ua.inouttracker.MainViewModel
+import ies.ua.inouttracker.MainViewModelFactory
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentHomeBinding
+import ies.ua.inouttracker.repository.Repository
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
 import ies.ua.inouttracker.ui.model.StoreCard
 import ies.ua.inouttracker.util.Datasource
@@ -24,6 +28,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
+    private lateinit var viewModel: MainViewModel
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -60,17 +66,23 @@ class HomeFragment : Fragment() {
         val stores = Datasource().getAllStores()
         val shoppings = Datasource().getAllShoppings()
 
+        var selected_store: String = ""
+        var selected_mall: String = ""
+
+
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
         mall.setAdapter(adapter1)
         val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, stores)
         store.setAdapter(adapter2)
 
         mall.setOnItemClickListener { parent, view, position, id ->
-            mall_capacity.text = Datasource().getShoppingCurrentCount(shoppings[position])
+            selected_mall = shoppings[position]
+            mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
         }
 
         store.setOnItemClickListener { parent, view, position, id ->
-            store_capacity.text = Datasource().getStoreCurrentCount(stores[position])
+            selected_store = stores[position]
+            store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
         }
 
         actv_mall.setOnClickListener {
@@ -80,6 +92,27 @@ class HomeFragment : Fragment() {
         actv_store.setOnClickListener {
             store.showDropDown()
         }
+
+        // Create the Handler object (on the main thread by default)
+        // Create the Handler object (on the main thread by default)
+        val handler = Handler()
+        // Define the code block to be executed
+        // Define the code block to be executed
+        val runnableCode: Runnable = object : Runnable {
+            override fun run() {
+                updateDB()
+                if (selected_store != "") store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
+                if (selected_mall != "") mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
+                Log.d("Handlers", "Called on main thread")
+                // Repeat this the same runnable code block again another 2 seconds
+                // 'this' is referencing the Runnable object
+                handler.postDelayed(this, 1000)
+            }
+        }
+        // Start the initial runnable task by posting through the handler
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnableCode)
+
     }
 
     private fun createCards(view: View?){
@@ -98,6 +131,22 @@ class HomeFragment : Fragment() {
             rv?.adapter = adapter
         }
 
+    }
+
+    fun updateDB(){
+        val self = Datasource().getSELF()
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+        viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+        viewModel.getStores()
+        viewModel.myResponse_Stores.observe(self, Observer { response ->
+            Datasource().setAllStores(response)
+        })
+
+        viewModel.getShoppings()
+        viewModel.myResponse_Shoppings.observe(self, Observer { response ->
+            Datasource().setAllShoppings(response)
+        })
     }
 
     override fun onDestroyView() {
