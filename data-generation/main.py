@@ -3,7 +3,7 @@ from simulate import *
 from random import randint, choices
 import time
 
-store1_1 = Store("Zara", 10, "10:00:00", "23:00:00")
+store1_1 = Store("Zara", 5, "10:00:00", "23:00:00")
 store2_1 = Store("Sport Zone", 55, "10:00:00", "22:00:00")
 store3_1 = Store("Primark", 70, "10:00:00", "23:00:00")
 store4_1 = Store("Modalfa", 35, "10:00:00", "22:00:00")
@@ -14,7 +14,7 @@ store4_2 = Store("Breshka", 35, "10:00:00", "23:00:00")
 store1_3 = Store("Intimissimi", 35, "10:00:00", "21:00:00")
 store2_3 = Store("Pull&Bear", 45, "10:00:00", "22:00:00")
 
-mall1 = Mall("Mall 1", 50, [store1_1, store2_1,
+mall1 = Mall("Mall 1", 10, [store1_1, store2_1,
              store3_1, store4_1], "9:00:00", "23:00:00")
 mall2 = Mall("Mall 2", 350, [store1_2, store2_2,
              store3_2, store4_2], "10:00:00", "23:00:00")
@@ -67,9 +67,10 @@ if __name__ == '__main__':
                 if person_id in mall1.stores[0].inside_store_ids:
                     idx_to_remove = mall1.stores[0].inside_store_ids.index(person_id)
                     mall1.stores[0].exitStore(idx_to_remove)
+                    if len(mall1.stores[0].waiting_store_ids) > 0:
+                        mall1.stores[0].waiting_list_to_inside_store()
 
                 if len(mall1.waiting_mall_ids) > 0:
-                    #!NOT WORKING YET
                     mall1.waiting_list_to_inside_mall()
 
         elif choices(pop, weights)[0] == 3:
