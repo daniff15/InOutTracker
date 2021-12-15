@@ -4,9 +4,9 @@ from random import randint, choices
 import time
 
 store1_1 = Store("Zara", 5, "10:00:00", "23:00:00")
-store2_1 = Store("Sport Zone", 55, "10:00:00", "22:00:00")
-store3_1 = Store("Primark", 70, "10:00:00", "23:00:00")
-store4_1 = Store("Modalfa", 35, "10:00:00", "22:00:00")
+store2_1 = Store("Sport Zone", 10, "10:00:00", "22:00:00")
+store3_1 = Store("Primark", 10, "10:00:00", "23:00:00")
+store4_1 = Store("Modalfa", 7, "10:00:00", "22:00:00")
 store1_2 = Store("Zara", 50, "10:00:00", "22:00:00")
 store2_2 = Store("Aucham", 100, "10:00:00", "22:00:00")
 store3_2 = Store("MEO", 5, "10:00:00", "23:00:00")
@@ -14,7 +14,7 @@ store4_2 = Store("Breshka", 35, "10:00:00", "23:00:00")
 store1_3 = Store("Intimissimi", 35, "10:00:00", "21:00:00")
 store2_3 = Store("Pull&Bear", 45, "10:00:00", "22:00:00")
 
-mall1 = Mall("Mall 1", 10, [store1_1, store2_1,
+mall1 = Mall("Mall 1", 50, [store1_1, store2_1,
              store3_1, store4_1], "9:00:00", "23:00:00")
 mall2 = Mall("Mall 2", 350, [store1_2, store2_2,
              store3_2, store4_2], "10:00:00", "23:00:00")
@@ -95,7 +95,7 @@ if __name__ == '__main__':
                 idx_temp = randint(0 , len(mall1.waiting_mall_ids) - 1)
                 mall1.stop_waiting_outside_Mall(idx_temp)
 
-        #!para depois contar quantas pessoas estao em cada cena, provavlemente vai se a cada lista ver os status de cada pessoa
+        #!para depois contar quantas pessoas estao em cada cena, len(lst)
         print("--------------START--------------")
         print("Inside mall - ", mall1.inside_mall_ids)
         print("Waiting mall - ", mall1.waiting_mall_ids)
@@ -111,4 +111,4 @@ if __name__ == '__main__':
         print(store.store_name)
         #print("Store - ", (mall1_1.stores)[1])
         exit(0)"""
-        time.sleep(0.7)
+        time.sleep(0.1)
