@@ -50,6 +50,9 @@ class Store:
     def waiting_outside_Store(self, id):
         self.waiting_store_ids.append(id) 
 
+    def stop_waiting_store(self, id):
+        self.waiting_store_ids.remove(self.waiting_store_ids[id])
+
     def waiting_list_to_inside_store(self):
         if len(self.waiting_store_ids) > 0:
             self.inside_store_ids.append(self.waiting_store_ids[0])

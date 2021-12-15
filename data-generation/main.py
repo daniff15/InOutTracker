@@ -27,9 +27,12 @@ if __name__ == '__main__':
     id = 0
 
     while True:
-        #! Escolher um shopping e fazer o q tem de fazer
-        # primeira imp, apenas um mall
+        # primeira imp, apenas um mall e simulação em varias lojas
         #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
+
+        idx_for_store = randint(0, len(mall1.stores)-1)
+        store = mall1.stores[idx_for_store]
+        print("LOJA ESCOLHIDA - ", store.store_name) 
 
         if choices(pop, weights)[0] == 1:
             # e condicao para verificar se respeitou o limite
@@ -38,10 +41,10 @@ if __name__ == '__main__':
                     mall1.waiting_list_to_inside_mall()
 
                     #TODO: METER AS CONDICOES DO Q A PESSOA VAI FAZER QUANDO ENTRAR NO SHOPPING
-                    if len(mall1.stores[0].inside_store_ids) >= mall1.stores[0].store_limit: #and RESPEITOU:
-                        mall1.stores[0].waiting_outside_Store(id)
+                    if len(store.inside_store_ids) >= store.store_limit: #and RESPEITOU:
+                        store.waiting_outside_Store(id)
                     else:
-                        mall1.stores[0].enterStore(id) 
+                        store.enterStore(id) 
 
                     id += 1
 
@@ -49,10 +52,10 @@ if __name__ == '__main__':
                     mall1.enterMall(id)
 
                     #TODO: METER AS CONDICOES DO Q A PESSOA VAI FAZER QUANDO ENTRAR NO SHOPPING
-                    if len(mall1.stores[0].inside_store_ids) >= mall1.stores[0].store_limit: #and RESPEITOU:
-                        mall1.stores[0].waiting_outside_Store(id)
+                    if len(store.inside_store_ids) >= store.store_limit: #and RESPEITOU:
+                        store.waiting_outside_Store(id)
                     else:
-                        mall1.stores[0].enterStore(id)
+                        store.enterStore(id)
 
                     id += 1
 
@@ -64,11 +67,18 @@ if __name__ == '__main__':
                 mall1.exitMall(idx)
 
                 #remove person from store if its in one
-                if person_id in mall1.stores[0].inside_store_ids:
-                    idx_to_remove = mall1.stores[0].inside_store_ids.index(person_id)
-                    mall1.stores[0].exitStore(idx_to_remove)
-                    if len(mall1.stores[0].waiting_store_ids) > 0:
-                        mall1.stores[0].waiting_list_to_inside_store()
+                for loja in mall1.stores:
+                    if person_id in loja.inside_store_ids:
+                        idx_to_remove = loja.inside_store_ids.index(person_id)
+                        loja.exitStore(idx_to_remove)
+                        if len(loja.waiting_store_ids) > 0:
+                            loja.waiting_list_to_inside_store()
+
+                #remove person from waiting list of store if the person leaves the mall 
+                for loja in mall1.stores:
+                    if person_id in loja.waiting_store_ids:
+                        idx_to_remove = loja.waiting_store_ids.index(person_id)
+                        loja.stop_waiting_store(idx_to_remove)
 
                 if len(mall1.waiting_mall_ids) > 0:
                     mall1.waiting_list_to_inside_mall()
@@ -89,14 +99,16 @@ if __name__ == '__main__':
         print("--------------START--------------")
         print("Inside mall - ", mall1.inside_mall_ids)
         print("Waiting mall - ", mall1.waiting_mall_ids)
-        print("LEN - ", len(mall1.stores[0].inside_store_ids))
-        print("INSIDE ZARA - ", mall1.stores[0].inside_store_ids)
-        print("WAITING ZARA - ", mall1.stores[0].waiting_store_ids)
+        print("LEN - ", len(store.inside_store_ids))
+        for store in mall1.stores:
+            print("INSIDE  ", store.store_name , " - " , store.inside_store_ids)           
+            print("WAITING ", store.store_name, " - ", store.waiting_store_ids)
+        
         print("--------------END--------------")
 
         """#escolha da loja para fazer cenas randoms
         #list_idx = randint(0, len(mall1.stores))
-        print(mall1.stores[0].store_name)
+        print(store.store_name)
         #print("Store - ", (mall1_1.stores)[1])
         exit(0)"""
-        time.sleep(0.2)
+        time.sleep(0.7)
