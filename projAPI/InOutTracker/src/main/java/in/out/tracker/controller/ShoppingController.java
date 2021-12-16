@@ -19,6 +19,12 @@ public class ShoppingController {
     @GetMapping("/api/v1/shoppings")
     public List<Shopping> getAllShoppings() { return service.getShoppings(); }
 
+    @PostMapping("/api/v1/shoppings")
+    public Shopping addShopping(@Valid @RequestBody Shopping shopping) { return service.createShopping(shopping); }
+
+    @DeleteMapping("api/v1/shoppings")
+    public void removeShopping(@Valid @RequestBody Shopping shopping) { service.deleteShopping(shopping); }
+
     @GetMapping("/api/v1/shopping/{id}")
     public ResponseEntity<Shopping> getShopping(@PathVariable(value = "id") long id)
                         throws ResourceNotFoundException{
@@ -28,9 +34,5 @@ public class ShoppingController {
     @PutMapping("api/v1/shopping/update")
     public Shopping updateShopping(@Valid @RequestBody Shopping shopping) throws ResourceNotFoundException { return service.updateShopping(shopping); }
 
-    @PostMapping("/api/v1/shoppings")
-    public Shopping addShopping(@Valid @RequestBody Shopping shopping) { return service.createShopping(shopping); }
 
-    @DeleteMapping("api/v1/shoppings")
-    public void removeShopping(@Valid @RequestBody Shopping shopping) { service.deleteShopping(shopping); }
 }
