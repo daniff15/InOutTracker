@@ -3,6 +3,7 @@ import requests
 from simulate import *
 from random import randint, choices
 import time
+from copy import deepcopy
 import json
 
 import pulsar
@@ -85,7 +86,6 @@ if __name__ == '__main__':
                         store.enterStore(id)
 
                     id += 1
-                produce(store)
 
         elif choices(pop, weights)[0] == 2:
             if len(mall1.inside_mall_ids) > 0:
@@ -123,6 +123,12 @@ if __name__ == '__main__':
                 idx_temp = randint(0 , len(mall1.waiting_mall_ids) - 1)
                 mall1.stop_waiting_outside_Mall(idx_temp)
 
+        #produce(store)
+        print_mall = deepcopy(mall1)
+        for i in range(len(print_mall.stores)):
+            print_mall.stores[i] = print_mall.stores[i].__dict__
+        produce(print_mall)
+
         #!para depois contar quantas pessoas estao em cada cena, len(lst)
         print("--------------START--------------")
         print("Inside mall - ", mall1.inside_mall_ids)
@@ -139,5 +145,6 @@ if __name__ == '__main__':
         print(store.store_name)
         #print("Store - ", (mall1_1.stores)[1])
         exit(0)"""
+
         time.sleep(0.1)
 #client.close()
