@@ -3,6 +3,12 @@ import requests
 from simulate import *
 from random import randint, choices
 import time
+import json
+
+import pulsar
+
+client = pulsar.Client('pulsar://localhost:6650')
+producer = client.create_producer(topic = 'persistent://sample/standalone/ns1/people-count')
 
 try:
     response_malls = requests.get('http://localhost:8000/api/v1/shoppings')
@@ -19,7 +25,7 @@ for store in response_stores:
 
 for mall in response_malls:  
     mall1 = Mall(mall["name"], 50, stores, mall['opening_time'], mall['closing_time'])
-    
+
 """
 store1_1 = Store("Zara", 5, "10:00:00", "23:00:00")
 store2_1 = Store("Sport Zone", 10, "10:00:00", "22:00:00")
@@ -38,6 +44,9 @@ mall2 = Mall("Mall 2", 350, [store1_2, store2_2,
              store3_2, store4_2], "10:00:00", "23:00:00")
 mall3 = Mall("Mall 3", 250, [store1_3, store1_3], "9:30:00", "22:00:00")
 """
+
+def produce(message):
+    producer.send(json.dumps(message.__dict__).encode('utf-8'))
 
 if __name__ == '__main__':
 
@@ -64,7 +73,6 @@ if __name__ == '__main__':
                         store.waiting_outside_Store(id)
                     else:
                         store.enterStore(id) 
-
                     id += 1
 
                 else:
@@ -77,6 +85,7 @@ if __name__ == '__main__':
                         store.enterStore(id)
 
                     id += 1
+                produce(store)
 
         elif choices(pop, weights)[0] == 2:
             if len(mall1.inside_mall_ids) > 0:
@@ -131,3 +140,4 @@ if __name__ == '__main__':
         #print("Store - ", (mall1_1.stores)[1])
         exit(0)"""
         time.sleep(0.1)
+#client.close()

@@ -1,6 +1,5 @@
 from random import random
 
-
 class Mall:
     def __init__(self,mall_name, mall_limit,stores, opening_time, close_time):
         self.mall_limit = mall_limit
