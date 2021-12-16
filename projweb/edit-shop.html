@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+﻿<!-- Admin can add shoppings, shops and change the maximum capacity of shoppings and shops -->
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shopping Center</title>
+    <title>Edit Shop</title>
     <!-- Bootstrap Styles-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- FontAwesome Styles-->
@@ -31,34 +33,22 @@
         </div>
     </nav>
 
-    <!-- Shops -->
+    <!-- Edit Shop -->
     <div class="container">
-        <div class="row map-row">
-            <img class="map-img mx-auto" src="imgs/shopping_map.jpg">
-        </div>
-        <div class="row justify-content-center">
-            <table class="table table-borderless shops-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Shop Name</th>
-                    <th scope="col" class="text-right">Capacity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Fnac</th>
-                    <td class="text-right">20/30</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Worten</th>
-                    <td class="text-right">11/25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Zara</th>
-                    <td class="text-right">33/35</td>
-                  </tr>
-                </tbody>
-              </table>
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <form>
+                    <div class="form-group">
+                        <label for="shop-name">Name</label>
+                        <input type="text" class="form-control" id="shop-name" placeholder="Shop Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="shop-capacity">Capacity</label>
+                        <input type="number" class="form-control" id="shop-capacity" placeholder="0">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 
