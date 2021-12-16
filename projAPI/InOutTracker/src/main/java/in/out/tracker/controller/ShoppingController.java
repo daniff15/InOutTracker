@@ -15,6 +15,7 @@ public class ShoppingController {
     @Autowired
     private ShoppingService service;
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping("/api/v1/shoppings")
     public List<Shopping> getAllShoppings() { return service.getShoppings(); }
 
