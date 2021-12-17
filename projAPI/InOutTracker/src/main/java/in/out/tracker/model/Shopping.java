@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "shopping_center")
+@Table(name = "shopping")
 public class Shopping {
 
 
@@ -12,12 +12,9 @@ public class Shopping {
     private String name;
     private String opening_time;
     private String closing_time;
+    private List<Store> stores;
     private int max_capacity;
     private int people_count;
-
-    @OneToMany(mappedBy = "shopping_center")
-    private List<Store> stores;
-
 
     @Id
     @Column(name = "id", nullable = false)
@@ -28,11 +25,6 @@ public class Shopping {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    @Column(name = "stores", nullable = true)
-    public List<Store> getStores() { return stores; }
-    public void setStores(List<Store> stores) { this.stores = stores; }
-
-
     @Column(name = "opening_time", nullable = true)
     public String getOpening_time() { return opening_time; }
     public void setOpening_time(String opening_time) { this.opening_time = opening_time; }
@@ -40,6 +32,10 @@ public class Shopping {
     @Column(name = "closing_time", nullable = true)
     public String getClosing_time() { return closing_time; }
     public void setClosing_time(String closing_time) { this.closing_time = closing_time; }
+
+    @OneToMany(mappedBy = "shop_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Store> getStores() { return stores; }
+    public void setStores(List<Store> stores) { this.stores = stores; }
 
     @Column(name = "max_capacity", nullable = true)
     public int getMax_capacity() { return max_capacity; }
