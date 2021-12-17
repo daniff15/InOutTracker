@@ -7,12 +7,16 @@ import javax.persistence.*;
 public class Store {
 
     private long id;
-    private long shop_id;
     private String name;
     private String opening_time;
     private String closing_time;
     private int max_capacity;
     private int people_count;
+
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = true)
+    private Shopping shop;
+
 
     @Id
     @Column(name = "id", nullable = false)
@@ -20,8 +24,8 @@ public class Store {
     public void setId(long id) { this.id = id; }
 
     @Column(name = "shop", nullable = false)
-    public long getShop_id(){ return shop_id; }
-    public void setShop_id(long shop_id) { this.shop_id = shop_id; }
+    public Shopping getShop(){ return shop; }
+    public void setShop(Shopping shop) { this.shop = shop; }
 
     @Column(name = "name", nullable = true)
     public String getName() { return name; }

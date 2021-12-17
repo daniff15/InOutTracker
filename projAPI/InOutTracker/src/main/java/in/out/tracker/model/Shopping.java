@@ -1,6 +1,7 @@
 package in.out.tracker.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "shopping_center")
@@ -14,6 +15,10 @@ public class Shopping {
     private int max_capacity;
     private int people_count;
 
+    @OneToMany(mappedBy = "shopping_center")
+    private List<Store> stores;
+
+
     @Id
     @Column(name = "id", nullable = false)
     public long getId() { return id; }
@@ -22,6 +27,11 @@ public class Shopping {
     @Column(name = "name", nullable = true)
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    @Column(name = "stores", nullable = true)
+    public List<Store> getStores() { return stores; }
+    public void setStores(List<Store> stores) { this.stores = stores; }
+
 
     @Column(name = "opening_time", nullable = true)
     public String getOpening_time() { return opening_time; }
