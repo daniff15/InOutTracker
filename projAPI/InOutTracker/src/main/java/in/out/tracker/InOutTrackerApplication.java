@@ -76,7 +76,7 @@ public class InOutTrackerApplication {
 						shoppingService.updateCount(Long.parseLong(element), Integer.parseInt(people));
 					 **/
 				}
-				System.out.println("Message received: " + message);
+				//System.out.println("Message received: " + message);
 				consumer.acknowledge(msg);
 			} catch (PulsarClientException e) {
 				System.err.println(e);
