@@ -11,6 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class InOutTrackerApplication {
 
 	public static void main(String[] args) throws PulsarClientException {
+		SpringApplication.run(InOutTrackerApplication.class, args);
+
+
 		PulsarClient client = PulsarClient.builder()
 				.serviceUrl("pulsar://localhost:6650")
 				.build();
@@ -30,7 +33,6 @@ public class InOutTrackerApplication {
 				.messageListener(messageListener)
 				.subscribe();
 
-		SpringApplication.run(InOutTrackerApplication.class, args);
 	}
 
 }
