@@ -1,7 +1,8 @@
 from random import random
 
 class Mall:
-    def __init__(self,mall_name, mall_limit,stores, opening_time, close_time):
+    def __init__(self,id,mall_name, mall_limit,stores, opening_time, close_time):
+        self.id = id
         self.mall_limit = mall_limit
         self.mall_name = mall_name
         self.stores = stores
@@ -32,7 +33,8 @@ class Mall:
             self.waiting_mall_ids.remove(self.waiting_mall_ids[0])
 
 class Store:
-    def __init__(self, store_name, store_limit, opening_time, close_time):
+    def __init__(self, id, store_name, store_limit, opening_time, close_time):
+        self.id = id
         self.store_name = store_name
         self.store_limit = store_limit
         self.opening_time = opening_time

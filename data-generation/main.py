@@ -9,7 +9,7 @@ import json
 import pulsar
 
 client = pulsar.Client('pulsar://localhost:6650')
-producer = client.create_producer(topic = 'persistent://sample/standalone/ns1/people-count')
+producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
 
 try:
     response_malls = requests.get('http://localhost:8000/api/v1/shoppings')
@@ -22,10 +22,14 @@ except requests.exceptions.ConnectionError:
 
 stores = []
 for store in response_stores:
-    stores.append(Store(store['name'], store['max_capacity'], store['opening_time'], store['closing_time']))
+    stores.append(Store(store['id'], store['name'], store['max_capacity'], store['opening_time'], store['closing_time']))
 
 for mall in response_malls:  
-    mall1 = Mall(mall["name"], 50, stores, mall['opening_time'], mall['closing_time'])
+    mall1 = Mall(mall['id'], mall["name"], mall['max_capacity'], stores, mall['opening_time'], mall['closing_time'])
+
+else:
+    mall1 = Mall(0, "Forum Aveiro", 50, stores, "08h00", "20h00")
+
 
 """
 store1_1 = Store("Zara", 5, "10:00:00", "23:00:00")
