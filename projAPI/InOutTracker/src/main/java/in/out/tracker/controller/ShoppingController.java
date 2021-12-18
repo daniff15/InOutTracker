@@ -34,5 +34,9 @@ public class ShoppingController {
     @PutMapping("api/v1/shopping/update")
     public Shopping updateShopping(@Valid @RequestBody Shopping shopping) throws ResourceNotFoundException { return service.updateShopping(shopping); }
 
+    @PutMapping("api/v1/shopping/update/{id}/count/{count}")
+    public Shopping updateCount(@PathVariable(value = "id") long id, @PathVariable(value = "count") int count) throws ResourceNotFoundException {
+        return service.updateCount(id, count);
+    }
 
 }

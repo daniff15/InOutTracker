@@ -43,4 +43,5 @@ public class Store {
     @Column(name = "people_count", nullable = true)
     public int getPeople_count() { return people_count; }
     public void setPeople_count(int people_count) { this.people_count = people_count; }
+
 }
