@@ -18,6 +18,7 @@ import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentDashboardBinding
 import ies.ua.inouttracker.repository.Repository
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
+import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.ui.model.StoreCard
 import ies.ua.inouttracker.ui.store.StorePageFragment
 import ies.ua.inouttracker.util.Datasource
@@ -52,12 +53,15 @@ class DashboardFragment : Fragment() {
         val mall: AutoCompleteTextView = view.findViewById(R.id.choose_mall_search)
         val count: TextView = view.findViewById(R.id.mall_count_search)
         val actv_mall: ImageView = view.findViewById(R.id.actv_dashboard)
+
         val shoppings = Datasource().getAllShoppings()
+        val stores = Datasource().getAllStores()
+
+        var selected_mall: String = "Forum Aveiro" //TODO: remove hardcoded shopping
+        count.text = Datasource().getShoppingCurrentCount(selected_mall)
 
 
-        var selected_mall: String = ""
-
-        createCards(view)
+        createCards(view, Datasource().getStores())
 
         mall.threshold = 2
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
@@ -79,6 +83,7 @@ class DashboardFragment : Fragment() {
             override fun run() {
                 updateDB()
                 if (selected_mall != "") count.text = Datasource().getShoppingCurrentCount(selected_mall)
+                createCards(view, Datasource().getStores())
                 Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
@@ -90,12 +95,12 @@ class DashboardFragment : Fragment() {
 
     }
 
-    private fun createCards(view: View?){
+    private fun createCards(view: View?, stores: MutableList<Store>){
         val rv = view?.findViewById<RecyclerView>(R.id.stores_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
-        for (i in 1..10){
-            cards.add(StoreCard(R.drawable.ic_launcher_background, "Store$i", (0..10).random().toString(), (10..20).random().toString()))
+        for (store in stores){
+            cards.add(StoreCard(R.drawable.ic_launcher_background, store.name, store.people_count.toString(), store.max_capacity.toString()))
         }
 
         Log.d("DEBUG:", cards.toString())

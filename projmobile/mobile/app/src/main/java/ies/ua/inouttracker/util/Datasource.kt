@@ -31,6 +31,14 @@ public class Datasource {
         return "0"
     }
 
+    fun getStores(): MutableList<Store>{
+        return stores
+    }
+    fun getShoppings(): MutableList<Shopping>{
+        return shoppings
+    }
+
+
     fun getAllShoppings(): List<String> {
         return shoppingsName
     }
