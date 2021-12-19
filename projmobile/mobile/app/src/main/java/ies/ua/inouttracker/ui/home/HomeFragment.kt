@@ -94,9 +94,7 @@ class HomeFragment : Fragment() {
         }
 
         // Create the Handler object (on the main thread by default)
-        // Create the Handler object (on the main thread by default)
         val handler = Handler()
-        // Define the code block to be executed
         // Define the code block to be executed
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
@@ -109,7 +107,6 @@ class HomeFragment : Fragment() {
                 handler.postDelayed(this, 1000)
             }
         }
-        // Start the initial runnable task by posting through the handler
         // Start the initial runnable task by posting through the handler
         handler.post(runnableCode)
 
@@ -139,12 +136,12 @@ class HomeFragment : Fragment() {
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
         viewModel.getStores()
-        viewModel.myResponse_Stores.observe(self, Observer { response ->
+        viewModel.myResponse_Stores.observe(self, { response ->
             Datasource().setAllStores(response)
         })
 
         viewModel.getShoppings()
-        viewModel.myResponse_Shoppings.observe(self, Observer { response ->
+        viewModel.myResponse_Shoppings.observe(self, { response ->
             Datasource().setAllShoppings(response)
         })
     }
