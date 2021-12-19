@@ -24,4 +24,21 @@ public class StoreService {
     }
 
     public Store createStore(Store store) { return storeRepository.save(store); }
+
+    public void deleteStore(Store store) { storeRepository.delete(store); }
+
+    public Store updateCount(long store_id, int people) throws ResourceNotFoundException {
+        Store store = storeRepository.findById(store_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Store not found for this id :: " + store_id));
+        store.setPeople_count(people);
+        storeRepository.save(store);
+        return store;
+    }
+
+    public Store updateStore(Store store) throws ResourceNotFoundException {
+        deleteStore(storeRepository.findById(store.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Store not found for this id :: " + store.getId())));
+        createStore(store);
+        return store;
+    }
 }

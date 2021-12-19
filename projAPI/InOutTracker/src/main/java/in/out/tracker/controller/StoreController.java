@@ -1,6 +1,7 @@
 package in.out.tracker.controller;
 
 import in.out.tracker.exception.ResourceNotFoundException;
+import in.out.tracker.model.Shopping;
 import in.out.tracker.model.Store;
 import in.out.tracker.services.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,17 @@ public class StoreController {
         return service.getStoreById(id);
     }
 
+    @PutMapping("api/v1/store/update")
+    public Store updateStore(@Valid @RequestBody Store store) throws ResourceNotFoundException { return service.updateStore(store); }
+
+    @PutMapping("api/v1/store/update/{id}/count/{count}")
+    public Store updateCount(@PathVariable(value = "id") long id, @PathVariable(value = "count") int count) throws ResourceNotFoundException {
+        return service.updateCount(id, count);
+    }
+
     @PostMapping("api/v1/stores")
     public Store addStore(@Valid @RequestBody Store store) { return service.createStore(store); }
+
+    @DeleteMapping("api/v1/stores")
+    public void removeStore(@Valid @RequestBody Store store) { service.deleteStore(store); }
 }

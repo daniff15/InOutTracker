@@ -1,9 +1,10 @@
 package in.out.tracker.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "shopping_center")
+@Table(name = "shopping")
 public class Shopping {
 
 
@@ -11,11 +12,11 @@ public class Shopping {
     private String name;
     private String opening_time;
     private String closing_time;
+    private List<Store> stores;
     private int max_capacity;
     private int people_count;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
@@ -31,6 +32,10 @@ public class Shopping {
     @Column(name = "closing_time", nullable = true)
     public String getClosing_time() { return closing_time; }
     public void setClosing_time(String closing_time) { this.closing_time = closing_time; }
+
+    @OneToMany(mappedBy = "shop_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Store> getStores() { return stores; }
+    public void setStores(List<Store> stores) { this.stores = stores; }
 
     @Column(name = "max_capacity", nullable = true)
     public int getMax_capacity() { return max_capacity; }

@@ -15,10 +15,10 @@ public class Store {
     private int people_count;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
+
 
     @Column(name = "shop", nullable = false)
     public long getShop_id(){ return shop_id; }
@@ -43,4 +43,5 @@ public class Store {
     @Column(name = "people_count", nullable = true)
     public int getPeople_count() { return people_count; }
     public void setPeople_count(int people_count) { this.people_count = people_count; }
+
 }
