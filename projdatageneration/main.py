@@ -5,7 +5,6 @@ from random import randint, choices
 import time
 from copy import deepcopy
 import json
-
 import pulsar
 
 client = pulsar.Client('pulsar://localhost:6650')
@@ -31,27 +30,8 @@ else:
     mall1 = Mall(0, "Forum Aveiro", 50, stores, "08h00", "20h00")
 
 
-"""
-store1_1 = Store("Zara", 5, "10:00:00", "23:00:00")
-store2_1 = Store("Sport Zone", 10, "10:00:00", "22:00:00")
-store3_1 = Store("Primark", 10, "10:00:00", "23:00:00")
-store4_1 = Store("Modalfa", 7, "10:00:00", "22:00:00")
-store1_2 = Store("Zara", 50, "10:00:00", "22:00:00")
-store2_2 = Store("Aucham", 100, "10:00:00", "22:00:00")
-store3_2 = Store("MEO", 5, "10:00:00", "23:00:00")
-store4_2 = Store("Breshka", 35, "10:00:00", "23:00:00")
-store1_3 = Store("Intimissimi", 35, "10:00:00", "21:00:00")
-store2_3 = Store("Pull&Bear", 45, "10:00:00", "22:00:00")
-
-mall1 = Mall("Mall 1", 50, [store1_1, store2_1,
-             store3_1, store4_1], "9:00:00", "23:00:00")
-mall2 = Mall("Mall 2", 350, [store1_2, store2_2,
-             store3_2, store4_2], "10:00:00", "23:00:00")
-mall3 = Mall("Mall 3", 250, [store1_3, store1_3], "9:30:00", "22:00:00")
-"""
-
 def produce(message):
-    producer.send(json.dumps(message.__dict__).encode('utf-8'))
+    producer.send(json.dumps(message).encode('utf-8'))
 
 if __name__ == '__main__':
 
@@ -127,11 +107,11 @@ if __name__ == '__main__':
                 idx_temp = randint(0 , len(mall1.waiting_mall_ids) - 1)
                 mall1.stop_waiting_outside_Mall(idx_temp)
 
-        #produce(store)
-        print_mall = deepcopy(mall1)
-        for i in range(len(print_mall.stores)):
-            print_mall.stores[i] = print_mall.stores[i].__dict__
-        produce(print_mall)
+        ''' implementation for one mall '''
+        stores_capacity = {mall1.id: len(mall1.inside_mall_ids)}
+        for store in mall1.stores:
+            stores_capacity[store.id] = len(store.inside_store_ids)
+        produce(stores_capacity)
 
         #!para depois contar quantas pessoas estao em cada cena, len(lst)
         print("--------------START--------------")
