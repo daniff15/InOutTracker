@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<!-- Admin can add shoppings, shops and change the maximum capacity of shoppings and shops -->
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -36,26 +38,47 @@
         <div class="row map-row">
             <img class="map-img mx-auto" src="imgs/shopping_map.jpg">
         </div>
+        <div class="row">
+            <a href="add-shop.html" class="add-shop-button">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add Shop</button>
+            </a>
+        </div>
         <div class="row justify-content-center">
             <table class="table table-borderless shops-table">
                 <thead>
                   <tr>
+                    <th scope="col" class="edit-shop-column"></th>
                     <th scope="col">Shop Name</th>
                     <th scope="col" class="text-right">Capacity</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">Fnac</th>
-                    <td class="text-right">20/30</td>
+                    <td>
+                        <a href="edit-shop.html" class="btn btn-primary edit-shop-button">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <th scope="row" class="table-cell">Fnac</th>
+                    <td class="text-right" class="table-cell">20/30</td>
                   </tr>
                   <tr>
-                    <th scope="row">Worten</th>
-                    <td class="text-right">11/25</td>
+                    <td>
+                        <a href="edit-shop.html" class="btn btn-primary edit-shop-button">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <th scope="row" class="table-cell">Worten</th>
+                    <td class="text-right" class="table-cell">11/25</td>
                   </tr>
                   <tr>
-                    <th scope="row">Zara</th>
-                    <td class="text-right">33/35</td>
+                    <td>
+                        <a href="edit-shop.html" class="btn btn-primary edit-shop-button">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <th scope="row" class="table-cell">Zara</th>
+                    <td class="text-right" class="table-cell">33/35</td>
                   </tr>
                 </tbody>
               </table>
