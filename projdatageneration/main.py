@@ -6,15 +6,53 @@ import time
 from copy import deepcopy
 import json
 import pulsar
-
-client = pulsar.Client('pulsar://localhost:6650')
-producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
+import sys
 
 try:
-    response_malls = requests.get('http://localhost:8000/api/v1/shoppings')
-    response_stores = requests.get('http://localhost:8000/api/v1/stores')
+	client = pulsar.Client('pulsar://127.0.0.1:6650')
+	producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
+except requests.exceptions.ConnectionError:
+    print("Broker is not Running")
+    exit(1)
+serviceURL = '127.0.0.1:8000/'  
+    
+try:
+    requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
+        "id": 0,
+        "name": "Forum Aveiro",
+        "opening_time": "09h00",
+        "closing_time": "22h00",
+        "max_capacity": 200,
+        "people_count": 0
+    })
+
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {
+        "id": 1,
+        "shop_id": 0,
+        "name": "Mi Store",
+        "opening_time": "09h00",
+        "closing_time": "22h00",
+        "max_capacity": 15,
+        "people_count": 0
+    })
+
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {
+        "id": 2,
+        "shop_id": 0,
+        "name": "FNAC",
+        "opening_time": "09h00",
+        "closing_time": "22h00",
+        "max_capacity": 50,
+        "people_count": 0
+    })
+
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 3,"shop_id": 0,"name": "Sport Zone","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 36, "people_count": 0})
+
+    response_malls = requests.get(f'http://{serviceURL}api/v1/shoppings')
+    response_stores = requests.get(f'http://{serviceURL}api/v1/stores')
     response_malls = response_malls.json()
     response_stores = response_stores.json()
+
 except requests.exceptions.ConnectionError:
     print("Server is not running")
     exit(1)
@@ -25,9 +63,6 @@ for store in response_stores:
 
 for mall in response_malls:  
     mall1 = Mall(mall['id'], mall["name"], mall['max_capacity'], stores, mall['opening_time'], mall['closing_time'])
-
-else:
-    mall1 = Mall(0, "Forum Aveiro", 50, stores, "08h00", "20h00")
 
 
 def produce(message):
