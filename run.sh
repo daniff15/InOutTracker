@@ -1,3 +1,6 @@
+cd projAPI/InOutTracker
+./mvnw install -Dmaven.test.skip
+cd ../../
 docker-compose up -d
 sleep 15
 cd projweb
