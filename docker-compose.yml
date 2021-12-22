@@ -17,13 +17,22 @@ services:
         - default
       restart: always
       
+    pulsar-client:
+      image: apachepulsar/pulsar:2.8.1
+      ports:  
+        - 8000:6650
+      environment:
+        - BOOKIE_MEM=" -Xms512m -Xmx512m -XX:MaxDirectMemorySize=1g"
+      command: /bin/bash -c "bin/apply-config-from-env.py conf/standalone.conf && exec bin/pulsar standalone"
+      volumes:
+        - ./projbroker:/var/lib/broker/pulsar
+      
     springboot-api:
       depends_on:  
         - mysql
+        - pulsar-client
       build: ./projAPI/InOutTracker
       restart: on-failure
-      ports:  
-        - 8000:8000
       environment:
         SPRING_APPLICATION_JSON: '{
           "server.port": 8000,
