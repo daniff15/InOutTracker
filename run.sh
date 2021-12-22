@@ -1,5 +1,8 @@
 docker-compose up -d
 sleep 15
-echo 'Done... Access at 127.0.0.1:8000'
+cd projweb
+python -m SimpleHTTPServer 5500 &
+cd ../
+xdg-open http://127.0.0.1:5500/shoppings.html 
 python3 projdatageneration/main.py >/dev/null
 
