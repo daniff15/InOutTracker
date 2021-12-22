@@ -24,7 +24,7 @@ services:
       volumes:
         - ./projbroker:/var/lib/broker/pulsar
       
-    springboot-api:
+    springbootapi:
       depends_on:  
         - mysql
         - pulsarclient
@@ -57,3 +57,12 @@ services:
         }'
       volumes:
          - ./projAPI:/var/lib/api
+
+    data-generation:
+      depends_on:  
+        - pulsarclient
+        - springbootapi
+      build: ./projdatageneration
+      restart: on-failure
+      volumes:
+         - ./projdatageneration:/var/lib/datagen
