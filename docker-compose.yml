@@ -17,21 +17,21 @@ services:
         - default
       restart: always
       
-    pulsar-client:
+    pulsarclient:
       image: apachepulsar/pulsar:2.8.1
       ports:  
-        - 8000:6650
-      environment:
-        - BOOKIE_MEM=" -Xms512m -Xmx512m -XX:MaxDirectMemorySize=1g"
-      command: /bin/bash -c "bin/apply-config-from-env.py conf/standalone.conf && exec bin/pulsar standalone"
+        - 6650:6650
+      command: bin/pulsar standalone
       volumes:
         - ./projbroker:/var/lib/broker/pulsar
       
     springboot-api:
       depends_on:  
         - mysql
-        - pulsar-client
+        - pulsarclient
       build: ./projAPI/InOutTracker
+      ports: 
+        - 8000:8000
       restart: on-failure
       environment:
         SPRING_APPLICATION_JSON: '{
@@ -41,7 +41,7 @@ services:
           "spring.datasource.password" : "secret2",
           "spring.jpa.database-platform" : "org.hibernate.dialect.MySQL5InnoDBDialect",
           "spring.jpa.hibernate.ddl-auto" : "update",
-          "pulsar.service-url" : "pulsar://pulsar-client:6650",
+          "pulsar.service-url" : "pulsar://pulsarclient:6650",
           "pulsar.io-threads" : "10",
           "pulsar.listener-threads" : "10",
           "pulsar.enable-tcp-no-delay" : "false",
