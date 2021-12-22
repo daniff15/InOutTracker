@@ -5,6 +5,7 @@ import in.out.tracker.model.FavStores;
 import in.out.tracker.repository.FavStoresRepository;
 import in.out.tracker.repository.ShoppingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ import java.util.List;
 public class FavStoresService {
     @Autowired
     private FavStoresRepository favStoresRepository;
+
+    @Value("${pulsar.service-url}")
+    private String serviceURL;
+
+    public String getServiceURL() { return serviceURL; }
 
     public List<FavStores> getAllFavStores() { return favStoresRepository.findAll(); }
 

@@ -5,6 +5,7 @@ import in.out.tracker.model.Shopping;
 import in.out.tracker.model.Store;
 import in.out.tracker.repository.ShoppingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,11 @@ import java.util.List;
 public class ShoppingService {
     @Autowired
     private ShoppingRepository shoppingRepository;
+
+    @Value("${pulsar.service-url}")
+    private String serviceURL;
+
+    public String getServiceURL() { return serviceURL; }
 
     public List<Shopping> getShoppings() {
         return shoppingRepository.findAll();
