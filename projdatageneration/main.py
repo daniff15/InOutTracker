@@ -8,22 +8,51 @@ import json
 import pulsar
 import sys
 
-
-time.sleep(15)
-
 try:
-	client = pulsar.Client('pulsar://pulsarclient/172.18.0.3:6650')
+	client = pulsar.Client('pulsar://127.0.0.1:6650')
 	producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
 except requests.exceptions.ConnectionError:
     print("Broker is not Running")
     exit(1)
-serviceURL = 'springboot-api/172.18.0.4/'  
+serviceURL = '127.0.0.1:8000/'  
     
 try:
+    requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
+        "id": 0,
+        "name": "Forum Aveiro",
+        "opening_time": "09h00",
+        "closing_time": "22h00",
+        "max_capacity": 200,
+        "people_count": 0
+    })
+
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {
+        "id": 1,
+        "shop_id": 0,
+        "name": "Mi Store",
+        "opening_time": "09h00",
+        "closing_time": "22h00",
+        "max_capacity": 15,
+        "people_count": 0
+    })
+
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {
+        "id": 2,
+        "shop_id": 0,
+        "name": "FNAC",
+        "opening_time": "09h00",
+        "closing_time": "22h00",
+        "max_capacity": 50,
+        "people_count": 0
+    })
+
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 3,"shop_id": 0,"name": "Sport Zone","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 36, "people_count": 0})
+
     response_malls = requests.get(f'http://{serviceURL}api/v1/shoppings')
     response_stores = requests.get(f'http://{serviceURL}api/v1/stores')
     response_malls = response_malls.json()
     response_stores = response_stores.json()
+
 except requests.exceptions.ConnectionError:
     print("Server is not running")
     exit(1)
