@@ -58,11 +58,11 @@ services:
       volumes:
          - ./projAPI:/var/lib/api
 
-    data-generation:
-      depends_on:  
-        - pulsarclient
-        - springbootapi
-      build: ./projdatageneration
-      restart: on-failure
-      volumes:
-         - ./projdatageneration:/var/lib/datagen
+    #data-generation:
+     # depends_on:  
+      #  - pulsarclient
+       # - springbootapi
+     # build: ./projdatageneration
+     # restart: on-failure
+     # volumes:
+     #    - ./projdatageneration:/var/lib/datagen
