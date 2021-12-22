@@ -64,9 +64,6 @@ for store in response_stores:
 for mall in response_malls:  
     mall1 = Mall(mall['id'], mall["name"], mall['max_capacity'], stores, mall['opening_time'], mall['closing_time'])
 
-else:
-    mall1 = Mall(0, "Forum Aveiro", 50, stores, "08h00", "20h00")
-
 
 def produce(message):
     producer.send(json.dumps(message).encode('utf-8'))
