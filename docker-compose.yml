@@ -1,0 +1,68 @@
+version: "3.1"
+services:
+    mysql: 
+      image: mysql/mysql-server:5.7
+      ports: 
+        - 33060:3306
+      command: --default-authentication-plugin=mysql_native_password --secure-file-priv=''
+      environment:
+        MYSQL_DATABASE: demo
+        MYSQL_USER: demo
+        MYSQL_ROOT_PASSWORD: secret1
+        MYSQL_PASSWORD: secret2 
+      volumes:
+        - ./projdatabase:/var/lib/db/mysql
+      networks:
+        - default
+      restart: always
+      
+    pulsarclient:
+      image: apachepulsar/pulsar:2.8.1
+      ports:  
+        - 6650:6650
+      command: bin/pulsar standalone
+      volumes:
+        - ./projbroker:/var/lib/broker/pulsar
+      
+    springbootapi:
+      depends_on:  
+        - mysql
+        - pulsarclient
+      build: ./projAPI/InOutTracker
+      ports: 
+        - 8000:8000
+      restart: on-failure
+      environment:
+        SPRING_APPLICATION_JSON: '{
+          "server.port": 8000,
+          "spring.datasource.url" : "jdbc:mysql://mysql:3306/demo?useSSL=false",
+          "spring.datasource.username" : "demo",
+          "spring.datasource.password" : "secret2",
+          "spring.jpa.database-platform" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+          "spring.jpa.hibernate.ddl-auto" : "update",
+          "pulsar.service-url" : "pulsar://pulsarclient:6650",
+          "pulsar.io-threads" : "10",
+          "pulsar.listener-threads" : "10",
+          "pulsar.enable-tcp-no-delay" : "false",
+          "pulsar.keep-alive-interval-sec" : "20",
+          "pulsar.connection-timeout-sec" : "10",
+          "pulsar.operation-timeout-sec" : "15",
+          "pulsar.starting-backoff-interval-ms" : "100",
+          "pulsar.max-backoff-interval-sec" : "10",
+          "pulsar.consumer-name-delimiter" : "",
+          "pulsar.namespace" : "default",
+          "pulsar.tenant" : "public",
+          "pulsar.consumer.default.dead-letter-policy-max-redeliver-count" : "-1",
+          "pulsar.consumer.default.ack-timeout-ms" : "3000"
+        }'
+      volumes:
+         - ./projAPI:/var/lib/api
+
+    #data-generation:
+     # depends_on:  
+      #  - pulsarclient
+       # - springbootapi
+     # build: ./projdatageneration
+     # restart: on-failure
+     # volumes:
+     #    - ./projdatageneration:/var/lib/datagen
