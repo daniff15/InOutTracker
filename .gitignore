@@ -11,3 +11,7 @@
 *.zip
 *.tar.gz
 *.rar
+
+projAPI/InOutTracker/target
+projdatageneration/__pycache__
+projdatageneration/venv
