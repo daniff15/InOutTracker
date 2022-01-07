@@ -116,9 +116,6 @@ class HomeFragment : Fragment() {
         val rv = view?.findViewById<RecyclerView>(R.id.home_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
-        for (i in 1..3){
-            cards.add(StoreCard(R.drawable.ic_launcher_background, "Store$i", (0..10).random().toString(), (10..20).random().toString()))
-        }
 
         Log.d("DEBUG:", cards.toString())
 

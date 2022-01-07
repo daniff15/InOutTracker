@@ -92,7 +92,6 @@ class DashboardFragment : Fragment() {
         }
         // Start the initial runnable task by posting through the handler
         handler.post(runnableCode)
-
     }
 
     private fun createCards(view: View?, stores: MutableList<Store>){
@@ -100,7 +99,7 @@ class DashboardFragment : Fragment() {
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
         for (store in stores){
-            cards.add(StoreCard(R.drawable.ic_launcher_background, store.name, store.people_count.toString(), store.max_capacity.toString()))
+            cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, store.name, store.people_count.toString(), store.max_capacity.toString()))
         }
 
         Log.d("DEBUG:", cards.toString())
@@ -129,9 +128,9 @@ class DashboardFragment : Fragment() {
         })
     }
 
-    fun openStorePage(view: View){
+    fun openStorePage(view: View, store: Store){
         val ctx: AppCompatActivity = view?.context as AppCompatActivity
-        val f : Fragment = StorePageFragment()
+        val f : Fragment = StorePageFragment(store)
         val t = ctx.supportFragmentManager.beginTransaction()
 
         if (t != null) {

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.ui.dashboard.DashboardFragment
 import ies.ua.inouttracker.ui.model.StoreCard
+import ies.ua.inouttracker.util.Datasource
 import java.util.ArrayList
 
 class StoreCardAdapter (private val context: Context, private val StoreCards: ArrayList<StoreCard>) : RecyclerView.Adapter<StoreCardAdapter.Viewholder>() {
@@ -27,7 +28,8 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         holder.max.text = store.maxCap
         holder.name.text = store.name
         holder.click.setOnClickListener {
-            DashboardFragment().openStorePage(holder.itemView)
+            Datasource().getStoreById(store.id)
+                ?.let { it1 -> DashboardFragment().openStorePage(holder.itemView, it1) }
         }
 
         //holder.logo.setImageResource(store.logo)

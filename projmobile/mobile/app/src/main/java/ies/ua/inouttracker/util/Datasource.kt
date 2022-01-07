@@ -5,6 +5,7 @@ import ies.ua.inouttracker.ui.model.Shopping
 import ies.ua.inouttracker.ui.model.Store
 
 var stores: MutableList<Store> = mutableListOf()
+var stores_dict: HashMap<Int, Store> = hashMapOf()
 var shoppings: MutableList<Shopping> = mutableListOf()
 var storesName: MutableList<String> = mutableListOf()
 var shoppingsName: MutableList<String> = mutableListOf()
@@ -18,10 +19,15 @@ public class Datasource {
     }
 
     fun setAllStores(stores_list: List<Store>) {
+        var count = 0
         stores = stores_list as MutableList<Store>
         for (store in stores)
-            if (store.name != null && store.name !in storesName)
+            if (store.name != null && store.name !in storesName){
+                stores_dict[count] = store
                 storesName.add(store.name)
+                count++
+            }
+
     }
 
     fun getStoreCurrentCount(STORE: String): String {
@@ -34,6 +40,11 @@ public class Datasource {
     fun getStores(): MutableList<Store>{
         return stores
     }
+
+    fun getStoreById(id: Int): Store? {
+        return stores_dict[id]
+    }
+
     fun getShoppings(): MutableList<Shopping>{
         return shoppings
     }
@@ -57,6 +68,12 @@ public class Datasource {
         return "0"
     }
 
+    fun getStoreID(store: Store): Int {
+        for (store_id in stores_dict)
+            if (store_id.value == store)
+                return store_id.key
+        return -1
+    }
     fun getSELF(): MainActivity? { return SELF }
     fun setSELF(self: MainActivity){ SELF = self}
 }
