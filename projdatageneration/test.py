@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
         for shopping in malls:
             print("--------------START--------------")
-            print("SHOPPING ESCOLHIDO - ", shopping)
+            print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
             print("Inside mall - ", shopping.inside_mall_ids)
             print("Waiting mall - ", shopping.waiting_mall_ids)
             print("LEN - ", len(shopping.inside_mall_ids))

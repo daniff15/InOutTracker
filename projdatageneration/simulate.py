@@ -33,9 +33,6 @@ class Mall:
             self.inside_mall_ids.append(self.waiting_mall_ids[0])
             self.waiting_mall_ids.remove(self.waiting_mall_ids[0])
 
-    def __str__(self):
-        return "Shopping " + self.mall_name + " ; Inside Mall: " + str(self.inside_mall_ids)
-
 class Store:
     def __init__(self, id, store_name, store_limit, opening_time, close_time):
         self.id = id
