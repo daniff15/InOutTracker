@@ -34,10 +34,7 @@ stores2.append(store4_2)
 mall1 = Mall(1, "Mall 1", 10, stores1, "9:00:00", "23:00:00")
 mall2 = Mall(2, "Mall 2", 350, stores2 , "10:00:00", "23:00:00")
 
-#malls = [mall1, mall2]
-
-#just to test respeitou bool
-malls = [mall1]
+malls = [mall1, mall2]
 
 if __name__ == '__main__':
     #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
@@ -177,4 +174,4 @@ if __name__ == '__main__':
 
         
         
-        time.sleep(0.025)
+        time.sleep(0.1)
