@@ -73,7 +73,6 @@ if __name__ == '__main__':
 
                 else:
                     mall.enterMall(mall.people_id)
-                    #TODO: METER AS CONDICOES DO Q A PESSOA VAI FAZER QUANDO ENTRAR NO SHOPPING
                     #Condicao que verifica se a pessoa respeitou a fila de espera
                     respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
 
@@ -156,7 +155,7 @@ if __name__ == '__main__':
         stores_capacity = {mall.id: len(mall.inside_mall_ids)}
         for store in mall.stores:
             stores_capacity[store.id] = len(store.inside_store_ids)
-            
+
         for shopping in malls:
             print("--------------START--------------")
             print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
