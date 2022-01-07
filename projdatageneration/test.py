@@ -9,9 +9,9 @@ import pulsar
 import sys
 
 store1_1 = Store(1 ,"Zara", 5, "10:00:00", "23:00:00")
-store2_1 = Store(2 ,"Sport Zone", 55, "10:00:00", "22:00:00")
-store3_1 = Store(3 ,"Primark", 70, "10:00:00", "23:00:00")
-store4_1 = Store(4 ,"Modalfa", 35, "10:00:00", "22:00:00")
+store2_1 = Store(2 ,"Sport Zone", 5, "10:00:00", "22:00:00")
+store3_1 = Store(3 ,"Primark", 5, "10:00:00", "23:00:00")
+store4_1 = Store(4 ,"Modalfa", 5, "10:00:00", "22:00:00")
 store1_2 = Store(5 ,"Zara", 50, "10:00:00", "22:00:00")
 store2_2 = Store(6 ,"Aucham", 100, "10:00:00", "22:00:00")
 store3_2 = Store(7 ,"MEO", 5, "10:00:00", "23:00:00")
@@ -34,13 +34,21 @@ stores2.append(store4_2)
 mall1 = Mall(1, "Mall 1", 10, stores1, "9:00:00", "23:00:00")
 mall2 = Mall(2, "Mall 2", 350, stores2 , "10:00:00", "23:00:00")
 
-malls = [mall1, mall2]
+#malls = [mall1, mall2]
+
+#just to test respeitou bool
+malls = [mall1]
 
 if __name__ == '__main__':
-
+    #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
     pop = [1, 2, 3, 4]
     weights = [0.30, 0.23, 0.23, 0.23]
 
+    #1-respeitou 2-nao respeitou
+    pop_waitLine = [1, 2]
+    weights_waitLine = [0.90, 0.10]
+
+    #! EM ALGUNS SITIOS (MAYBE?) FALTAM METER CONDICOES PARA VER SE RESPEITOU A FILA
     while True:
         #Choose the mall (random)
         mall_idx = randint(0, len(malls) - 1)
@@ -57,8 +65,7 @@ if __name__ == '__main__':
                 if len(mall.waiting_mall_ids) > 0:
                     mall.waiting_list_to_inside_mall()
 
-                    #TODO: METER AS CONDICOES DO Q A PESSOA VAI FAZER QUANDO ENTRAR NO SHOPPING
-                    if len(store.inside_store_ids) >= store.store_limit: #and RESPEITOU:
+                    if len(store.inside_store_ids) >= store.store_limit: #and respeitou:
                         store.waiting_outside_Store(mall.people_id)
                     else:
                         store.enterStore(mall.people_id) 
@@ -67,16 +74,24 @@ if __name__ == '__main__':
                 else:
                     mall.enterMall(mall.people_id)
                     #TODO: METER AS CONDICOES DO Q A PESSOA VAI FAZER QUANDO ENTRAR NO SHOPPING
-                    if len(store.inside_store_ids) >= store.store_limit: #and RESPEITOU:
+                    #Condicao que verifica se a pessoa respeitou a fila de espera
+                    respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
+
+                    if respeitou_int == 1:
+                        respeitou = True
+                    else:
+                        respeitou = False
+
+                    if len(store.inside_store_ids) >= store.store_limit and respeitou:
                         store.waiting_outside_Store(mall.people_id)
                     else:
+                        #!Supostamente ja entra quando nao respeita
                         store.enterStore(mall.people_id)
                     mall.people_id += 1
 
         elif choices(pop, weights)[0] == 2:
             if len(mall.inside_mall_ids) > 0:
                 idx = randint(0 , len(mall.inside_mall_ids) - 1)
-                print("idx - " , idx)
                 person_id = mall.inside_mall_ids[idx]
                 mall.exitMall(idx)
                 #remove person from store if its in one
@@ -94,10 +109,41 @@ if __name__ == '__main__':
                 if len(mall.waiting_mall_ids) > 0:
                     mall.waiting_list_to_inside_mall()
 
+                    if len(store.inside_store_ids) >= store.store_limit: #and respeitou:
+                        store.waiting_outside_Store(mall.people_id)
+                    else:
+                        store.enterStore(mall.people_id) 
+                    mall.people_id += 1
+
         elif choices(pop, weights)[0] == 3:
             # e condicao para verificar se respeitou o limite
-            if len(mall.inside_mall_ids) >= mall.mall_limit:
+            respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
+
+            if respeitou_int == 1:
+                respeitou = True
+            else:
+                respeitou = False
+
+            if len(mall.inside_mall_ids) >= mall.mall_limit and respeitou:
                 mall.waiting_outside_Mall(mall.people_id)
+                mall.people_id += 1
+            elif len(mall.inside_mall_ids) >= mall.mall_limit and not respeitou:
+                print("DEVIAS RESPEITAR A FILA!")
+                mall.enterMall(mall.people_id)
+
+                #nao respeitou e agora tem de entrar numa loja
+                respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
+
+                if respeitou_int == 1:
+                    respeitou = True
+                else:
+                    respeitou = False
+
+                if len(store.inside_store_ids) >= store.store_limit and respeitou:
+                    store.waiting_outside_Store(mall.people_id)
+                else:
+                    #!Supostamente ja entra quando nao respeita
+                    store.enterStore(mall.people_id)
                 mall.people_id += 1
 
         else:
@@ -110,10 +156,7 @@ if __name__ == '__main__':
         stores_capacity = {mall.id: len(mall.inside_mall_ids)}
         for store in mall.stores:
             stores_capacity[store.id] = len(store.inside_store_ids)
-
-        #!para depois contar quantas pessoas estao em cada cena, len(lst)
-        
-
+            
         for shopping in malls:
             print("--------------START--------------")
             print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
@@ -132,5 +175,7 @@ if __name__ == '__main__':
         print(store.store_name)
         #print("Store - ", (mall_1.stores)[1])
         exit(0)"""
+
         
-        time.sleep(0.1)
+        
+        time.sleep(0.025)
