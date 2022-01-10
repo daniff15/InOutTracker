@@ -9,13 +9,13 @@ import pulsar
 import sys
 
 try:
-	client = pulsar.Client('pulsar://127.0.0.1:6650')
+	client = pulsar.Client('pulsar://pulsarclient:6650')
 	producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
 except requests.exceptions.ConnectionError:
     print("Broker is not Running")
     exit(1)
-serviceURL = '127.0.0.1:8000/'  
-    
+serviceURL = 'springbootapi:8000/'
+
 try:
     requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
         "id": 0,
