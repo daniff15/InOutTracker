@@ -9,6 +9,7 @@ var stores_dict: HashMap<Int, Store> = hashMapOf()
 var shoppings: MutableList<Shopping> = mutableListOf()
 var storesName: MutableList<String> = mutableListOf()
 var shoppingsName: MutableList<String> = mutableListOf()
+var favorite: MutableList<Store> = mutableListOf()
 
 var SELF : MainActivity? = null
 
@@ -76,4 +77,8 @@ public class Datasource {
     }
     fun getSELF(): MainActivity? { return SELF }
     fun setSELF(self: MainActivity){ SELF = self}
+
+    fun getFavorite(): MutableList<Store> { return favorite }
+    fun addFavorite(store: Store) { favorite.add(store) }
+    fun removeFavorite(store: Store) { favorite.remove(store) }
 }

@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         val actv_mall: ImageView = view.findViewById(R.id.actv1)
         val actv_store: ImageView = view.findViewById(R.id.actv)
 
-        //createCards(view)
+        createCards(view)
 
         mall.threshold = 2
         store.threshold = 2
@@ -116,8 +116,9 @@ class HomeFragment : Fragment() {
         val rv = view?.findViewById<RecyclerView>(R.id.home_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
-
-        Log.d("DEBUG:", cards.toString())
+        for (store in Datasource().getFavorite()){
+            cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, store.name, store.people_count.toString(), store.max_capacity.toString()))
+        }
 
         if (rv != null) {
             rv.layoutManager = LinearLayoutManager(view?.context)

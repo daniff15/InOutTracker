@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +12,7 @@ import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentStorePageBinding
 import ies.ua.inouttracker.ui.dashboard.DashboardViewModel
 import ies.ua.inouttracker.ui.model.Store
+import ies.ua.inouttracker.util.Datasource
 
 class StorePageFragment(store: Store) : Fragment() {
 
@@ -47,6 +45,35 @@ class StorePageFragment(store: Store) : Fragment() {
         store_name.text = store.name
         current.text = store.people_count.toString()
         max.text = store.max_capacity.toString()
-    }
+
+        val fav = view?.findViewById<ImageButton>(R.id.favorite)
+
+        if (store in Datasource().getFavorite()) {
+            fav.setImageResource(R.mipmap.hearton)
+            fav.tag = R.mipmap.hearton
+        }
+
+        fav.setOnClickListener {
+            if (fav.tag == R.mipmap.hearton) {
+                fav.setImageResource(R.mipmap.heartoff)
+                fav.tag = R.mipmap.heartoff
+                Datasource().removeFavorite(store)
+                Toast.makeText(
+                    context,
+                    "Store removed from favorites",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                fav.setImageResource(R.mipmap.hearton)
+                fav.tag = R.mipmap.hearton
+                Datasource().addFavorite(store)
+                Toast.makeText(
+                    context,
+                    "Store added from favorites",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
     }
+}
