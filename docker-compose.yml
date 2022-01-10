@@ -66,12 +66,11 @@ services:
     volumes:
       - ./projweb:/webapp
 
-  # data-generation:
-  #   depends_on:  
-  #     - pulsarclient
-  #     - springbootapi
-  #   build: ./projdatageneration
-  #   volumes:
-  #     - ./projdatageneration:/var/lib/datagen
-  #   restart: on-failure
-  #   command: python -c "import time; time.sleep(30)"
+  datageneration:
+    depends_on:  
+      - pulsarclient
+      - springbootapi
+    build: ./projdatageneration
+    volumes:
+      - ./projdatageneration:/var/lib/datageneration
+    restart: on-failure
