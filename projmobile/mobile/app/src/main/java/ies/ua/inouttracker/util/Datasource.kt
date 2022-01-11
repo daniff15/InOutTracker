@@ -11,6 +11,7 @@ var shoppings: MutableList<Shopping> = mutableListOf()
 var storesName: MutableList<String> = mutableListOf()
 var shoppingsName: MutableList<String> = mutableListOf()
 var favorite: MutableList<Store> = mutableListOf()
+var following: HashMap<Store, Int> = hashMapOf()
 
 var SELF : MainActivity? = null
 
@@ -91,6 +92,16 @@ public class Datasource {
             if (shopping.id == shopId)
                 return shopping.name
         return ""
+    }
+
+    fun getFollowing(): HashMap<Store, Int>{
+        return following
+    }
+    fun addFollowing(store: Store, percentage: Int){
+        following[store] = percentage
+    }
+    fun removeFollowing(store: Store){
+        following.remove(store)
     }
 
     fun getStoreLogo(storeName: String): Int? {

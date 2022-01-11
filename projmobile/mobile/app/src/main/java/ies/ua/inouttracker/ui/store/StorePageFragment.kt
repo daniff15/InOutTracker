@@ -20,6 +20,7 @@ import com.google.gson.Gson
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentStorePageBinding
 import ies.ua.inouttracker.ui.dashboard.DashboardViewModel
+import ies.ua.inouttracker.ui.model.Dialog
 import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.util.Datasource
 import java.net.DatagramSocket
@@ -68,6 +69,9 @@ class StorePageFragment(store: Store) : Fragment() {
         }
 
         follow.setOnClickListener {
+            var dialog: Dialog = Dialog()
+            fragmentManager?.let { it1 -> dialog.show(it1, "dialog") }
+
             var follow_not = self.context?.let { it1 ->
                 NotificationCompat.Builder(it1, "Notify")
                     .setSmallIcon(R.drawable.notification_bell)
