@@ -99,4 +99,13 @@
         app:layout_constraintTop_toTopOf="@+id/store_page_logo"
         app:layout_constraintVertical_bias="0.513" />
 
+    <Button
+        android:id="@+id/follow_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Follow"
+        app:layout_constraintEnd_toStartOf="@+id/mall_count_current_count2"
+        app:layout_constraintStart_toEndOf="@+id/mall_count_current_count"
+        tools:layout_editor_absoluteY="516dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

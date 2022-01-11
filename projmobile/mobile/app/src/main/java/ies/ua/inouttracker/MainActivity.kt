@@ -1,15 +1,20 @@
 package ies.ua.inouttracker
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import ies.ua.inouttracker.databinding.ActivityMainBinding
 import ies.ua.inouttracker.repository.Repository
+import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.util.Datasource
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             "Sport Zone" to R.mipmap.sport_zone_logo,
             "" to R.mipmap.no_image
         ))
+
 
         val navView: BottomNavigationView = binding.navView
 

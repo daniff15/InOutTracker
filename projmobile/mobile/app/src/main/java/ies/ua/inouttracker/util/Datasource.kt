@@ -98,4 +98,8 @@ public class Datasource {
             return stores_logos[storeName]
         return stores_logos[""]
     }
+
+    fun loadFavorite(fav: MutableList<Store>) {
+        favorite = fav
+    }
 }
