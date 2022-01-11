@@ -99,7 +99,7 @@ class DashboardFragment : Fragment() {
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
         for (store in stores){
-            cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, store.name, store.people_count.toString(), store.max_capacity.toString()))
+            cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, "", store.name, store.people_count.toString(), store.max_capacity.toString()))
         }
 
         Log.d("DEBUG:", cards.toString())

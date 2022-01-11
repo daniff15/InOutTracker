@@ -81,4 +81,11 @@ public class Datasource {
     fun getFavorite(): MutableList<Store> { return favorite }
     fun addFavorite(store: Store) { favorite.add(store) }
     fun removeFavorite(store: Store) { favorite.remove(store) }
+    //TODO: Change to a dict with {id: shopping}
+    fun getShoppingById(shopId: Int): String {
+        for (shopping in getShoppings())
+            if (shopping.id == shopId)
+                return shopping.name
+        return ""
+    }
 }

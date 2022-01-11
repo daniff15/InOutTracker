@@ -26,7 +26,8 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         val store: StoreCard = StoreCards[position]
         holder.current.text = store.count
         holder.max.text = store.maxCap
-        holder.name.text = store.name
+        holder.mall_name.text = store.mall_name
+        holder.store_name.text = store.store_name
         holder.click.setOnClickListener {
             Datasource().getStoreById(store.id)
                 ?.let { it1 -> DashboardFragment().openStorePage(holder.itemView, it1) }
@@ -47,12 +48,14 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         val logo: ImageView
         val current: TextView
         val max: TextView
-        val name: TextView
+        val mall_name : TextView
+        val store_name: TextView
         val click: Button
 
         init {
             logo = itemView.findViewById((R.id.store_logo))
-            name = itemView.findViewById(R.id.store_name)
+            mall_name = itemView.findViewById(R.id.shopping_name)
+            store_name = itemView.findViewById(R.id.store_name)
             current = itemView.findViewById(R.id.current_capacity)
             max = itemView.findViewById(R.id.max_capacity)
             click = itemView.findViewById(R.id.go_to_store_page)
