@@ -5,6 +5,7 @@ import ies.ua.inouttracker.ui.model.Shopping
 import ies.ua.inouttracker.ui.model.Store
 
 var stores: MutableList<Store> = mutableListOf()
+var stores_logos: HashMap<String, Int> = hashMapOf()
 var stores_dict: HashMap<Int, Store> = hashMapOf()
 var shoppings: MutableList<Shopping> = mutableListOf()
 var storesName: MutableList<String> = mutableListOf()
@@ -77,6 +78,9 @@ public class Datasource {
     }
     fun getSELF(): MainActivity? { return SELF }
     fun setSELF(self: MainActivity){ SELF = self}
+    fun setStoreLogos(store_logos: HashMap<String, Int>){
+        stores_logos = store_logos
+    }
 
     fun getFavorite(): MutableList<Store> { return favorite }
     fun addFavorite(store: Store) { favorite.add(store) }
@@ -87,5 +91,11 @@ public class Datasource {
             if (shopping.id == shopId)
                 return shopping.name
         return ""
+    }
+
+    fun getStoreLogo(storeName: String): Int? {
+        if (storeName in stores_logos.keys)
+            return stores_logos[storeName]
+        return stores_logos[""]
     }
 }

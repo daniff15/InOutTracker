@@ -24,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Datasource().setSELF(this)
+        Datasource().setStoreLogos(hashMapOf(
+            "FNAC" to R.mipmap.fnac_logo,
+            "Mi Store" to R.mipmap.mi_logo,
+            "Sport Zone" to R.mipmap.sport_zone_logo,
+            "" to R.mipmap.no_image
+        ))
 
         val navView: BottomNavigationView = binding.navView
 

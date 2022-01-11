@@ -24,6 +24,7 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
         // to set data to textview and imageview of each card layout
         val store: StoreCard = StoreCards[position]
+        Datasource().getStoreLogo(store.store_name)?.let { holder.logo.setImageResource(it) }
         holder.current.text = store.count
         holder.max.text = store.maxCap
         holder.mall_name.text = store.mall_name

@@ -13,6 +13,7 @@ import ies.ua.inouttracker.databinding.FragmentStorePageBinding
 import ies.ua.inouttracker.ui.dashboard.DashboardViewModel
 import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.util.Datasource
+import java.net.DatagramSocket
 
 class StorePageFragment(store: Store) : Fragment() {
 
@@ -39,9 +40,11 @@ class StorePageFragment(store: Store) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val store_name = view.findViewById<TextView>(R.id.store_page_name)
+        val store_logo = view.findViewById<ImageView>(R.id.store_page_logo)
         val current = view.findViewById<TextView>(R.id.mall_count_current_count)
         val max = view.findViewById<TextView>(R.id.mall_count_current_count2)
 
+        Datasource().getStoreLogo(store.name)?.let { store_logo.setImageResource(it) }
         store_name.text = store.name
         current.text = store.people_count.toString()
         max.text = store.max_capacity.toString()
