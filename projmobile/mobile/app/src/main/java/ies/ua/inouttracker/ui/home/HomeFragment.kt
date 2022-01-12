@@ -1,5 +1,9 @@
 package ies.ua.inouttracker.ui.home
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -7,8 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +25,6 @@ import ies.ua.inouttracker.repository.Repository
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
 import ies.ua.inouttracker.ui.model.StoreCard
 import ies.ua.inouttracker.util.Datasource
-import org.w3c.dom.Text
 import java.util.ArrayList
 
 
@@ -29,6 +33,8 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
     private lateinit var viewModel: MainViewModel
+    private var selfcont = this
+
 
 
     // This property is only valid between onCreateView and
@@ -98,7 +104,7 @@ class HomeFragment : Fragment() {
         // Define the code block to be executed
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
-                updateDB()
+                updateDB(selfcont)
                 if (selected_store != "") store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
                 if (selected_mall != "") mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
                 Log.d("Handlers", "Called on main thread")
@@ -117,7 +123,10 @@ class HomeFragment : Fragment() {
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
         for (store in Datasource().getFavorite()){
-            cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, Datasource().getShoppingById(store.shop_id), store.name, store.people_count.toString(), store.max_capacity.toString()))
+            Datasource().getStoreLogo(store.name)?.let {
+                StoreCard(Datasource().getStoreID(store),
+                    it, Datasource().getShoppingById(store.shop_id), store.name, store.people_count.toString(), store.max_capacity.toString())
+            }?.let { cards.add(it) }
         }
 
         if (rv != null) {
@@ -128,7 +137,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun updateDB(){
+    fun updateDB(selfcont: HomeFragment) {
         val self = Datasource().getSELF()
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
@@ -142,6 +151,35 @@ class HomeFragment : Fragment() {
         viewModel.myResponse_Shoppings.observe(self, { response ->
             Datasource().setAllShoppings(response)
         })
+        for (following in Datasource().getFollowing()){
+            if (following.key.people_count == following.key.max_capacity * following.value){
+                Datasource().removeFollowing(following.key)
+                var follow_not = selfcont.context?.let { it1 ->
+                    NotificationCompat.Builder(it1, "Notify")
+                        .setSmallIcon(R.drawable.notification_bell)
+                        .setContentTitle("Test Notification")
+                        .setContentText("Some big test to describe what's happening")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val channel = NotificationChannel("Notify", "Notify", NotificationManager.IMPORTANCE_DEFAULT).apply {
+                        description = "description"
+                    }
+                    // Register the channel with the system
+                    val notificationManager: NotificationManager =
+                        Datasource().getSELF()?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManager.createNotificationChannel(channel)
+                }
+
+                with(selfcont.context?.let { it1 -> NotificationManagerCompat.from(it1) }) {
+                    // notificationId is a unique int for each notification that you must define
+                    if (follow_not != null) {
+                        this?.notify(0, follow_not.build())
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

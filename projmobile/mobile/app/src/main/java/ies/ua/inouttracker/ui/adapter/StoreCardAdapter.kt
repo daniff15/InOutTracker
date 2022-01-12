@@ -33,8 +33,6 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
             Datasource().getStoreById(store.id)
                 ?.let { it1 -> DashboardFragment().openStorePage(holder.itemView, it1) }
         }
-
-        //holder.logo.setImageResource(store.logo)
     }
 
     override fun getItemCount(): Int {

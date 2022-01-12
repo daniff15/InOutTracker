@@ -72,6 +72,15 @@ class StorePageFragment(store: Store) : Fragment() {
             var dialog: Dialog = Dialog()
             fragmentManager?.let { it1 -> dialog.show(it1, "dialog") }
 
+            Datasource().addFollowing(store, 1)
+
+            Toast.makeText(
+                context,
+                "You are now following this store",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            /*
             var follow_not = self.context?.let { it1 ->
                 NotificationCompat.Builder(it1, "Notify")
                     .setSmallIcon(R.drawable.notification_bell)
@@ -96,7 +105,7 @@ class StorePageFragment(store: Store) : Fragment() {
                     this?.notify(0, follow_not.build())
                 }
             }
-
+            */
 
         }
 
