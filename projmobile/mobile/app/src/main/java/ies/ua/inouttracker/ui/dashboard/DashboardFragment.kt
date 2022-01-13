@@ -84,7 +84,7 @@ class DashboardFragment : Fragment() {
                 updateDB()
                 if (selected_mall != "") count.text = Datasource().getShoppingCurrentCount(selected_mall)
                 createCards(view, Datasource().getStores())
-                Log.d("Handlers", "Called on main thread")
+                //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
                 handler.postDelayed(this, 1000)
@@ -101,8 +101,6 @@ class DashboardFragment : Fragment() {
         for (store in stores){
             cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, "", store.name, store.people_count.toString(), store.max_capacity.toString()))
         }
-
-        Log.d("DEBUG:", cards.toString())
 
         if (rv != null) {
             rv.layoutManager = LinearLayoutManager(view?.context)

@@ -52,7 +52,7 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         val click: Button
 
         init {
-            logo = itemView.findViewById((R.id.store_logo))
+            logo = itemView.findViewById(R.id.store_logo)
             mall_name = itemView.findViewById(R.id.shopping_name)
             store_name = itemView.findViewById(R.id.store_name)
             current = itemView.findViewById(R.id.current_capacity)

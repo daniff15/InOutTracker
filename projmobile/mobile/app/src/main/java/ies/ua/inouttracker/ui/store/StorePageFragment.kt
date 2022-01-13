@@ -70,7 +70,7 @@ class StorePageFragment(store: Store) : Fragment() {
 
         follow.setOnClickListener {
             var dialog: Dialog = Dialog()
-            fragmentManager?.let { it1 -> dialog.show(it1, "dialog") }
+            //fragmentManager?.let { it1 -> dialog.show(it1, "dialog") }
 
             Datasource().addFollowing(store, 1)
 

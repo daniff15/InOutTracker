@@ -107,7 +107,8 @@ class HomeFragment : Fragment() {
                 updateDB(selfcont)
                 if (selected_store != "") store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
                 if (selected_mall != "") mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
-                Log.d("Handlers", "Called on main thread")
+                createCards(view)
+                //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
                 handler.postDelayed(this, 1000)
@@ -123,10 +124,19 @@ class HomeFragment : Fragment() {
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
         for (store in Datasource().getFavorite()){
-            Datasource().getStoreLogo(store.name)?.let {
-                StoreCard(Datasource().getStoreID(store),
-                    it, Datasource().getShoppingById(store.shop_id), store.name, store.people_count.toString(), store.max_capacity.toString())
-            }?.let { cards.add(it) }
+            //TODO: need to get the store updated
+            var new_store = Datasource().getStoreById(Datasource().getStoreID(store))
+            for (st in Datasource().getStores()){
+                if (st.id == store.id)
+                    new_store = st
+            }
+            Log.d("DEBUG", new_store.toString())
+            if (new_store != null) {
+                Datasource().getStoreLogo(new_store.name)?.let {
+                    StoreCard(new_store.id,
+                        it, Datasource().getShoppingById(new_store.shop_id), new_store.name, new_store.people_count.toString(), new_store.max_capacity.toString())
+                }?.let { cards.add(it) }
+            }
         }
 
         if (rv != null) {
