@@ -1,23 +1,19 @@
-import random
-import requests
 from simulate import *
 from random import randint, choices, choice
 import time
 from copy import deepcopy
-import json
-import pulsar
-import sys
+import datetime
 
-store1_1 = Store(1 ,"Zara", 5, "10:00:00", "23:00:00")
-store2_1 = Store(2 ,"Sport Zone", 5, "10:00:00", "22:00:00")
-store3_1 = Store(3 ,"Primark", 5, "10:00:00", "23:00:00")
-store4_1 = Store(4 ,"Modalfa", 5, "10:00:00", "22:00:00")
-store1_2 = Store(5 ,"Zara", 50, "10:00:00", "22:00:00")
-store2_2 = Store(6 ,"Aucham", 100, "10:00:00", "22:00:00")
-store3_2 = Store(7 ,"MEO", 5, "10:00:00", "23:00:00")
-store4_2 = Store(8 ,"Breshka", 35, "10:00:00", "23:00:00")
-store1_3 = Store(9 ,"Intimissimi", 35, "10:00:00", "21:00:00")
-store2_3 = Store(10 ,"Pull&Bear", 45, "10:00:00", "22:00:00")
+store1_1 = Store(1 ,"Zara", 10, "10h00", "23h00")
+store2_1 = Store(2 ,"Sport Zone", 10, "10h00", "22h00")
+store3_1 = Store(3 ,"Primark", 10, "10h00", "23h00")
+store4_1 = Store(4 ,"Modalfa", 10, "10h00", "22h00")
+store1_2 = Store(5 ,"Zara", 5, "10h00", "22h00")
+store2_2 = Store(6 ,"Aucham", 5, "10h00", "22h00")
+store3_2 = Store(7 ,"MEO", 5, "10h00", "23h00")
+store4_2 = Store(8 ,"Breshka", 5, "10h00", "23h00")
+store1_3 = Store(9 ,"Intimissimi", 35, "10h00", "21h00")
+store2_3 = Store(10 ,"Pull&Bear", 45, "10h00", "22h00")
 
 stores1 = []
 stores1.append(store1_1)
@@ -31,8 +27,8 @@ stores2.append(store2_2)
 stores2.append(store3_2)
 stores2.append(store4_2)
 
-mall1 = Mall(1, "Mall 1", 10, stores1, "9:00:00", "23:00:00")
-mall2 = Mall(2, "Mall 2", 350, stores2 , "10:00:00", "23:00:00")
+mall1 = Mall(1, "Mall 1", 10, stores1, "09h00", "23h00")
+mall2 = Mall(2, "Mall 2", 350, stores2 , "10h00", "23h00")
 
 malls = [mall1, mall2]
 
@@ -45,9 +41,19 @@ if __name__ == '__main__':
     pop_waitLine = [1, 2]
     weights_waitLine = [0.90, 0.10]
 
-    #! EM ALGUNS SITIOS (MAYBE?) FALTAM METER CONDICOES PARA VER SE RESPEITOU A FILA
+    #Starting day
+    hours_of_day = "00h00"
+    day = 1
+    #In case the store or mall are closed, do nothing
+
+
     while True:
         #Choose the mall (random)
+
+        if hours_of_day == "00h00":
+            print("NEW DAY")
+            print("DAY - ", day)
+
         mall_idx = randint(0, len(malls) - 1)
         mall = malls[mall_idx]
 
@@ -56,7 +62,25 @@ if __name__ == '__main__':
         idx_for_store = randint(0, len(mall.stores)-1)
         store = mall.stores[idx_for_store]
 
-        if choices(pop, weights)[0] == 1:
+        if len(store.inside_store_ids) >= store.store_limit:
+            #print("ENTREI PARA " , mall.mall_name)
+            weights = [0.25, 0.40, 0.20, 0.15]
+        else:
+            weights = [0.30, 0.23, 0.23, 0.23]
+
+        val = choices(pop, weights)[0]
+
+        #mall or store are closed
+        #if mall is closed than all stores are closed, so check first mall
+        if (mall.opening_time):
+            val = 5
+
+        #print("1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall")
+        #print("VAL - ", val)
+        #print("WEIGHTS - ", weights)
+        #print("LOJA ESCOLHIDA - ", store.store_name)
+
+        if val == 1:
             # e condicao para verificar se respeitou o limite
             if len(mall.inside_mall_ids) < mall.mall_limit:
                 if len(mall.waiting_mall_ids) > 0:
@@ -85,7 +109,7 @@ if __name__ == '__main__':
                         store.enterStore(mall.people_id)
                     mall.people_id += 1
 
-        elif choices(pop, weights)[0] == 2:
+        elif val == 2:
             if len(mall.inside_mall_ids) > 0:
                 idx = randint(0 , len(mall.inside_mall_ids) - 1)
                 person_id = mall.inside_mall_ids[idx]
@@ -111,7 +135,7 @@ if __name__ == '__main__':
                         store.enterStore(mall.people_id) 
                     mall.people_id += 1
 
-        elif choices(pop, weights)[0] == 3:
+        elif val == 3:
             # e condicao para verificar se respeitou o limite
             respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
 
@@ -142,11 +166,17 @@ if __name__ == '__main__':
                     store.enterStore(mall.people_id)
                 mall.people_id += 1
 
-        else:
+        elif val == 4:
+            print("TOU AQUI")
             #e condicao para verificar se se cansou de esperar na fila
             if len(mall.inside_mall_ids) >= mall.mall_limit and len(mall.waiting_mall_ids) > 0:
                 idx_temp = randint(0 , len(mall.waiting_mall_ids) - 1)
                 mall.stop_waiting_outside_Mall(idx_temp)
+            
+        else: #val == 5 #store or mall are closed
+            #just pass the time
+            pass
+            
 
         ''' implementation for one mall '''
         stores_capacity = {mall.id: len(mall.inside_mall_ids)}
@@ -166,12 +196,5 @@ if __name__ == '__main__':
             print("--------------END--------------")
 
         print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
-        """#escolha da loja para fazer cenas randoms
-        #list_idx = randint(0, len(mall.stores))
-        print(store.store_name)
-        #print("Store - ", (mall_1.stores)[1])
-        exit(0)"""
-
         
-        
-        time.sleep(0.1)
+        time.sleep(0.25)
