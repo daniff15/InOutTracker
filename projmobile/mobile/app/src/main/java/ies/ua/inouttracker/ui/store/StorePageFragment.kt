@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import ies.ua.inouttracker.MainViewModel
+import ies.ua.inouttracker.MainViewModelFactory
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentStorePageBinding
+import ies.ua.inouttracker.repository.Repository
 import ies.ua.inouttracker.ui.dashboard.DashboardViewModel
 import ies.ua.inouttracker.ui.model.Dialog
 import ies.ua.inouttracker.ui.model.Store
@@ -30,6 +34,7 @@ class StorePageFragment(store: Store) : Fragment() {
     private lateinit var storePageViewModel: StorePageViewModel
     private var _binding: FragmentStorePageBinding? = null
     private var store = store
+    private lateinit var viewModel: MainViewModel
     private var self = this
 
     // This property is only valid between onCreateView and
@@ -110,6 +115,36 @@ class StorePageFragment(store: Store) : Fragment() {
             editor.putString("favorites", json)
             editor.commit()
         }
+        // Create the Handler object (on the main thread by default)
+        val handler = Handler()
+        // Define the code block to be executed
+        val runnableCode: Runnable = object : Runnable {
+            override fun run() {
+                updateDB()
+                current.text = Datasource().getStoreCurrentCount(store.name)
+                //Log.d("Handlers", "Called on main thread")
+                // Repeat this the same runnable code block again another 2 seconds
+                // 'this' is referencing the Runnable object
+                handler.postDelayed(this, 1000)
+            }
+        }
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnableCode)
 
+    }
+    fun updateDB(){
+        val self = Datasource().getSELF()
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+        viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+        viewModel.getStores()
+        viewModel.myResponse_Stores.observe(self, { response ->
+            Datasource().setAllStores(response)
+        })
+
+        viewModel.getShoppings()
+        viewModel.myResponse_Shoppings.observe(self, { response ->
+            Datasource().setAllShoppings(response)
+        })
     }
 }

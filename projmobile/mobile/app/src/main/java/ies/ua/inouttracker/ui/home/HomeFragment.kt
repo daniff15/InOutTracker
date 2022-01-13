@@ -124,7 +124,6 @@ class HomeFragment : Fragment() {
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
         for (store in Datasource().getFavorite()){
-            //TODO: need to get the store updated
             var new_store = Datasource().getStoreById(store.id)
             if (new_store != null) {
                 Datasource().getStoreLogo(new_store.name)?.let {
