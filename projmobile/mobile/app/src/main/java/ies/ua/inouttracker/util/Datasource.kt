@@ -22,15 +22,13 @@ public class Datasource {
     }
 
     fun setAllStores(stores_list: List<Store>) {
-        var count = 0
         stores = stores_list as MutableList<Store>
-        for (store in stores)
-            if (store.name != null && store.name !in storesName){
-                stores_dict[count] = store
+        for (store in stores) {
+            if (store.name != null && store.name !in storesName) {
                 storesName.add(store.name)
-                count++
             }
-
+            stores_dict[store.id] = store
+        }
     }
 
     fun getStoreCurrentCount(STORE: String): String {

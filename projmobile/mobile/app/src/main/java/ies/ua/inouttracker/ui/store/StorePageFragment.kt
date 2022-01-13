@@ -79,34 +79,6 @@ class StorePageFragment(store: Store) : Fragment() {
                 "You are now following this store",
                 Toast.LENGTH_SHORT
             ).show()
-
-            /*
-            var follow_not = self.context?.let { it1 ->
-                NotificationCompat.Builder(it1, "Notify")
-                    .setSmallIcon(R.drawable.notification_bell)
-                    .setContentTitle("Test Notification")
-                    .setContentText("Some big test to describe what's happening")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel("Notify", "Notify", NotificationManager.IMPORTANCE_DEFAULT).apply {
-                    description = "description"
-                }
-                // Register the channel with the system
-                val notificationManager: NotificationManager =
-                    Datasource().getSELF()?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.createNotificationChannel(channel)
-            }
-
-            with(self.context?.let { it1 -> NotificationManagerCompat.from(it1) }) {
-                // notificationId is a unique int for each notification that you must define
-                if (follow_not != null) {
-                    this?.notify(0, follow_not.build())
-                }
-            }
-            */
-
         }
 
         fav.setOnClickListener {

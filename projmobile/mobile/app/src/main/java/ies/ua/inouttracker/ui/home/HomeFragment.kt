@@ -125,12 +125,7 @@ class HomeFragment : Fragment() {
 
         for (store in Datasource().getFavorite()){
             //TODO: need to get the store updated
-            var new_store = Datasource().getStoreById(Datasource().getStoreID(store))
-            for (st in Datasource().getStores()){
-                if (st.id == store.id)
-                    new_store = st
-            }
-            Log.d("DEBUG", new_store.toString())
+            var new_store = Datasource().getStoreById(store.id)
             if (new_store != null) {
                 Datasource().getStoreLogo(new_store.name)?.let {
                     StoreCard(new_store.id,
