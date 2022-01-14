@@ -81,7 +81,7 @@ class DashboardFragment : Fragment() {
         // Define the code block to be executed
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
-                updateDB()
+                //updateDB()
                 if (selected_mall != "") count.text = Datasource().getShoppingCurrentCount(selected_mall)
                 createCards(view, Datasource().getStores())
                 //Log.d("Handlers", "Called on main thread")

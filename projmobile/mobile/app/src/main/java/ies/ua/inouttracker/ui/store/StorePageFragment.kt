@@ -1,9 +1,13 @@
 package ies.ua.inouttracker.ui.store
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -60,6 +64,7 @@ class StorePageFragment() : Fragment() {
         val follow = view.findViewById<Button>(R.id.follow_button)
         val current = view.findViewById<TextView>(R.id.mall_count_current_count)
         val max = view.findViewById<TextView>(R.id.mall_count_current_count2)
+        val info_button = view.findViewById<ImageButton>(R.id.info)
 
         Datasource().getStoreLogo(store.name)?.let { store_logo.setImageResource(it) }
         store_name.text = store.name
@@ -74,9 +79,6 @@ class StorePageFragment() : Fragment() {
         }
 
         follow.setOnClickListener {
-            var dialog: Dialog = Dialog()
-            fragmentManager?.let { it1 -> dialog.show(it1, "dialog") }
-
             Datasource().addFollowing(store, 1)
 
             Toast.makeText(
@@ -115,12 +117,20 @@ class StorePageFragment() : Fragment() {
             editor.putString("favorites", json)
             editor.commit()
         }
+        info_button.setOnClickListener {
+            var dialog = Dialog("Follow a Store", "When you are following a store you will get notified when it is the best time for you to go there", "Ok", DialogInterface.OnClickListener { dialog, which ->
+
+            })
+            dialog.isCancelable = false
+            dialog.show(parentFragmentManager, "Follow Info")
+        }
+
         // Create the Handler object (on the main thread by default)
         val handler = Handler()
         // Define the code block to be executed
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
-                updateDB()
+                //updateDB()
                 current.text = Datasource().getStoreCurrentCount(store.name)
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds

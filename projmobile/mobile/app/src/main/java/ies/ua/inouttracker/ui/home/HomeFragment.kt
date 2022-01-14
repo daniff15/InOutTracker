@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
         // Define the code block to be executed
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
-                updateDB(selfcont)
+                //updateDB(selfcont)
                 if (selected_store != "") store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
                 if (selected_mall != "") mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
                 createCards(view)
@@ -118,7 +118,6 @@ class HomeFragment : Fragment() {
         }
         // Start the initial runnable task by posting through the handler
         handler.post(runnableCode)
-
     }
 
     private fun createCards(view: View?){
