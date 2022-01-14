@@ -12,6 +12,7 @@ var storesName: MutableList<String> = mutableListOf()
 var shoppingsName: MutableList<String> = mutableListOf()
 var favorite: MutableList<Store> = mutableListOf()
 var following: HashMap<Store, Int> = hashMapOf()
+var current_store: Store = Store(0,0, "", "", "", 0, 0)
 
 var SELF : MainActivity? = null
 
@@ -110,5 +111,12 @@ public class Datasource {
 
     fun loadFavorite(fav: MutableList<Store>) {
         favorite = fav
+    }
+
+    fun setCurrentStore(store: Store){
+        current_store = store
+    }
+    fun getCurrentStore(): Store {
+        return current_store
     }
 }

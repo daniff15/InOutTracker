@@ -29,11 +29,11 @@ import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.util.Datasource
 import java.net.DatagramSocket
 
-class StorePageFragment(store: Store) : Fragment() {
+class StorePageFragment() : Fragment() {
 
     private lateinit var storePageViewModel: StorePageViewModel
     private var _binding: FragmentStorePageBinding? = null
-    private var store = store
+    private var store = Datasource().getCurrentStore()
     private lateinit var viewModel: MainViewModel
     private var self = this
 

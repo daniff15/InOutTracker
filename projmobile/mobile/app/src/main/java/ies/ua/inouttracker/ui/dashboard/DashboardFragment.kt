@@ -2,7 +2,6 @@ package ies.ua.inouttracker.ui.dashboard
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.MainViewModel
@@ -127,15 +127,8 @@ class DashboardFragment : Fragment() {
     }
 
     fun openStorePage(view: View, store: Store){
-        val ctx: AppCompatActivity = view?.context as AppCompatActivity
-        val f : Fragment = StorePageFragment(store)
-        val t = ctx.supportFragmentManager.beginTransaction()
-
-        if (t != null) {
-            t.replace(R.id.nav_host_fragment_activity_main, f)
-            t.addToBackStack(null)
-            t.commit()
-        }
+        Datasource().setCurrentStore(store)
+        Navigation.findNavController(view).navigate(R.id.action_navigation_dashboard_to_storePageFragment)
     }
 
     override fun onDestroyView() {
