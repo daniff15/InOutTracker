@@ -7,8 +7,6 @@
         password: $("#password").val(),
     };
 
-    console.log(formData)
-
     $.ajax({
         url: "http://localhost:8000/api/v1/users",
         type: "POST",
