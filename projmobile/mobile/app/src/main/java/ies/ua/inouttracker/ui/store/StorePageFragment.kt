@@ -75,7 +75,7 @@ class StorePageFragment() : Fragment() {
 
         follow.setOnClickListener {
             var dialog: Dialog = Dialog()
-            //fragmentManager?.let { it1 -> dialog.show(it1, "dialog") }
+            fragmentManager?.let { it1 -> dialog.show(it1, "dialog") }
 
             Datasource().addFollowing(store, 1)
 
@@ -102,7 +102,7 @@ class StorePageFragment() : Fragment() {
                 Datasource().addFavorite(store)
                 Toast.makeText(
                     context,
-                    "Store added from favorites",
+                    "Store added to favorites",
                     Toast.LENGTH_SHORT
                 ).show()
             }

@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.MainViewModel
@@ -23,6 +24,7 @@ import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentHomeBinding
 import ies.ua.inouttracker.repository.Repository
 import ies.ua.inouttracker.ui.adapter.StoreCardAdapter
+import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.ui.model.StoreCard
 import ies.ua.inouttracker.util.Datasource
 import java.util.ArrayList
@@ -128,7 +130,7 @@ class HomeFragment : Fragment() {
             if (new_store != null) {
                 Datasource().getStoreLogo(new_store.name)?.let {
                     StoreCard(new_store.id,
-                        it, Datasource().getShoppingById(new_store.shop_id), new_store.name, new_store.people_count.toString(), new_store.max_capacity.toString())
+                        it, Datasource().getShoppingById(new_store.shop_id), new_store.name, new_store.people_count.toString(), new_store.max_capacity.toString(), 1)
                 }?.let { cards.add(it) }
             }
         }
@@ -189,5 +191,10 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun openStorePage(view: View, store: Store) {
+        Datasource().setCurrentStore(store)
+        Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_storePageFragment)
     }
 }
