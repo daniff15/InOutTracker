@@ -5,11 +5,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 public class User {
-
     private long id;
     private int type;
     private String name;
     private String username;
+    private String email;
     private String password;
 
     @Id
@@ -29,9 +29,11 @@ public class User {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
+    @Column(name = "email", nullable = true)
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
     @Column(name = "password", nullable = true)
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-
 }

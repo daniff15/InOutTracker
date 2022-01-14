@@ -52,7 +52,6 @@ try:
     response_stores = requests.get(f'http://{serviceURL}api/v1/stores')
     response_malls = response_malls.json()
     response_stores = response_stores.json()
-
 except requests.exceptions.ConnectionError:
     print("Server is not running")
     exit(1)
@@ -61,6 +60,7 @@ stores = []
 for store in response_stores:
     stores.append(Store(store['id'], store['name'], store['max_capacity'], store['opening_time'], store['closing_time']))
 
+print(response_malls)
 for mall in response_malls:  
     mall1 = Mall(mall['id'], mall["name"], mall['max_capacity'], stores, mall['opening_time'], mall['closing_time'])
 
