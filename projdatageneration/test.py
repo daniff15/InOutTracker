@@ -1,3 +1,4 @@
+from numpy import ma
 from simulate import *
 from random import randint, choices, choice
 import time
@@ -27,10 +28,11 @@ stores2.append(store2_2)
 stores2.append(store3_2)
 stores2.append(store4_2)
 
-mall1 = Mall(1, "Mall 1", 10, stores1, "09h00", "23h00")
+mall1 = Mall(1, "Mall 1", 5, stores1, "09h00", "23h00")
 mall2 = Mall(2, "Mall 2", 350, stores2 , "10h00", "23h00")
 
 malls = [mall1, mall2]
+malls = [mall1]
 
 if __name__ == '__main__':
     #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
@@ -42,17 +44,11 @@ if __name__ == '__main__':
     weights_waitLine = [0.90, 0.10]
 
     #Starting day
-    hours_of_day = "00h00"
-    day = 1
     #In case the store or mall are closed, do nothing
 
 
     while True:
         #Choose the mall (random)
-
-        if hours_of_day == "00h00":
-            print("NEW DAY")
-            print("DAY - ", day)
 
         mall_idx = randint(0, len(malls) - 1)
         mall = malls[mall_idx]
@@ -72,9 +68,6 @@ if __name__ == '__main__':
 
         #mall or store are closed
         #if mall is closed than all stores are closed, so check first mall
-        if (mall.opening_time):
-            val = 5
-
         #print("1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall")
         #print("VAL - ", val)
         #print("WEIGHTS - ", weights)
@@ -83,31 +76,19 @@ if __name__ == '__main__':
         if val == 1:
             # e condicao para verificar se respeitou o limite
             if len(mall.inside_mall_ids) < mall.mall_limit:
-                if len(mall.waiting_mall_ids) > 0:
-                    mall.waiting_list_to_inside_mall()
-
-                    if len(store.inside_store_ids) >= store.store_limit: #and respeitou:
-                        store.waiting_outside_Store(mall.people_id)
-                    else:
-                        store.enterStore(mall.people_id) 
-                    mall.people_id += 1
-
+                mall.enterMall(mall.people_id)
+                #Condicao que verifica se a pessoa respeitou a fila de espera
+                respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
+                if respeitou_int == 1:
+                    respeitou = True
                 else:
-                    mall.enterMall(mall.people_id)
-                    #Condicao que verifica se a pessoa respeitou a fila de espera
-                    respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
-
-                    if respeitou_int == 1:
-                        respeitou = True
-                    else:
-                        respeitou = False
-
-                    if len(store.inside_store_ids) >= store.store_limit and respeitou:
-                        store.waiting_outside_Store(mall.people_id)
-                    else:
-                        #!Supostamente ja entra quando nao respeita
-                        store.enterStore(mall.people_id)
-                    mall.people_id += 1
+                    respeitou = False
+                if len(store.inside_store_ids) >= store.store_limit and respeitou:
+                    store.waiting_outside_Store(mall.people_id)
+                else:
+                    #!Supostamente ja entra quando nao respeita
+                    store.enterStore(mall.people_id)
+                mall.people_id += 1
 
         elif val == 2:
             if len(mall.inside_mall_ids) > 0:
@@ -127,13 +108,13 @@ if __name__ == '__main__':
                         idx_to_remove = loja.waiting_store_ids.index(person_id)
                         loja.stop_waiting_store(idx_to_remove)
                 if len(mall.waiting_mall_ids) > 0:
-                    mall.waiting_list_to_inside_mall()
+                    val = mall.waiting_list_to_inside_mall()
 
                     if len(store.inside_store_ids) >= store.store_limit: #and respeitou:
-                        store.waiting_outside_Store(mall.people_id)
+                        store.waiting_outside_Store(val)
                     else:
-                        store.enterStore(mall.people_id) 
-                    mall.people_id += 1
+                        store.enterStore(val)
+                        mall.people_id += 1 
 
         elif val == 3:
             # e condicao para verificar se respeitou o limite
