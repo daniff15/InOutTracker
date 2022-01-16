@@ -1,4 +1,3 @@
-from numpy import ma
 from simulate import *
 from random import randint, choices, choice
 import time
@@ -28,10 +27,10 @@ stores2.append(store2_2)
 stores2.append(store3_2)
 stores2.append(store4_2)
 
-mall1 = Mall(1, "Mall 1", 5, stores1, "09h00", "23h00")
+mall1 = Mall(1, "Mall 1", 10, stores1, "09h00", "23h00")
 mall2 = Mall(2, "Mall 2", 350, stores2 , "10h00", "23h00")
 
-malls = [mall1, mall2]
+#malls = [mall1, mall2]
 malls = [mall1]
 
 if __name__ == '__main__':
@@ -51,10 +50,8 @@ if __name__ == '__main__':
     day = 0
     #In case the store or mall are closed, do nothing
     numbers_of_iters = 0
-
     while True:
         #Choose the mall (random)
-
         mall_idx = randint(0, len(malls) - 1)
         mall = malls[mall_idx]
 
@@ -63,12 +60,9 @@ if __name__ == '__main__':
             day += 1
             print("DAY - ", day)
             mall.inside_mall_ids = []
-            mall.waiting_mall_ids = []
             for store in mall.stores:
                 if len(store.inside_store_ids) > 0:
                     store.inside_store_ids = []
-                if len(store.waiting_store_ids) > 0:
-                    store.waiting_store_ids = []
 
         # primeira imp, apenas um mall e simulação em varias lojas
         #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
@@ -79,7 +73,7 @@ if __name__ == '__main__':
             #print("ENTREI PARA " , mall.mall_name)
             weights = [0.25, 0.40, 0.20, 0.15]
         else:
-            weights = [0.30, 0.23, 0.23, 0.23]
+            weights = [0.40, 0.23, 0.23, 0.23]
 
         val = choices(pop, weights)[0]
 
@@ -88,6 +82,7 @@ if __name__ == '__main__':
         opening_mall = mall.opening_time.split("h")
         for i in range(len(opening_mall)):
             opening_mall[i] = int(opening_mall[i])
+
 
         if (opening_mall[0] > hours_of_day[0]): #shopping fechado
             val = 5
@@ -98,23 +93,36 @@ if __name__ == '__main__':
         #print("VAL - ", val)
         #print("WEIGHTS - ", weights)
         #print("LOJA ESCOLHIDA - ", store.store_name)
-
+        print("VAL ==== ", val)
+        print(opening_mall[0] , "  -  ", hours_of_day[0])
         if val == 1:
             # e condicao para verificar se respeitou o limite
             if len(mall.inside_mall_ids) < mall.mall_limit:
-                mall.enterMall(mall.people_id)
-                #Condicao que verifica se a pessoa respeitou a fila de espera
-                respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
-                if respeitou_int == 1:
-                    respeitou = True
+                if len(mall.waiting_mall_ids) > 0:
+                    mall.waiting_list_to_inside_mall()
+
+                    if len(store.inside_store_ids) >= store.store_limit: #and respeitou:
+                        store.waiting_outside_Store(mall.people_id)
+                    else:
+                        store.enterStore(mall.people_id) 
+                    mall.people_id += 1
+
                 else:
-                    respeitou = False
-                if len(store.inside_store_ids) >= store.store_limit and respeitou:
-                    store.waiting_outside_Store(mall.people_id)
-                else:
-                    #!Supostamente ja entra quando nao respeita
-                    store.enterStore(mall.people_id)
-                mall.people_id += 1
+                    mall.enterMall(mall.people_id)
+                    #Condicao que verifica se a pessoa respeitou a fila de espera
+                    respeitou_int = choices(pop_waitLine, weights_waitLine)[0]
+
+                    if respeitou_int == 1:
+                        respeitou = True
+                    else:
+                        respeitou = False
+
+                    if len(store.inside_store_ids) >= store.store_limit and respeitou:
+                        store.waiting_outside_Store(mall.people_id)
+                    else:
+                        #!Supostamente ja entra quando nao respeita
+                        store.enterStore(mall.people_id)
+                    mall.people_id += 1
 
         elif val == 2:
             if len(mall.inside_mall_ids) > 0:
@@ -124,6 +132,7 @@ if __name__ == '__main__':
                 #remove person from store if its in one
                 for loja in mall.stores:
                     if person_id in loja.inside_store_ids:
+                        print("VOU ABANDONAR A LOJA   - ", person_id )
                         idx_to_remove = loja.inside_store_ids.index(person_id)
                         loja.exitStore(idx_to_remove)
                         if len(loja.waiting_store_ids) > 0:
@@ -134,13 +143,13 @@ if __name__ == '__main__':
                         idx_to_remove = loja.waiting_store_ids.index(person_id)
                         loja.stop_waiting_store(idx_to_remove)
                 if len(mall.waiting_mall_ids) > 0:
-                    val = mall.waiting_list_to_inside_mall()
+                    mall.waiting_list_to_inside_mall()
 
                     if len(store.inside_store_ids) >= store.store_limit: #and respeitou:
-                        store.waiting_outside_Store(val)
+                        store.waiting_outside_Store(mall.people_id)
                     else:
-                        store.enterStore(val)
-                        mall.people_id += 1 
+                        store.enterStore(mall.people_id) 
+                    mall.people_id += 1
 
         elif val == 3:
             # e condicao para verificar se respeitou o limite
@@ -183,10 +192,10 @@ if __name__ == '__main__':
         else: #val == 5 #store or mall are closed
             #just pass the time
             pass
-            
+
         #To see when to increase the hours_of_day    
         numbers_of_iters += 1
-
+        
         ''' implementation for one mall '''
         stores_capacity = {mall.id: len(mall.inside_mall_ids)}
         for store in mall.stores:
@@ -204,6 +213,7 @@ if __name__ == '__main__':
                 print("LEN - ", len(store.inside_store_ids))
             print("--------------END--------------")
 
+
         #! JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 5:
             numbers_of_iters = 0
@@ -220,4 +230,4 @@ if __name__ == '__main__':
         print("HOURS OF DAY  - " , hours_of_day)
         print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
-        time.sleep(0.025)
+        time.sleep(0.1)
