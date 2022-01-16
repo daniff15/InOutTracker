@@ -17,13 +17,11 @@ class LoginDataSource {
 
     fun login(username: String, password: String): Result<LoggedInUser> {
         try {
-            // TODO: handle loggedInUser authentication
             var ret = check_user_in_db(username)
-            Log.d("DEBUG", ret.toString())
             if(ret.first){
                 if(password == ret.second.password){
-                    val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), " " + ret.second.name)
-                    return Result.Success(fakeUser)
+                    val user = LoggedInUser(java.util.UUID.randomUUID().toString(), " " + ret.second.name)
+                    return Result.Success(user)
                 }
             }
             return Result.Error(IOException("Error logging in"))
@@ -44,11 +42,11 @@ class LoginDataSource {
 
         var ret = Pair(false, User(-1, 0, "", "", ""))
         viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
-        viewModel.getStores()
+        viewModel.getUsers()
         viewModel.myResponse_Users.observe(self, { response ->
-            for(user in response)
-                if(user.username == username)
-                    ret =  Pair(true, user)
+            for (user in response){
+                if (user.username == username) ret = Pair(true, user)
+            }
         })
         return ret
     }

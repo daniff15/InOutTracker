@@ -15,9 +15,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.navigation.Navigation
 import ies.ua.inouttracker.databinding.FragmentLoginBinding
 
 import ies.ua.inouttracker.R
+import ies.ua.inouttracker.util.Datasource
 
 class LoginFragment : Fragment() {
 
@@ -109,6 +111,8 @@ class LoginFragment : Fragment() {
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
             )
+            if (Datasource().isLoggedIn()) Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_navigation_notifications)
+
         }
     }
 

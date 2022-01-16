@@ -1,6 +1,9 @@
 package ies.ua.inouttracker.data
 
+import androidx.navigation.Navigation
+import ies.ua.inouttracker.R
 import ies.ua.inouttracker.data.model.LoggedInUser
+import ies.ua.inouttracker.util.Datasource
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -33,6 +36,7 @@ class  LoginRepository(val dataSource: LoginDataSource) {
 
         if (result is Result.Success) {
             setLoggedInUser(result.data)
+            Datasource().setLoggedIn(true, username)
         }
 
         return result

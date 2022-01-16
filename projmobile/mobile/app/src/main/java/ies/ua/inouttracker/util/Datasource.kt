@@ -14,6 +14,8 @@ var shoppingsName: MutableList<String> = mutableListOf()
 var favorite: MutableList<Store> = mutableListOf()
 var following: HashMap<Store, Int> = hashMapOf()
 var current_store: Store = Store(0,0, "", "", "", 0, 0)
+var loggedin: Boolean = false
+var current_user: String = ""
 
 var SELF : MainActivity? = null
 
@@ -131,5 +133,18 @@ public class Datasource {
     }
     fun getCurrentStore(): Store {
         return current_store
+    }
+
+    fun setLoggedIn(b: Boolean, username: String) {
+        loggedin = b
+        current_user = username
+    }
+
+    fun isLoggedIn(): Boolean {
+        return loggedin
+    }
+
+    fun getCurrentUser(): String {
+        return current_user
     }
 }
