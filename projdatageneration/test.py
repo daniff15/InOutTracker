@@ -89,9 +89,17 @@ if __name__ == '__main__':
         for i in range(len(opening_mall)):
             opening_mall[i] = int(opening_mall[i])
 
+        closing_mall = mall.close_time.split("h")
+        for i in range(len(closing_mall)):
+            closing_mall[i] = int(closing_mall[i])
+
         if (opening_mall[0] > hours_of_day[0]): #shopping fechado
             val = 5
         elif (opening_mall[0] == hours_of_day[0] and opening_mall[1] > hours_of_day[1]): #shopping fechado
+            val = 5
+        elif (closing_mall[0] < hours_of_day[0]):
+            val = 5
+        elif (closing_mall[0] == hours_of_day[0] and closing_mall[1] <= hours_of_day[1]):
             val = 5
 
         #print("1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall")
@@ -155,7 +163,6 @@ if __name__ == '__main__':
                 mall.waiting_outside_Mall(mall.people_id)
                 mall.people_id += 1
             elif len(mall.inside_mall_ids) >= mall.mall_limit and not respeitou:
-                print("DEVIAS RESPEITAR A FILA!")
                 mall.enterMall(mall.people_id)
 
                 #nao respeitou e agora tem de entrar numa loja
@@ -174,7 +181,6 @@ if __name__ == '__main__':
                 mall.people_id += 1
 
         elif val == 4:
-            print("TOU AQUI")
             #e condicao para verificar se se cansou de esperar na fila
             if len(mall.inside_mall_ids) >= mall.mall_limit and len(mall.waiting_mall_ids) > 0:
                 idx_temp = randint(0 , len(mall.waiting_mall_ids) - 1)
@@ -204,11 +210,14 @@ if __name__ == '__main__':
                 print("LEN - ", len(store.inside_store_ids))
             print("--------------END--------------")
 
-        #! JUST TO TEST INCREASE ON HOURS_OF_DAY
+        #JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 5:
             numbers_of_iters = 0
             if val == 5:
-                hours_of_day[0] += 1
+                if (hours_of_day[0] != closing_mall[0]):
+                    hours_of_day[0] += 1
+                else:
+                    hours_of_day = [00 , 00]
             elif hours_of_day == [23 , 45]:
                 hours_of_day = [00 , 00]
             elif hours_of_day[1] != 45:
@@ -216,7 +225,6 @@ if __name__ == '__main__':
             elif hours_of_day[1] == 45:
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
-        print("ITERS - " , numbers_of_iters)
         print("HOURS OF DAY  - " , hours_of_day)
         print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
