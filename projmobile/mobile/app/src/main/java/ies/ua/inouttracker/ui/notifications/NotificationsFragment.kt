@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentNotificationsBinding
 
@@ -35,7 +37,15 @@ class NotificationsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val login: Button = view.findViewById(R.id.login)
+        val sign_up: Button = view.findViewById(R.id.sign_up)
 
+        login.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_notifications_to_loginFragment)
+        }
+        sign_up.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_notifications_to_loginFragment)
+        }
     }
 
     override fun onDestroyView() {
