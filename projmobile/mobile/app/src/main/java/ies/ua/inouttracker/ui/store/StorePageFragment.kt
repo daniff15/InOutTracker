@@ -112,7 +112,7 @@ class StorePageFragment() : Fragment() {
             val editor = pref.edit()
             val gson = Gson()
 
-            val json: String = gson.toJson(Datasource().getFavorite())
+            val json: String = gson.toJson(Datasource().getFavoriteID())
 
             editor.putString("favorites", json)
             editor.commit()

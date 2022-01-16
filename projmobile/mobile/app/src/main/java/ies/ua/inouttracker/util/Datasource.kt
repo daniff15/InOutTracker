@@ -1,5 +1,6 @@
 package ies.ua.inouttracker.util
 
+import android.util.Log
 import ies.ua.inouttracker.MainActivity
 import ies.ua.inouttracker.ui.model.Shopping
 import ies.ua.inouttracker.ui.model.Store
@@ -93,6 +94,7 @@ public class Datasource {
         return ""
     }
 
+
     fun getFollowing(): HashMap<Store, Int>{
         return following
     }
@@ -109,8 +111,19 @@ public class Datasource {
         return stores_logos[""]
     }
 
-    fun loadFavorite(fav: MutableList<Store>) {
-        favorite = fav
+    fun getFavoriteID(): String{
+        var list_ids = ""
+        for (store in getFavorite())
+            list_ids += store.id.toString() + ","
+        return list_ids
+    }
+
+    fun loadFavorite(fav_ids: String) {
+        var ids = fav_ids.split(',')
+        for (id in ids){
+            var id_int = id.toIntOrNull()
+            if (id_int != null) getStoreById(id_int)?.let { addFavorite(it) }
+        }
     }
 
     fun setCurrentStore(store: Store){

@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var first_control = true
 
         Datasource().setSELF(this)
         Datasource().setStoreLogos(hashMapOf(
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             "" to R.mipmap.no_image
         ))
 
+        updateDB()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -63,6 +65,11 @@ class MainActivity : AppCompatActivity() {
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
                 updateDB()
+                if (first_control && Datasource().getFavorite().size == 0){
+                    loadData()
+                    if (Datasource().getFavorite().size != 0) first_control = false
+                }
+
                 notify_user()
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
@@ -72,6 +79,17 @@ class MainActivity : AppCompatActivity() {
         }
         // Start the initial runnable task by posting through the handler
         handler.post(runnableCode)
+
+    }
+
+    private fun loadData(){
+        val sp: SharedPreferences = getPreferences(MODE_PRIVATE)
+        val gson = Gson()
+        val json: String? = sp.getString("favorites", null)
+        val type = object : TypeToken<String>() {}.type
+
+        if (json != null) Datasource().loadFavorite(gson.fromJson(json, type))
+
     }
 
     private fun notify_user() {
