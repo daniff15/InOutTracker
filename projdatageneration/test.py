@@ -32,7 +32,7 @@ mall1 = Mall(1, "Mall 1", 5, stores1, "09h00", "23h00")
 mall2 = Mall(2, "Mall 2", 350, stores2 , "10h00", "23h00")
 
 malls = [mall1, mall2]
-malls = [mall1]
+#malls = [mall1]
 
 if __name__ == '__main__':
     #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
