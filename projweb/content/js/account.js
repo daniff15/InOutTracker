@@ -13,18 +13,22 @@
         }
         return '';
     }
-    
+
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        if(user["type"] == 1) {
-            $("#account").html(
-                `<li class="nav-item">
-                    <a class="nav-link" href="account.html">${user["username"]}</a>
-                </li>`
-            );
-        }
+        $("#account").html(
+            `<li class="nav-item">
+                <a class="nav-link" href="account.html">${user["username"]}</a>
+            </li>`
+        );
+
+        $("#account-details").html(
+            `<p>${user["name"]}</p>
+            <p>${user["username"]}</p>
+            <p>${user["email"]}</p>`
+        );
     }else {
-        $("#admin").html("");
-    }    
+        $("#account").html("");
+    }
 });

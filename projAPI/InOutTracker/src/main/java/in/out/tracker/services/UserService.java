@@ -49,8 +49,10 @@ public class UserService {
         Map<String, String> response = new HashMap<>();
         response.put("status", "success");
         response.put("message", "Login");
-        response.put("username", dbUser.getUsername());
         response.put("type", String.valueOf(dbUser.getType()));
+        response.put("name", dbUser.getName());
+        response.put("username", dbUser.getUsername());
+        response.put("email", dbUser.getEmail());
 
         return response;
     }
