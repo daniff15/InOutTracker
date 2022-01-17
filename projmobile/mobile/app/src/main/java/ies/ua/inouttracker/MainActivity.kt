@@ -145,5 +145,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.myResponse_Shoppings.observe(self, { response ->
             Datasource().setAllShoppings(response)
         })
+
+        /*
+        viewModel.getFavorites(77)
+        viewModel.myResponse_UserFavorites.observe(self, { response ->
+            if(response.isSuccessful){
+                Log.d("FAVORITES", "Favorites: $response")
+            } else {
+                Log.d("FAVORITES", "error")
+            }
+        })
+        */
     }
 }

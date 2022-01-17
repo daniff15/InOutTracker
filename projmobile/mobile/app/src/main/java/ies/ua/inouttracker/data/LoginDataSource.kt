@@ -6,6 +6,7 @@ import ies.ua.inouttracker.MainViewModel
 import ies.ua.inouttracker.MainViewModelFactory
 import ies.ua.inouttracker.data.model.LoggedInUser
 import ies.ua.inouttracker.repository.Repository
+import ies.ua.inouttracker.ui.model.FavStores
 import ies.ua.inouttracker.ui.model.User
 import ies.ua.inouttracker.util.Datasource
 import java.io.IOException
@@ -21,6 +22,33 @@ class LoginDataSource {
             if(ret.first){
                 if(password == ret.second.password){
                     val user = LoggedInUser(java.util.UUID.randomUUID().toString(), " " + ret.second.name)
+
+                    Log.d("DEBUG", "Antes: " + Datasource().getFavorite())
+
+                    lateinit var viewModel: MainViewModel
+                    val self = Datasource().getSELF()
+                    val repository = Repository()
+                    val viewModelFactory = MainViewModelFactory(repository)
+                    //Add Cached Favorites to DB
+                    viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+                    for (favorite in Datasource().getFavorite()){
+                        viewModel.saveFav(FavStores(ret.second.id, favorite.id))
+                        viewModel.myResponse_FavStores.observe(self, { response ->
+                            Log.d("DEBUG", "Durante: ${response.body()}")
+                        })
+                    }
+                    //Get Favorites from the DB
+                    viewModel.getFavorites(ret.second.id)
+                    viewModel.myResponse_UserFavorites.observe(self, { response ->
+                        for (shop_id in response.body()!!){
+                            if (Datasource().getStoreById(shop_id) !in Datasource().getFavorite())
+                                Datasource().getStoreById(shop_id)
+                                    ?.let { Datasource().addFavorite(it) }
+                        }
+                    })
+
+                    Log.d("DEBUG", "Depois: " + Datasource().getFavorite())
+
                     return Result.Success(user)
                 }
             } else{
@@ -29,9 +57,16 @@ class LoginDataSource {
                 val repository = Repository()
                 val viewModelFactory = MainViewModelFactory(repository)
                 viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
-                viewModel.saveUser(User(77,0, username, username, password))
+                val user_id = getId()
+                viewModel.saveUser(User(user_id,0, username, username, password))
                 viewModel.myResponse_SaveUser.observe(self, { response ->
+
                 })
+                for (favorite in Datasource().getFavorite()){
+                    viewModel.saveFav(FavStores(user_id, favorite.id))
+                    viewModel.myResponse_FavStores.observe(self, { response ->
+                    })
+                }
             }
             return Result.Error(IOException("Error logging in"))
         } catch (e: Throwable) {
@@ -58,5 +93,23 @@ class LoginDataSource {
             }
         })
         return ret
+    }
+
+    fun getId(): Int {
+        lateinit var viewModel: MainViewModel
+        val self = Datasource().getSELF()
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+
+        var max_id = 0
+
+        viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+        viewModel.getUsers()
+        viewModel.myResponse_Users.observe(self, { response ->
+            for (user in response){
+                if (user.id > max_id) max_id = user.id
+            }
+        })
+        return max_id + 1
     }
 }

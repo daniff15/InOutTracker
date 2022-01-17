@@ -7,9 +7,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-    val httpLoggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
-
-
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_API_URL)
