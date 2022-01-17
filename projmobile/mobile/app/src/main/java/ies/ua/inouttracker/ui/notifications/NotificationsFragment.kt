@@ -1,5 +1,6 @@
 package ies.ua.inouttracker.ui.notifications
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.google.gson.Gson
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.databinding.FragmentNotificationsBinding
 import ies.ua.inouttracker.util.Datasource
@@ -42,6 +44,9 @@ class NotificationsFragment : Fragment() {
         val sign_up: Button = view.findViewById(R.id.sign_up)
         val logout: Button = view.findViewById(R.id.logout)
 
+        val current_user: TextView = view.findViewById(R.id.loggedin_user)
+        current_user.text = Datasource().getCurrentUser()
+
         if (Datasource().isLoggedIn()){
             login.visibility = View.GONE
             sign_up.visibility = View.GONE
@@ -58,10 +63,18 @@ class NotificationsFragment : Fragment() {
         }
         logout.setOnClickListener {
             Datasource().setLoggedIn(false, "")
+            current_user.text = ""
             login.visibility = View.VISIBLE
             sign_up.visibility = View.VISIBLE
             logout.visibility = View.GONE
-            //TODO: store it in cache
+            val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+            val editor = pref.edit()
+            val gson = Gson()
+
+            val json: String = gson.toJson("")
+
+            editor.putString("loggedin", json)
+            editor.commit()
         }
         sign_up.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_navigation_notifications_to_loginFragment)

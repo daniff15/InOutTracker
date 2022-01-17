@@ -85,11 +85,12 @@ class MainActivity : AppCompatActivity() {
     private fun loadData(){
         val sp: SharedPreferences = getPreferences(MODE_PRIVATE)
         val gson = Gson()
-        val json: String? = sp.getString("favorites", null)
+        val favorites: String? = sp.getString("favorites", null)
+        val user: String? = sp.getString("loggedin", null)
         val type = object : TypeToken<String>() {}.type
 
-        if (json != null) Datasource().loadFavorite(gson.fromJson(json, type))
-
+        if (favorites != null) Datasource().loadFavorite(gson.fromJson(favorites, type))
+        if (user != "\"\"" && user != null) Datasource().setLoggedIn(true, gson.fromJson(user, type))
     }
 
     private fun notify_user() {

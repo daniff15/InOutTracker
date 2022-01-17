@@ -1,5 +1,6 @@
 package ies.ua.inouttracker.ui.login
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
@@ -16,6 +17,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.google.gson.Gson
 import ies.ua.inouttracker.databinding.FragmentLoginBinding
 
 import ies.ua.inouttracker.R
@@ -111,7 +113,17 @@ class LoginFragment : Fragment() {
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
             )
-            if (Datasource().isLoggedIn()) Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_navigation_notifications)
+            if (Datasource().isLoggedIn()){
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_navigation_notifications)
+                val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+                val editor = pref.edit()
+                val gson = Gson()
+
+                val json: String = gson.toJson(Datasource().getCurrentUser())
+
+                editor.putString("loggedin", json)
+                editor.commit()
+            }
 
         }
     }
