@@ -23,6 +23,8 @@
                     <a class="nav-link" href="account.html">${user["username"]}</a>
                 </li>`
             );
+        }else {
+            $("#admin").html("")
         }
     }else {
         $("#admin").html("");

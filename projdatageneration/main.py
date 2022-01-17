@@ -17,6 +17,15 @@ except requests.exceptions.ConnectionError:
 serviceURL = 'springbootapi:8000/'
 
 try:
+    requests.post(f'http://{serviceURL}api/v1/users', json = {
+        "id": 0,
+        "type": 1,
+        "name": "Admin",
+        "username": "admin",
+        "email": "admin.inouttracker@gmail.com",
+        "password": "adminpass",
+    })
+    
     requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
         "id": 0,
         "name": "Forum Aveiro",

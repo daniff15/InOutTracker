@@ -17,44 +17,46 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="shoppings.html">InOutTracker</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto" id="account">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="register.html">Register</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <div id="admin">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="admin-shoppings.html">InOutTracker</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto" id="account">
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-    <!-- Edit Shopping -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-                <form>
-                    <div class="form-group">
-                        <label for="shopping-center-name">Name</label>
-                        <input type="text" class="form-control" id="shopping-center-name" placeholder="Shopping Center Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="shopping-center-description">Description</label>
-                        <input type="text" class="form-control" id="shopping-center-description" placeholder="Shopping Center Description">
-                    </div>
-                    <div class="form-group">
-                        <label for="shopping-center-capacity">Capacity</label>
-                        <input type="number" class="form-control" id="shopping-center-capacity" placeholder="0">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+        <!-- Edit Shopping -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <form>
+                        <div class="form-group">
+                            <label for="shopping-center-name">Name</label>
+                            <input type="text" class="form-control" id="shopping-center-name" placeholder="Shopping Center Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="shopping-center-description">Description</label>
+                            <input type="text" class="form-control" id="shopping-center-description" placeholder="Shopping Center Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="shopping-center-capacity">Capacity</label>
+                            <input type="number" class="form-control" id="shopping-center-capacity" placeholder="0">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

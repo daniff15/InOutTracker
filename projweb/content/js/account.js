@@ -22,7 +22,7 @@
                 <a class="nav-link" href="account.html">${user["username"]}</a>
             </li>`
         );
-
+        
         $("#account-details").html(
             `<p>${user["name"]}</p>
             <p>${user["username"]}</p>

@@ -41,12 +41,17 @@
             console.log(data);
             if(data["status"] == "success") {
                 value = {
-                    username: data["username"],
                     type: data["type"],
+                    name: data["name"],
+                    username: data["username"],
+                    email: data["email"],
                 }
                 writeCookie("login", JSON.stringify(value), 1);
             }
-            window.location.href = "http://127.0.0.1:5500/shoppings.html"
+            if(data["type"] == 0)
+                window.location.href = "http://127.0.0.1:5500/shoppings.html"
+            else if(data["type"] == 1)
+                window.location.href = "http://127.0.0.1:5500/admin-shoppings.html"
         });
     
         event.preventDefault();
