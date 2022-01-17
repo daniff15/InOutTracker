@@ -23,6 +23,15 @@ class LoginDataSource {
                     val user = LoggedInUser(java.util.UUID.randomUUID().toString(), " " + ret.second.name)
                     return Result.Success(user)
                 }
+            } else{
+                lateinit var viewModel: MainViewModel
+                val self = Datasource().getSELF()
+                val repository = Repository()
+                val viewModelFactory = MainViewModelFactory(repository)
+                viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+                viewModel.saveUser(User(77,0, username, username, password))
+                viewModel.myResponse_SaveUser.observe(self, { response ->
+                })
             }
             return Result.Error(IOException("Error logging in"))
         } catch (e: Throwable) {

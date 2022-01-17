@@ -8,11 +8,13 @@ import ies.ua.inouttracker.ui.model.Shopping
 import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.ui.model.User
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class MainViewModel(private val repository: Repository): ViewModel() {
     val myResponse_Stores: MutableLiveData<List<Store>> = MutableLiveData()
     val myResponse_Shoppings: MutableLiveData<List<Shopping>> = MutableLiveData()
     val myResponse_Users: MutableLiveData<List<User>> = MutableLiveData()
+    val myResponse_SaveUser: MutableLiveData<Response<User>> = MutableLiveData()
 
 
     fun getStores(){
@@ -34,5 +36,13 @@ class MainViewModel(private val repository: Repository): ViewModel() {
             val response = repository.getUsers()
             myResponse_Users.value = response
         }
+    }
+
+    fun saveUser(user: User){
+        viewModelScope.launch {
+            val response = repository.saveUser(user)
+            myResponse_SaveUser.value = response
+        }
+
     }
 }
