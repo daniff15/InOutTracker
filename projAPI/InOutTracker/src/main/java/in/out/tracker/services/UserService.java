@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -24,4 +26,32 @@ public class UserService {
     }
 
     public User createUser(User user) { return userRepository.save(user);}
+
+    public Map<String, String> loginUser(User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
+
+        User dbUser = userRepository.findByEmail(email);
+        if(dbUser == null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Email not found");
+            return response;
+        }
+
+        if(!password.equals(dbUser.getPassword())) {
+            Map<String, String> response = new HashMap<>();
+            response.put("status", "error");
+            response.put("message", "Wrong password");
+            return response;
+        }
+
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "Login");
+        response.put("username", dbUser.getUsername());
+        response.put("type", String.valueOf(dbUser.getType()));
+
+        return response;
+    }
 }
