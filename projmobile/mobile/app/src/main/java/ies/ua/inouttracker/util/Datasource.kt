@@ -17,7 +17,7 @@ var current_store: Store = Store(0,0, "", "", "", 0, 0)
 var loggedin: Boolean = false
 var current_user: String = ""
 var current_user_id: Int = -1
-
+var shopping_stores: HashMap<Int, MutableList<Store>> = hashMapOf()
 var SELF : MainActivity? = null
 
 
@@ -33,6 +33,11 @@ public class Datasource {
                 storesName.add(store.name)
             }
             stores_dict[store.id] = store
+            if (store.shop_id in shopping_stores){
+                shopping_stores[store.shop_id]?.add(store)
+            } else{
+                shopping_stores[store.shop_id] = mutableListOf(store)
+            }
         }
     }
 
@@ -89,7 +94,6 @@ public class Datasource {
     fun getFavorite(): MutableList<Store> { return favorite }
     fun addFavorite(store: Store) { favorite.add(store) }
     fun removeFavorite(store: Store) { favorite.remove(store) }
-    //TODO: Change to a dict with {id: shopping}
     fun getShoppingById(shopId: Int): String {
         for (shopping in getShoppings())
             if (shopping.id == shopId)

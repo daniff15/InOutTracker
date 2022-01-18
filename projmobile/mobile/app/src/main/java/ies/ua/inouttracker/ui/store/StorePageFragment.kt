@@ -73,6 +73,8 @@ class StorePageFragment() : Fragment() {
         current.text = store.people_count.toString()
         max.text = store.max_capacity.toString()
 
+        if (store in Datasource().getFollowing().keys) follow.text = "Unfollow"
+
         val fav = view?.findViewById<ImageButton>(R.id.favorite)
 
         if (store in Datasource().getFavorite()) {
@@ -81,13 +83,27 @@ class StorePageFragment() : Fragment() {
         }
 
         follow.setOnClickListener {
-            Datasource().addFollowing(store, 1)
+            if (follow.text == "Follow"){
+                Datasource().addFollowing(store, 1)
+                follow.text = "Unfollow"
 
-            Toast.makeText(
-                context,
-                "You are now following this store",
-                Toast.LENGTH_SHORT
-            ).show()
+                Toast.makeText(
+                    context,
+                    "You are now following this store",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (follow.text == "Unfollow"){
+                Datasource().removeFollowing(store)
+                follow.text = "Follow"
+
+                Toast.makeText(
+                    context,
+                    "You stopped following this store",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+
         }
 
         fav.setOnClickListener {

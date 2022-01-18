@@ -57,11 +57,7 @@ class DashboardFragment : Fragment() {
         val shoppings = Datasource().getAllShoppings()
         val stores = Datasource().getAllStores()
 
-        var selected_mall: String = "Forum Aveiro" //TODO: remove hardcoded shopping
-        count.text = Datasource().getShoppingCurrentCount(selected_mall)
-
-
-        createCards(view, Datasource().getStores())
+        var selected_mall: String = ""
 
         mall.threshold = 2
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
@@ -74,6 +70,7 @@ class DashboardFragment : Fragment() {
         mall.setOnItemClickListener { parent, view, position, id ->
             selected_mall = shoppings[position]
             count.text = Datasource().getShoppingCurrentCount(selected_mall)
+            createCards(view, Datasource().getStores())
         }
 
         // Create the Handler object (on the main thread by default)
@@ -82,8 +79,8 @@ class DashboardFragment : Fragment() {
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
                 //updateDB()
-                if (selected_mall != "") count.text = Datasource().getShoppingCurrentCount(selected_mall)
-                createCards(view, Datasource().getStores())
+                if (selected_mall != ""){ count.text = Datasource().getShoppingCurrentCount(selected_mall)
+                createCards(view, Datasource().getStores())}
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object

@@ -72,7 +72,7 @@ class LoginDataSource {
     }
 
     fun logout() {
-        // TODO: revoke authentication
+
     }
 
     fun check_user_in_db(username: String): Pair<Boolean, User> {

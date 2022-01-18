@@ -115,11 +115,11 @@ class MainActivity : AppCompatActivity() {
         //TODO: fix this function
         if (Datasource().getFollowing().isNotEmpty()) {
             for (store in Datasource().getFollowing().keys) {
-                if (store.people_count == store.max_capacity) {
+                if (store.people_count <= store.max_capacity/2) {
                     var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
                         .setSmallIcon(R.drawable.notification_bell)
-                        .setContentTitle("Test Notification")
-                        .setContentText("Some big test to describe what's happening")
+                        .setContentTitle("There's only ${store.people_count} people at ${store.name}")
+                        .setContentText("Maybe it's a good time to go there")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
@@ -136,6 +136,9 @@ class MainActivity : AppCompatActivity() {
                             Datasource().getSELF()
                                 ?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                         notificationManager.createNotificationChannel(channel)
+
+                        Datasource().removeFollowing(store)
+
                     }
 
                     with(applicationContext?.let { it1 -> NotificationManagerCompat.from(it1) }) {
