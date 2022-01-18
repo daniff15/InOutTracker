@@ -37,7 +37,11 @@
     <fragment
         android:id="@+id/storePageFragment"
         android:name="ies.ua.inouttracker.ui.store.StorePageFragment"
-        android:label="StorePageFragment"/>
+        android:label="StorePageFragment">
+        <action
+            android:id="@+id/action_storePageFragment_to_navigation_notifications"
+            app:destination="@id/navigation_notifications" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="ies.ua.inouttracker.ui.login.LoginFragment"

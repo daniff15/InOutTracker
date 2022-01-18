@@ -20,6 +20,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import ies.ua.inouttracker.MainViewModel
@@ -83,27 +84,34 @@ class StorePageFragment() : Fragment() {
         }
 
         follow.setOnClickListener {
-            if (follow.text == "Follow"){
-                Datasource().addFollowing(store, 1)
-                follow.text = "Unfollow"
+            if (Datasource().getNotified()) {
+                if (follow.text == "Follow") {
+                    Datasource().addFollowing(store, 1)
+                    follow.text = "Unfollow"
 
-                Toast.makeText(
-                    context,
-                    "You are now following this store",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (follow.text == "Unfollow"){
-                Datasource().removeFollowing(store)
-                follow.text = "Follow"
+                    Toast.makeText(
+                        context,
+                        "You are now following this store",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (follow.text == "Unfollow") {
+                    Datasource().removeFollowing(store)
+                    follow.text = "Follow"
 
-                Toast.makeText(
-                    context,
-                    "You stopped following this store",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    Toast.makeText(
+                        context,
+                        "You stopped following this store",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                var dialog = Dialog("Turn on Push Notifications", "In order to get notifications for the stores you follow you have to turn your notifications on", "Ok", DialogInterface.OnClickListener { dialog, which ->
+                    Navigation.findNavController(view).navigate(R.id.action_storePageFragment_to_navigation_notifications)
+                }, "Cancel", DialogInterface.OnClickListener { dialog, which ->
+                })
+                dialog.isCancelable = false
+                dialog.show(parentFragmentManager, "Turn on Notifications")
             }
-
-
         }
 
         fav.setOnClickListener {
