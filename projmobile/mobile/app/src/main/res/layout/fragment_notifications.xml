@@ -130,7 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Capacity at"
+        android:text="Capacity below"
         app:layout_constraintStart_toStartOf="@+id/info1"
         app:layout_constraintTop_toBottomOf="@+id/info_notified" />
 
@@ -154,7 +154,7 @@
 
     <EditText
         android:id="@+id/notify_percentage"
-        android:layout_width="0dp"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="50"
@@ -163,7 +163,6 @@
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/percentage_checkbox"
-        app:layout_constraintEnd_toEndOf="@+id/info_notified"
         app:layout_constraintStart_toEndOf="@+id/percentage_checkbox"
         app:layout_constraintTop_toTopOf="@+id/percentage_checkbox"
         tools:text="0" />

@@ -141,31 +141,40 @@ class MainActivity : AppCompatActivity() {
         //TODO: add constraints checked on settings
         if (Datasource().getFollowing().isNotEmpty() && Datasource().getNotified()) {
             for (store in Datasource().getFollowing().keys) {
-                if (store.people_count <= store.max_capacity/2) {
-                    var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
-                        .setSmallIcon(R.drawable.notification_bell)
-                        .setContentTitle("There's only ${store.people_count} people at ${store.name}")
-                        .setContentText("Maybe it's a good time to go there")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                var title: String = ""
+                var content: String = ""
+                if (Datasource().getIsEmpty_check() && store.people_count == 0) {
+                    title = "There's only ${store.people_count} people at ${store.name}"
+                    content = "Maybe it's a good time to go there"
+                } else if (Datasource().getIsFull_check() && store.people_count == store.max_capacity){
+                    title = "${store.name} is at Full Capacity"
+                    content = "Maybe you should wait a little"
+                } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage()/100))){
+                    title = "${store.name} is Empty"
+                    content = "Now it's a good time to do your shopping"
+                }
+                var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
+                    .setSmallIcon(R.drawable.notification_bell)
+                    .setContentTitle(title)
+                    .setContentText(content)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        val channel = NotificationChannel(
-                            "Notify",
-                            "Notify",
-                            NotificationManager.IMPORTANCE_DEFAULT
-                        ).apply {
-                            description = "description"
-                        }
-                        // Register the channel with the system
-                        val notificationManager: NotificationManager =
-                            Datasource().getSELF()
-                                ?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                        notificationManager.createNotificationChannel(channel)
-
-                        Datasource().removeFollowing(store)
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val channel = NotificationChannel(
+                        "Notify",
+                        "Notify",
+                        NotificationManager.IMPORTANCE_DEFAULT
+                    ).apply {
+                        description = "description"
                     }
+                    // Register the channel with the system
+                    val notificationManager: NotificationManager =
+                        Datasource().getSELF()
+                            ?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManager.createNotificationChannel(channel)
+
+                    Datasource().removeFollowing(store)
 
                     with(applicationContext?.let { it1 -> NotificationManagerCompat.from(it1) }) {
                         // notificationId is a unique int for each notification that you must define
