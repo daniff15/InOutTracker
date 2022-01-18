@@ -89,6 +89,12 @@ class MainActivity : AppCompatActivity() {
         val favorites: String? = sp.getString("favorites", null)
         val user: String? = sp.getString("loggedin", null)
         val user_id: String? = sp.getString("user_id", null)
+        val notify: String? = sp.getString("notify", null)
+        val percentage: String? = sp.getString("percentage", null)
+        val custom: String? = sp.getString("custom", null)
+        val empty: String? = sp.getString("empty", null)
+        val full: String? = sp.getString("full", null)
+
         val type = object : TypeToken<String>() {}.type
 
         if (favorites != null) Datasource().loadFavorite(gson.fromJson(favorites, type))
@@ -96,6 +102,26 @@ class MainActivity : AppCompatActivity() {
         if (user_id != null){
             val id: String = gson.fromJson(user_id, type)
             id.toIntOrNull()?.let { Datasource().setCurrentUserId(it) }
+        }
+        if (notify != null){
+            var notify: String = gson.fromJson(notify, type)
+            Datasource().setNotified(notify.toString() == "true")
+        }
+        if (percentage != null){
+            var percentage: String = gson.fromJson(percentage, type)
+            percentage.toIntOrNull()?.let { Datasource().setPercentage(it) }
+        }
+        if (custom != null){
+            var check: String = gson.fromJson(custom, type)
+            Datasource().setCapacity_check(check.toString() == "true")
+        }
+        if (empty != null){
+            var check: String = gson.fromJson(empty, type)
+            Datasource().setIsEmpty_check(check.toString() == "true")
+        }
+        if (full != null){
+            var check: String = gson.fromJson(full, type)
+            Datasource().setIsFull_check(check.toString() == "true")
         }
 
         val self = Datasource().getSELF()
@@ -112,8 +138,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun notify_user() {
-        //TODO: fix this function
-        if (Datasource().getFollowing().isNotEmpty()) {
+        //TODO: add constraints checked on settings
+        if (Datasource().getFollowing().isNotEmpty() && Datasource().getNotified()) {
             for (store in Datasource().getFollowing().keys) {
                 if (store.people_count <= store.max_capacity/2) {
                     var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
@@ -167,15 +193,5 @@ class MainActivity : AppCompatActivity() {
             Datasource().setAllShoppings(response)
         })
 
-        /*
-        viewModel.getFavorites(77)
-        viewModel.myResponse_UserFavorites.observe(self, { response ->
-            if(response.isSuccessful){
-                Log.d("FAVORITES", "Favorites: $response")
-            } else {
-                Log.d("FAVORITES", "error")
-            }
-        })
-        */
     }
 }

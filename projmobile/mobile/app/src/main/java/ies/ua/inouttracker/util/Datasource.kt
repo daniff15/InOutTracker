@@ -18,10 +18,53 @@ var loggedin: Boolean = false
 var current_user: String = ""
 var current_user_id: Int = -1
 var shopping_stores: HashMap<Int, MutableList<Store>> = hashMapOf()
+var getNotified: Boolean = false
+
+var capacity_check: Boolean = true
+var percentage: Int = 50
+var isEmpty_check: Boolean = false
+var isFull_check: Boolean = false
+
 var SELF : MainActivity? = null
 
 
 public class Datasource {
+    fun getIsFull_check(): Boolean {
+        return isFull_check
+    }
+    fun setIsFull_check(b: Boolean){
+        isFull_check = b
+    }
+
+    fun getIsEmpty_check(): Boolean {
+        return isEmpty_check
+    }
+    fun setIsEmpty_check(b: Boolean){
+        isEmpty_check = b
+    }
+
+    fun getCapacity_check(): Boolean {
+        return capacity_check
+    }
+    fun setCapacity_check(b: Boolean){
+        capacity_check = b
+    }
+
+    fun getPercentage(): Int {
+        return percentage
+    }
+    fun setPercentage(percent: Int){
+        percentage = percent
+    }
+
+    fun getNotified(): Boolean {
+        return getNotified
+    }
+
+    fun setNotified(b: Boolean){
+        getNotified = b
+    }
+
     fun getAllStores(): List<String> {
         return storesName
     }
