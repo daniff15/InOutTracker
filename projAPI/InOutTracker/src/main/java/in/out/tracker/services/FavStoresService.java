@@ -35,4 +35,12 @@ public class FavStoresService {
     }
 
     public FavStores createFavRelation(FavStores relation){ return favStoresRepository.save(relation); }
+
+    public void deleteFavStore(FavStores fav) {
+        List<FavStores> allFavStores = getAllFavStores();
+        for(FavStores relation: allFavStores){
+            if (relation.getUser_id() == fav.getUser_id() && relation.getStore_id() == fav.getStore_id())
+                favStoresRepository.delete(relation);
+        }
+    }
 }
