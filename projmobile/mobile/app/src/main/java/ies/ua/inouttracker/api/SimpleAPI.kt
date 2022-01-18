@@ -5,10 +5,7 @@ import ies.ua.inouttracker.ui.model.Shopping
 import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.ui.model.User
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface SimpleAPI {
     @GET("stores")
@@ -23,5 +20,8 @@ interface SimpleAPI {
     suspend fun getFavorites(@Path("id") user_id: Int): Response<List<Int>>
     @POST("add/favorite")
     suspend fun saveFav(@Body fav: FavStores): Response<FavStores>
+    @HTTP(method = "DELETE", path = "remove/favorite", hasBody = true)
+    suspend fun removeFav(@Body fav: FavStores)
+
 
 }

@@ -63,6 +63,7 @@ class NotificationsFragment : Fragment() {
         }
         logout.setOnClickListener {
             Datasource().setLoggedIn(false, "")
+            Datasource().setCurrentUserId(-1)
             current_user.text = ""
             login.visibility = View.VISIBLE
             sign_up.visibility = View.VISIBLE
@@ -72,8 +73,10 @@ class NotificationsFragment : Fragment() {
             val gson = Gson()
 
             val json: String = gson.toJson("")
+            val id: String? = gson.toJson(Datasource().getCurrentUserId())
 
             editor.putString("loggedin", json)
+            editor.putString("user_id", id)
             editor.commit()
         }
         sign_up.setOnClickListener {

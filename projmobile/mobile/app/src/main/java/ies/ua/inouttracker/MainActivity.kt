@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
                 updateDB()
+                Log.d("DEBUG", "User ID: "+Datasource().getCurrentUserId())
                 if (first_control && Datasource().getFavorite().size == 0){
                     loadData()
                     if (Datasource().getFavorite().size != 0) first_control = false
@@ -87,10 +88,27 @@ class MainActivity : AppCompatActivity() {
         val gson = Gson()
         val favorites: String? = sp.getString("favorites", null)
         val user: String? = sp.getString("loggedin", null)
+        val user_id: String? = sp.getString("user_id", null)
         val type = object : TypeToken<String>() {}.type
 
         if (favorites != null) Datasource().loadFavorite(gson.fromJson(favorites, type))
         if (user != "\"\"" && user != null) Datasource().setLoggedIn(true, gson.fromJson(user, type))
+        if (user_id != null){
+            val id: String = gson.fromJson(user_id, type)
+            id.toIntOrNull()?.let { Datasource().setCurrentUserId(it) }
+        }
+
+        val self = Datasource().getSELF()
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+        viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+        viewModel.getFavorites(Datasource().getCurrentUserId())
+        viewModel.myResponse_UserFavorites.observe(self, { response ->
+            var fav_ids = ""
+            for (id in response.body()!!)
+                fav_ids += "$id,"
+            Datasource().loadFavorite(fav_ids)
+        })
     }
 
     private fun notify_user() {

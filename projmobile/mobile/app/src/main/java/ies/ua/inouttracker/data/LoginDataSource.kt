@@ -22,9 +22,7 @@ class LoginDataSource {
             if(ret.first){
                 if(password == ret.second.password){
                     val user = LoggedInUser(java.util.UUID.randomUUID().toString(), " " + ret.second.name)
-
-                    Log.d("DEBUG", "Antes: " + Datasource().getFavorite())
-
+                    Datasource().setCurrentUserId(ret.second.id)
                     lateinit var viewModel: MainViewModel
                     val self = Datasource().getSELF()
                     val repository = Repository()
@@ -34,7 +32,6 @@ class LoginDataSource {
                     for (favorite in Datasource().getFavorite()){
                         viewModel.saveFav(FavStores(ret.second.id, favorite.id))
                         viewModel.myResponse_FavStores.observe(self, { response ->
-                            Log.d("DEBUG", "Durante: ${response.body()}")
                         })
                     }
                     //Get Favorites from the DB
@@ -47,7 +44,6 @@ class LoginDataSource {
                         }
                     })
 
-                    Log.d("DEBUG", "Depois: " + Datasource().getFavorite())
 
                     return Result.Success(user)
                 }
@@ -58,6 +54,7 @@ class LoginDataSource {
                 val viewModelFactory = MainViewModelFactory(repository)
                 viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
                 val user_id = getId()
+                Datasource().setCurrentUserId(user_id)
                 viewModel.saveUser(User(user_id,0, username, username, password))
                 viewModel.myResponse_SaveUser.observe(self, { response ->
 
@@ -103,13 +100,17 @@ class LoginDataSource {
 
         var max_id = 0
 
+        var finish = false
+
         viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
         viewModel.getUsers()
         viewModel.myResponse_Users.observe(self, { response ->
             for (user in response){
                 if (user.id > max_id) max_id = user.id
             }
+            finish = true
         })
+
         return max_id + 1
     }
 }

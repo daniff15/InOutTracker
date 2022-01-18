@@ -119,9 +119,11 @@ class LoginFragment : Fragment() {
                 val editor = pref.edit()
                 val gson = Gson()
 
-                val json: String = gson.toJson(Datasource().getCurrentUser())
+                val username: String = gson.toJson(Datasource().getCurrentUser())
+                val id: String? = gson.toJson(Datasource().getCurrentUserId())
 
-                editor.putString("loggedin", json)
+                editor.putString("loggedin", username)
+                editor.putString("user_id", id)
                 editor.commit()
             }
 

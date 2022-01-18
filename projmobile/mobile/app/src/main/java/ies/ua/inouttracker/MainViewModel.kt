@@ -18,6 +18,7 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     val myResponse_SaveUser: MutableLiveData<Response<User>> = MutableLiveData()
     val myResponse_UserFavorites: MutableLiveData<Response<List<Int>>> = MutableLiveData()
     val myResponse_FavStores: MutableLiveData<Response<FavStores>> = MutableLiveData()
+    val myResponse_removeFav: MutableLiveData<String> = MutableLiveData()
 
     fun getStores(){
         viewModelScope.launch {
@@ -59,6 +60,13 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val response = repository.saveFav(fav)
             myResponse_FavStores.value = response
+        }
+    }
+
+    fun removeFav(fav: FavStores){
+        viewModelScope.launch {
+            val response = repository.removeFav(fav)
+            myResponse_removeFav.value = "Removed: $fav"
         }
     }
 }

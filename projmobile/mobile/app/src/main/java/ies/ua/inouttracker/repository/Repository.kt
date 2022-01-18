@@ -27,4 +27,7 @@ class Repository {
     suspend fun saveFav(fav: FavStores): Response<FavStores>{
         return RetrofitInstance.api.saveFav(fav)
     }
+    suspend fun removeFav(fav: FavStores) {
+        RetrofitInstance.api.removeFav(fav)
+    }
 }

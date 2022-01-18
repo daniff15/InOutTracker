@@ -16,6 +16,7 @@ var following: HashMap<Store, Int> = hashMapOf()
 var current_store: Store = Store(0,0, "", "", "", 0, 0)
 var loggedin: Boolean = false
 var current_user: String = ""
+var current_user_id: Int = -1
 
 var SELF : MainActivity? = null
 
@@ -146,5 +147,13 @@ public class Datasource {
 
     fun getCurrentUser(): String {
         return current_user
+    }
+
+    fun getCurrentUserId(): Int {
+        return current_user_id
+    }
+
+    fun setCurrentUserId(id: Int) {
+        current_user_id = id
     }
 }

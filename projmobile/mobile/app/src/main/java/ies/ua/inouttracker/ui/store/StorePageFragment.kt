@@ -29,7 +29,9 @@ import ies.ua.inouttracker.databinding.FragmentStorePageBinding
 import ies.ua.inouttracker.repository.Repository
 import ies.ua.inouttracker.ui.dashboard.DashboardViewModel
 import ies.ua.inouttracker.ui.model.Dialog
+import ies.ua.inouttracker.ui.model.FavStores
 import ies.ua.inouttracker.ui.model.Store
+import ies.ua.inouttracker.ui.model.User
 import ies.ua.inouttracker.util.Datasource
 import java.net.DatagramSocket
 
@@ -98,6 +100,17 @@ class StorePageFragment() : Fragment() {
                     "Store removed from favorites",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                lateinit var viewModel: MainViewModel
+                val self = Datasource().getSELF()
+                val repository = Repository()
+                val viewModelFactory = MainViewModelFactory(repository)
+                viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+                viewModel.removeFav(FavStores(Datasource().getCurrentUserId(), store.id) )
+                viewModel.myResponse_removeFav.observe(self, { response ->
+
+                })
+
             } else {
                 fav.setImageResource(R.mipmap.hearton)
                 fav.tag = R.mipmap.hearton
@@ -107,7 +120,18 @@ class StorePageFragment() : Fragment() {
                     "Store added to favorites",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                lateinit var viewModel: MainViewModel
+                val self = Datasource().getSELF()
+                val repository = Repository()
+                val viewModelFactory = MainViewModelFactory(repository)
+                viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+                viewModel.saveFav(FavStores(Datasource().getCurrentUserId(), store.id) )
+                viewModel.myResponse_FavStores.observe(self, { response ->
+
+                })
             }
+
             val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             val editor = pref.edit()
             val gson = Gson()
