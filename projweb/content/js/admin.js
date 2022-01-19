@@ -15,18 +15,18 @@
     }
     
     user = readCookie('login');
-    if(user) {
-        user = JSON.parse(user);
-        if(user["type"] == 1) {
-            $("#account").html(
-                `<li class="nav-item">
-                    <a class="nav-link" href="account.html">${user["username"]}</a>
-                </li>`
-            );
-        }else {
-            $("#admin").html("")
-        }
-    }else {
-        $("#admin").html("");
-    }    
+    // if(user) {
+    //     user = JSON.parse(user);
+    //     if(user["type"] == 1) {
+    //         $("#account").html(
+    //             `<li class="nav-item">
+    //                 <a class="nav-link" href="account.html">${user["username"]}</a>
+    //             </li>`
+    //         );
+    //     }else {
+    //         $("#admin").html("")
+    //     }
+    // }else {
+    //     $("#admin").html("");
+    // }
 });
