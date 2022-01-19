@@ -51,9 +51,6 @@
 
     $("#logout-btn").click(function() {
         delete_cookie("login");
-        if(user["type"] == 0)
-            window.location.href = "http://127.0.0.1:5500/shoppings.html";
-        else if(user["type"] == 1)
-            window.location.href = "http://127.0.0.1:5500/admin-shoppings.html";
+        window.location.href = "http://127.0.0.1:5500/shoppings.html";
     });
 });
