@@ -2,6 +2,7 @@ package ies.ua.inouttracker.ui.dashboard
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,11 +54,19 @@ class DashboardFragment : Fragment() {
         val mall: AutoCompleteTextView = view.findViewById(R.id.choose_mall_search)
         val count: TextView = view.findViewById(R.id.mall_count_search)
         val actv_mall: ImageView = view.findViewById(R.id.actv_dashboard)
+        val vieww = view
 
         val shoppings = Datasource().getAllShoppings()
         val stores = Datasource().getAllStores()
 
         var selected_mall: String = ""
+
+
+        if (selected_mall != "")
+        {
+            createCards(vieww, selected_mall)
+            count.text = Datasource().getShoppingCurrentCount(selected_mall)
+        }
 
         mall.threshold = 2
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
@@ -70,7 +79,9 @@ class DashboardFragment : Fragment() {
         mall.setOnItemClickListener { parent, view, position, id ->
             selected_mall = shoppings[position]
             count.text = Datasource().getShoppingCurrentCount(selected_mall)
-            createCards(view, Datasource().getStores())
+
+            createCards(vieww, selected_mall)
+
         }
 
         // Create the Handler object (on the main thread by default)
@@ -81,30 +92,43 @@ class DashboardFragment : Fragment() {
                 //updateDB()
                 if (selected_mall != ""){
                     count.text = Datasource().getShoppingCurrentCount(selected_mall)
-                    createCards(view, Datasource().getStores())
+                    //Datasource().getShoppingStores(Datasource().getShoppingId(selected_mall))?.let { createCards(view, it) }
                 }
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 1000)
+                handler.postDelayed(this, 5000)
             }
         }
         // Start the initial runnable task by posting through the handler
         handler.post(runnableCode)
     }
 
-    private fun createCards(view: View?, stores: MutableList<Store>){
+    private fun createCards(view: View?, mall: String){
         val rv = view?.findViewById<RecyclerView>(R.id.stores_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
-
-        for (store in stores){
-            cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, "", store.name, store.people_count.toString(), store.max_capacity.toString()))
+        val stores = Datasource().getShoppingStores(Datasource().getShoppingId(mall))
+        Log.d("debug",
+            stores.toString()
+        )
+        if (stores != null) {
+            for (store in stores){
+                cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, "", store.name, store.people_count.toString(), store.max_capacity.toString()))
+            }
         }
 
         if (rv != null) {
+            Log.d("debug",
+                "depois:" + cards.toString()
+            )
             rv.layoutManager = LinearLayoutManager(view?.context)
             var adapter = StoreCardAdapter(view.context, cards as ArrayList<StoreCard>)
             rv?.adapter = adapter
+        }
+        else{
+            Log.d("debug",
+                "rv null"
+            )
         }
 
     }

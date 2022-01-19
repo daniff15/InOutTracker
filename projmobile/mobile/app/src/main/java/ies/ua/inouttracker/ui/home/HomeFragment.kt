@@ -109,11 +109,11 @@ class HomeFragment : Fragment() {
                 //updateDB(selfcont)
                 if (selected_store != "") store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
                 if (selected_mall != "") mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
-                createCards(view)
+                //createCards(view)
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 1000)
+                handler.postDelayed(this, 5000)
             }
         }
         // Start the initial runnable task by posting through the handler
@@ -123,7 +123,7 @@ class HomeFragment : Fragment() {
     private fun createCards(view: View?){
         val rv = view?.findViewById<RecyclerView>(R.id.home_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
-
+        
         for (store in Datasource().getFavorite()){
             var new_store = Datasource().getStoreById(store.id)
             if (new_store != null) {
