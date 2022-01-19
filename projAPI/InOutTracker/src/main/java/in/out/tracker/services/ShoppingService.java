@@ -48,10 +48,14 @@ public class ShoppingService {
         return shopping;
     }
 
-    public Shopping updateShopping(Shopping shopping) throws ResourceNotFoundException {
-        deleteShopping(shoppingRepository.findById(shopping.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Shopping not found for this id :: " + shopping.getId())));
-        createShopping(shopping);
+    public Shopping updateShopping(Shopping updatedShopping, long id) throws ResourceNotFoundException {
+        Shopping shopping = shoppingRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Shopping not found for this id :: " + id));
+        shopping.setName(updatedShopping.getName());
+        shopping.setOpening_time(updatedShopping.getOpening_time());
+        shopping.setClosing_time(updatedShopping.getClosing_time());
+        shopping.setMax_capacity(updatedShopping.getMax_capacity());
+        shoppingRepository.save(shopping);
         return shopping;
     }
 }
