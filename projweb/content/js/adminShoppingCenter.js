@@ -5,7 +5,7 @@
             rows +=
             `<tr>
                 <td>
-                    <a href="edit-shop.html" class="btn btn-primary edit-shop-button">
+                    <a href="edit-shop.html?${store.id}" class="btn btn-primary edit-shop-button">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                 </td>
@@ -53,4 +53,14 @@
             </li>`
         );
     }
+
+    var queryString = location.search.substring(1);
+    var a = queryString.split("|");
+    var shoppingId = a[0];
+
+    $("#add-shop").html(
+        `<a href="add-shop.html?${shoppingId}" class="add-shop-button">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add Shop</button>
+        </a>`
+    );
 });

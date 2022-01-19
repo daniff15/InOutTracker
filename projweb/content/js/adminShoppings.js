@@ -10,8 +10,8 @@
                         <h4 class="card-title">${shopping.name}</h4>
                         <h5>${shopping.people_count} / ${shopping.max_capacity}</h5>
                         <p>Open: ${shopping.opening_time}-${shopping.closing_time}</p>
-                        <a href="admin-shopping-center.html" class="btn btn-primary">Go somewhere</a>
-                        <a href="edit-shopping-center.html" class="btn btn-primary edit-shopping-button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a href="admin-shopping-center.html?${shopping.id}" class="btn btn-primary">Go somewhere</a>
+                        <a href="edit-shopping-center.html?${shopping.id}" class="btn btn-primary edit-shopping-button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>`
