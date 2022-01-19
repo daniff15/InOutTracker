@@ -28,7 +28,7 @@ stores2.append(store2_2)
 stores2.append(store3_2)
 stores2.append(store4_2)
 
-mall1 = Mall(1, "Mall 1", 5, stores1, "09h00", "23h00")
+mall1 = Mall(1, "Mall 1", 5, stores1, "09h00", "15h00")
 mall2 = Mall(2, "Mall 2", 350, stores2 , "10h00", "23h00")
 
 malls = [mall1, mall2]
@@ -62,13 +62,6 @@ if __name__ == '__main__':
             print("NEW DAY")
             day += 1
             print("DAY - ", day)
-            mall.inside_mall_ids = []
-            mall.waiting_mall_ids = []
-            for store in mall.stores:
-                if len(store.inside_store_ids) > 0:
-                    store.inside_store_ids = []
-                if len(store.waiting_store_ids) > 0:
-                    store.waiting_store_ids = []
 
         # primeira imp, apenas um mall e simulação em varias lojas
         #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
@@ -102,6 +95,24 @@ if __name__ == '__main__':
         elif (closing_mall[0] == hours_of_day[0] and closing_mall[1] <= hours_of_day[1]):
             val = 5
 
+
+        if val == 5:
+            mall.inside_mall_ids = []
+            mall.waiting_mall_ids = []
+            for store in mall.stores:
+                if len(store.inside_store_ids) > 0:
+                    store.inside_store_ids = []
+                if len(store.waiting_store_ids) > 0:
+                    store.waiting_store_ids = []
+            for shopping in malls:
+                if mall.close_time == shopping.close_time:
+                    shopping.inside_mall_ids = []
+                    shopping.waiting_mall_ids = []
+                    for store in shopping.stores:
+                        if len(store.inside_store_ids) > 0:
+                            store.inside_store_ids = []
+                        if len(store.waiting_store_ids) > 0:
+                            store.waiting_store_ids = []
         #print("1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall")
         #print("VAL - ", val)
         #print("WEIGHTS - ", weights)
@@ -213,18 +224,14 @@ if __name__ == '__main__':
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 5:
             numbers_of_iters = 0
-            if val == 5:
-                if (hours_of_day[0] != closing_mall[0]):
-                    hours_of_day[0] += 1
-                else:
-                    hours_of_day = [00 , 00]
-            elif hours_of_day == [23 , 45]:
+            if hours_of_day == [23 , 45]:
                 hours_of_day = [00 , 00]
             elif hours_of_day[1] != 45:
                 hours_of_day[1] += 15
             elif hours_of_day[1] == 45:
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
+
         print("HOURS OF DAY  - " , hours_of_day)
         print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
