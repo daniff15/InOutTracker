@@ -10,6 +10,7 @@ class Mall:
         self.close_time = close_time
         self.inside_mall_ids = []
         self.waiting_mall_ids = []
+        self.people_id = 0
 
     def enterMall(self, id):
         #verificar se se pode entrar por causa do limite (verificar tambem se a pessoa respeitou ou nao)
@@ -29,8 +30,10 @@ class Mall:
 
     def waiting_list_to_inside_mall(self):
         if len(self.waiting_mall_ids) > 0:
-            self.inside_mall_ids.append(self.waiting_mall_ids[0])
-            self.waiting_mall_ids.remove(self.waiting_mall_ids[0])
+            idc = self.waiting_mall_ids[0]
+            self.inside_mall_ids.append(idc)
+            self.waiting_mall_ids.remove(idc)
+            return idc
 
 class Store:
     def __init__(self, id, store_name, store_limit, opening_time, close_time):
