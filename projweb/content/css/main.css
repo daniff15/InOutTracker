@@ -42,3 +42,9 @@
 .edit-shopping-button {
     float: right;
 }
+
+#account-fields {
+    color: gray; 
+    text-align: right; 
+    padding-right: 40px;
+}

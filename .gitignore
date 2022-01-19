@@ -15,3 +15,5 @@
 projAPI/InOutTracker/target
 projdatageneration/__pycache__
 projdatageneration/venv
+
+*.vscode
