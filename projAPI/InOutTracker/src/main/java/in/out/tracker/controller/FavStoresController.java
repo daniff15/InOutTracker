@@ -2,6 +2,7 @@ package in.out.tracker.controller;
 
 import in.out.tracker.exception.ResourceNotFoundException;
 import in.out.tracker.model.FavStores;
+import in.out.tracker.model.Shopping;
 import in.out.tracker.services.FavStoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,4 +24,8 @@ public class FavStoresController {
 
     @PostMapping("/api/v1/add/favorite")
     public FavStores addRelation(@Valid @RequestBody FavStores relation) { return service.createFavRelation(relation); }
+
+    @DeleteMapping("/api/v1/remove/favorite")
+    public void removeFavStore(@Valid @RequestBody FavStores fav) { service.deleteFavStore(fav); }
+
 }

@@ -70,5 +70,17 @@
         app:layout_constraintStart_toEndOf="@+id/store_logo"
         app:layout_constraintTop_toTopOf="@+id/go_to_store_page" />
 
+    <TextView
+        android:id="@+id/shopping_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/go_to_store_page"
+        app:layout_constraintEnd_toStartOf="@+id/divider3"
+        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintStart_toEndOf="@+id/store_logo"
+        app:layout_constraintTop_toTopOf="@+id/go_to_store_page"
+        app:layout_constraintVertical_bias="0.183" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

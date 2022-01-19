@@ -15,6 +15,7 @@ public class Store {
     private int people_count;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }

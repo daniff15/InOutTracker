@@ -1,2 +1,8 @@
-requests
-pulsar-client
+certifi==2021.10.8
+charset-normalizer==2.0.9
+idna==3.3
+numpy==1.22.1
+pulsar-client==2.9.1
+requests==2.26.0
+six==1.16.0
+urllib3==1.26.7

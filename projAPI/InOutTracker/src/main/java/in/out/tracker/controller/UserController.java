@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
@@ -27,4 +28,9 @@ public class UserController {
 
     @PostMapping("/api/v1/users")
     public User addUser(@Valid @RequestBody User user) { return service.createUser(user); }
+
+    @PostMapping("/api/v1/users/login")
+    public Map<String, String> loginUser(@Valid @RequestBody User user) {
+        return service.loginUser(user);
+    }
 }

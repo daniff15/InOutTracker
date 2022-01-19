@@ -2,7 +2,6 @@ package ies.ua.inouttracker.ui.dashboard
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.MainViewModel
@@ -57,11 +57,7 @@ class DashboardFragment : Fragment() {
         val shoppings = Datasource().getAllShoppings()
         val stores = Datasource().getAllStores()
 
-        var selected_mall: String = "Forum Aveiro" //TODO: remove hardcoded shopping
-        count.text = Datasource().getShoppingCurrentCount(selected_mall)
-
-
-        createCards(view, Datasource().getStores())
+        var selected_mall: String = ""
 
         mall.threshold = 2
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
@@ -74,6 +70,7 @@ class DashboardFragment : Fragment() {
         mall.setOnItemClickListener { parent, view, position, id ->
             selected_mall = shoppings[position]
             count.text = Datasource().getShoppingCurrentCount(selected_mall)
+            createCards(view, Datasource().getStores())
         }
 
         // Create the Handler object (on the main thread by default)
@@ -81,10 +78,12 @@ class DashboardFragment : Fragment() {
         // Define the code block to be executed
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
-                updateDB()
-                if (selected_mall != "") count.text = Datasource().getShoppingCurrentCount(selected_mall)
-                createCards(view, Datasource().getStores())
-                Log.d("Handlers", "Called on main thread")
+                //updateDB()
+                if (selected_mall != ""){
+                    count.text = Datasource().getShoppingCurrentCount(selected_mall)
+                    createCards(view, Datasource().getStores())
+                }
+                //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
                 handler.postDelayed(this, 1000)
@@ -92,7 +91,6 @@ class DashboardFragment : Fragment() {
         }
         // Start the initial runnable task by posting through the handler
         handler.post(runnableCode)
-
     }
 
     private fun createCards(view: View?, stores: MutableList<Store>){
@@ -100,10 +98,8 @@ class DashboardFragment : Fragment() {
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
 
         for (store in stores){
-            cards.add(StoreCard(R.drawable.ic_launcher_background, store.name, store.people_count.toString(), store.max_capacity.toString()))
+            cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, "", store.name, store.people_count.toString(), store.max_capacity.toString()))
         }
-
-        Log.d("DEBUG:", cards.toString())
 
         if (rv != null) {
             rv.layoutManager = LinearLayoutManager(view?.context)
@@ -129,16 +125,9 @@ class DashboardFragment : Fragment() {
         })
     }
 
-    fun openStorePage(view: View){
-        val ctx: AppCompatActivity = view?.context as AppCompatActivity
-        val f : Fragment = StorePageFragment()
-        val t = ctx.supportFragmentManager.beginTransaction()
-
-        if (t != null) {
-            t.replace(R.id.nav_host_fragment_activity_main, f)
-            t.addToBackStack(null)
-            t.commit()
-        }
+    fun openStorePage(view: View, store: Store){
+        Datasource().setCurrentStore(store)
+        Navigation.findNavController(view).navigate(R.id.action_navigation_dashboard_to_storePageFragment)
     }
 
     override fun onDestroyView() {

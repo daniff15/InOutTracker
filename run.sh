@@ -1,14 +1,8 @@
-cd projdatageneration/
-pip3 install -r requirements.txt
-cd ../
 cd projAPI/InOutTracker
-./mvnw install -Dmaven.test.skip
-cd ../../
-docker-compose up -d
-sleep 15
-cd projweb
-python -m SimpleHTTPServer 5500 & >/dev/null
-cd ../
-xdg-open http://127.0.0.1:5500/shoppings.html &
-python3 projdatageneration/main.py >/dev/null
+./mvnw clean install -Dmaven.test.skip
 
+cd ../../
+docker-compose down
+docker volume rm $(docker volume ls -q)
+docker-compose build
+docker-compose up -d

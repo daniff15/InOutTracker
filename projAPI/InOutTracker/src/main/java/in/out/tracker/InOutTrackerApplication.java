@@ -48,41 +48,35 @@ public class InOutTrackerApplication {
 			try {
 				String message = new String(msg.getData());
 				JSONObject json = new JSONObject(message);
-				for (Iterator it = json.keys(); it.hasNext(); ) {
+				JSONObject shoppings = json.getJSONObject("shoppings");
+				for(Iterator it = shoppings.keys(); it.hasNext(); ) {
 					String element = (String) it.next();
-					String people = json.getString(element);
-					if(!element.equals("0")) {
-						URL url = new URL("http://127.0.0.1:8000/api/v1/store/update/" + element + "/count/" + people);
-						HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-						httpCon.setDoOutput(true);
-						httpCon.setRequestMethod("PUT");
-						OutputStreamWriter out = new OutputStreamWriter(
-								httpCon.getOutputStream());
-						out.write("Resource content");
-						out.close();
-						httpCon.getInputStream();
-					}
-					else {
-						URL url = new URL("http://127.0.0.1:8000/api/v1/shopping/update/" + element + "/count/" + people);
-						HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-						httpCon.setDoOutput(true);
-						httpCon.setRequestMethod("PUT");
-						OutputStreamWriter out = new OutputStreamWriter(
-								httpCon.getOutputStream());
-						out.write("Resource content");
-						out.close();
-						httpCon.getInputStream();
-					}
-					/**
-					 * if(!element.equals("0")){
-						storeService.updateCount(Long.parseLong(element), Integer.parseInt(people));
-					}
-
-					else
-						shoppingService.updateCount(Long.parseLong(element), Integer.parseInt(people));
-					 **/
+					String people = shoppings.getString(element);
+					URL url = new URL("http://127.0.0.1:8000/api/v1/shopping/update/" + element + "/count/" + people);
+					HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+					httpCon.setDoOutput(true);
+					httpCon.setRequestMethod("PUT");
+					OutputStreamWriter out = new OutputStreamWriter(
+							httpCon.getOutputStream());
+					out.write("Resource content");
+					out.close();
+					httpCon.getInputStream();
 				}
-				//System.out.println("Message received: " + message);
+
+				JSONObject stores = json.getJSONObject("stores");
+				for(Iterator it = stores.keys(); it.hasNext(); ) {
+					String element = (String) it.next();
+					String people = stores.getString(element);
+					URL url = new URL("http://127.0.0.1:8000/api/v1/store/update/" + element + "/count/" + people);
+					HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+					httpCon.setDoOutput(true);
+					httpCon.setRequestMethod("PUT");
+					OutputStreamWriter out = new OutputStreamWriter(
+							httpCon.getOutputStream());
+					out.write("Resource content");
+					out.close();
+					httpCon.getInputStream();
+				}
 				consumer.acknowledge(msg);
 			} catch (PulsarClientException e) {
 				System.err.println(e);
@@ -105,5 +99,4 @@ public class InOutTrackerApplication {
 				.subscribe();
 
 	}
-
 }
