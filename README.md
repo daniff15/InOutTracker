@@ -13,14 +13,12 @@ Simply run the script 'run.sh' with:
 
 $ `./run-sh`
 
-and wait until the browser opens the webapp
-
 (You may need to give it permission to run `$ chmod +x run.sh`)
 
 This script will:
 - Build and run the service backend with the docker-compose.yml file 
 - Run the data generation script to simulate real life data
-- Open the webapp to check results
+- Run the webapp
 
 ## Students identification 
 
@@ -34,10 +32,14 @@ This script will:
 
 ## Bookmarks
 
-links to quickly access all project resources, such as project
-management boards, editable versions of the reports in the cloud, entry point for
-your API documentation,....
-
+API Documentation
+https://app.swaggerhub.com/apis-docs/InOutTracker/api-documentation/v1
 
 Mobile App Pages and User Stories Overview 
-https://github.com/daniff15/InOutTracker/tree/dev/projmobile/mockup_overview
+https://github.com/daniff15/InOutTracker/tree/main/projmobile/mockup_overview
+
+Management Boards
+https://github.com/daniff15/InOutTracker/projects
+
+Report Editable Version
+https://docs.google.com/document/d/16kg7lIpYdTnfPisO5DxJrdOrjkCGBFBsKNpyiTpw5MI/edit?usp=sharing
