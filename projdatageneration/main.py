@@ -18,7 +18,7 @@ serviceURL = 'springbootapi:8000/'
 
 try:
     requests.post(f'http://{serviceURL}api/v1/users', json = {
-        "id": 0,
+        "id": 1,
         "type": 1,
         "name": "Admin",
         "username": "admin",
@@ -27,7 +27,7 @@ try:
     })
     
     requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
-        "id": 0,
+        "id": 1,
         "name": "Forum Aveiro",
         "opening_time": "09h00",
         "closing_time": "22h00",
@@ -37,7 +37,7 @@ try:
 
     requests.post(f'http://{serviceURL}api/v1/stores', json = {
         "id": 1,
-        "shop_id": 0,
+        "shop_id": 1,
         "name": "Mi Store",
         "opening_time": "09h00",
         "closing_time": "22h00",
@@ -47,7 +47,7 @@ try:
 
     requests.post(f'http://{serviceURL}api/v1/stores', json = {
         "id": 2,
-        "shop_id": 0,
+        "shop_id": 1,
         "name": "FNAC",
         "opening_time": "09h00",
         "closing_time": "22h00",
@@ -55,7 +55,15 @@ try:
         "people_count": 0
     })
 
-    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 3,"shop_id": 0,"name": "Sport Zone","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 36, "people_count": 0})
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {
+        "id": 3,
+        "shop_id": 1,
+        "name": "Sport Zone",
+        "opening_time": "09h00", 
+        "closing_time": "22h00", 
+        "max_capacity": 36, 
+        "people_count": 0
+    })
 
     response_malls = requests.get(f'http://{serviceURL}api/v1/shoppings')
     response_stores = requests.get(f'http://{serviceURL}api/v1/stores')
@@ -152,9 +160,14 @@ if __name__ == '__main__':
                 mall1.stop_waiting_outside_Mall(idx_temp)
 
         ''' implementation for one mall '''
-        stores_capacity = {mall1.id: len(mall1.inside_mall_ids)}
+        stores_capacity = {
+            'shoppings': {
+                mall1.id: len(mall1.inside_mall_ids)
+            },
+            'stores': {}
+        }
         for store in mall1.stores:
-            stores_capacity[store.id] = len(store.inside_store_ids)
+            stores_capacity.get('stores')[store.id] = len(store.inside_store_ids)
         produce(stores_capacity)
 
         #!para depois contar quantas pessoas estao em cada cena, len(lst)
