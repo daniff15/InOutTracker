@@ -1,13 +1,18 @@
 ﻿$(document).ready(function() {
+    var queryString = location.search.substring(1);
+    var a = queryString.split("|");
+    var shoppingId = a[0];
     function showStores(stores) {
-        var queryString = location.search.substring(1);
-        var a = queryString.split("|");
-        var shoppingId = a[0];
 
         var rows = "";
         for(var store of stores) {
             rows +=
-            `<tr>
+            `<tr id="${store.id}">
+                <td>
+                    <button class="btn btn-danger delete-shop-button" type="button">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
                 <td>
                     <a href="edit-shop.html?${store.id}|${shoppingId}" class="btn btn-primary edit-shop-button">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -63,4 +68,14 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add Shop</button>
         </a>`
     );
+
+    $(document).on("click", ".delete-shop-button", function() {
+        var shopId = $(this).parent().parent().attr("id");
+        $.ajax({
+            url: "http://localhost:8000/api/v1/stores/" + shopId,
+            type: "DELETE",
+        }).done(function (data) {
+            console.log(data);
+        });
+    });
 });

@@ -27,7 +27,15 @@
     width: 30px;
 }
 
+.delete-shop-column {
+    width: 30px;
+}
+
 .edit-shop-button {
+    float: right;
+}
+
+.delete-shop-button {
     float: right;
 }
 
