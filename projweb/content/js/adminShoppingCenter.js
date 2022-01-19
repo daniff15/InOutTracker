@@ -14,7 +14,8 @@
                     </button>
                 </td>
                 <td>
-                    <a href="edit-shop.html?${store.id}|${shoppingId}" class="btn btn-primary edit-shop-button">
+                    <a href="edit-shop.html?${store.id}|${shoppingId}|${store.name}|${store.opening_time}|${store.closing_time}|${store.max_capacity}" 
+                        class="btn btn-primary edit-shop-button">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                 </td>

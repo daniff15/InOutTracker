@@ -3,7 +3,16 @@
     var a = queryString.split("|");
     var shopId = a[0];
     var shoppingId = a[1];
+    var shopName = a[2].replace("%20", " ");
+    var shopOpeningTime = a[3];
+    var shopClosingTime = a[4];
+    var shopCapacity = a[5];
     
+    $("#name").val(shopName);
+    $("#opening-time").val(shopOpeningTime);
+    $("#closing-time").val(shopClosingTime);
+    $("#capacity").val(shopCapacity);
+
     $("form").submit(function (event) {
         var formData = {
             name: $("#name").val(),

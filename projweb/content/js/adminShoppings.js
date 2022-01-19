@@ -12,7 +12,10 @@
                         <p>Open: ${shopping.opening_time}-${shopping.closing_time}</p>
                         <a href="admin-shopping-center.html?${shopping.id}" class="btn btn-primary">Details</a>
                         <button class="btn btn-danger delete-shopping-button" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        <a href="edit-shopping-center.html?${shopping.id}" class="btn btn-primary edit-shopping-button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a href="edit-shopping-center.html?${shopping.id}|${shopping.name}|${shopping.opening_time}|${shopping.closing_time}|${shopping.max_capacity}" 
+                            class="btn btn-primary edit-shopping-button">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
                     </div>
                 </div>
             </div>`
