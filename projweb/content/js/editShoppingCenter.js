@@ -2,7 +2,7 @@
     var queryString = location.search.substring(1);
     var a = queryString.split("|");
     var shoppingId = a[0];
-    var shoppingName = a[1].replace("%20", " ");
+    var shoppingName = a[1].replaceAll("%20", " ").replaceAll("%27", "'");
     var shoppingOpeningTime = a[2];
     var shoppingClosingTime = a[3];
     var shoppingCapacity = a[4];

@@ -3,7 +3,7 @@
     var a = queryString.split("|");
     var shopId = a[0];
     var shoppingId = a[1];
-    var shopName = a[2].replace("%20", " ");
+    var shopName = a[2].replaceAll("%20", " ").replaceAll("%27", "'");
     var shopOpeningTime = a[3];
     var shopClosingTime = a[4];
     var shopCapacity = a[5];
