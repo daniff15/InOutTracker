@@ -12,7 +12,7 @@
 	<artifactId>InOutTracker</artifactId>
 	<version>0.0.1</version>
 	<name>InOutTracker</name>
-	<description>Demo project for Spring Boot</description>
+	<description>SpringBoot API for InOutTracker</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -62,7 +62,11 @@
 			<version>0.0.20131108.vaadin1</version>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>

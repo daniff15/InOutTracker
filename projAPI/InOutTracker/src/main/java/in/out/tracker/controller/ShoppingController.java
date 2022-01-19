@@ -39,5 +39,4 @@ public class ShoppingController {
     public Shopping updateCount(@PathVariable(value = "id") long id, @PathVariable(value = "count") int count) throws ResourceNotFoundException {
         return service.updateCount(id, count);
     }
-
 }

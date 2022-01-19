@@ -8,7 +8,9 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import ies.ua.inouttracker.R
 import ies.ua.inouttracker.ui.dashboard.DashboardFragment
+import ies.ua.inouttracker.ui.home.HomeFragment
 import ies.ua.inouttracker.ui.model.StoreCard
+import ies.ua.inouttracker.util.Datasource
 import java.util.ArrayList
 
 class StoreCardAdapter (private val context: Context, private val StoreCards: ArrayList<StoreCard>) : RecyclerView.Adapter<StoreCardAdapter.Viewholder>() {
@@ -23,14 +25,19 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
         // to set data to textview and imageview of each card layout
         val store: StoreCard = StoreCards[position]
+        Datasource().getStoreLogo(store.store_name)?.let { holder.logo.setImageResource(it) }
         holder.current.text = store.count
         holder.max.text = store.maxCap
-        holder.name.text = store.name
+        holder.mall_name.text = store.mall_name
+        holder.store_name.text = store.store_name
         holder.click.setOnClickListener {
-            DashboardFragment().openStorePage(holder.itemView)
+            if (store.method == 0)
+                Datasource().getStoreById(store.id)
+                    ?.let { it1 -> DashboardFragment().openStorePage(holder.itemView, it1) }
+            else
+                Datasource().getStoreById(store.id)
+                    ?.let { it1 -> HomeFragment().openStorePage(holder.itemView, it1) }
         }
-
-        //holder.logo.setImageResource(store.logo)
     }
 
     override fun getItemCount(): Int {
@@ -45,12 +52,14 @@ class StoreCardAdapter (private val context: Context, private val StoreCards: Ar
         val logo: ImageView
         val current: TextView
         val max: TextView
-        val name: TextView
+        val mall_name : TextView
+        val store_name: TextView
         val click: Button
 
         init {
-            logo = itemView.findViewById((R.id.store_logo))
-            name = itemView.findViewById(R.id.store_name)
+            logo = itemView.findViewById(R.id.store_logo)
+            mall_name = itemView.findViewById(R.id.shopping_name)
+            store_name = itemView.findViewById(R.id.store_name)
             current = itemView.findViewById(R.id.current_capacity)
             max = itemView.findViewById(R.id.max_capacity)
             click = itemView.findViewById(R.id.go_to_store_page)
