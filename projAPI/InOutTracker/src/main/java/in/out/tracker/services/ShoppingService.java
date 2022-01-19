@@ -36,7 +36,9 @@ public class ShoppingService {
         return shoppingRepository.save(shopping);
     }
 
-    public void deleteShopping(Shopping shopping) {
+    public void deleteShopping(long id)
+            throws ResourceNotFoundException {
+        Shopping shopping = shoppingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Shopping not found for this id :: " + id));
         shoppingRepository.delete(shopping);
     }
 

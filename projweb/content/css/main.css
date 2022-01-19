@@ -41,6 +41,11 @@
 
 .edit-shopping-button {
     float: right;
+    margin-right: 5px;
+}
+
+.delete-shopping-button {
+    float: right;
 }
 
 #account-fields {

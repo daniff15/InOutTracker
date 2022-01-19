@@ -23,8 +23,9 @@ public class ShoppingController {
     @PostMapping("/api/v1/shoppings")
     public Shopping addShopping(@Valid @RequestBody Shopping shopping) { return service.createShopping(shopping); }
 
-    @DeleteMapping("api/v1/shoppings")
-    public void removeShopping(@Valid @RequestBody Shopping shopping) { service.deleteShopping(shopping); }
+    @DeleteMapping("api/v1/shoppings/{id}")
+    public void removeShopping(@PathVariable(value = "id") long id)
+            throws ResourceNotFoundException { service.deleteShopping(id); }
 
     @GetMapping("/api/v1/shopping/{id}")
     public ResponseEntity<Shopping> getShopping(@PathVariable(value = "id") long id)
