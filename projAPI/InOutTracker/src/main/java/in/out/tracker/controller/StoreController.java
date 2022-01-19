@@ -26,8 +26,11 @@ public class StoreController {
         return service.getStoreById(id);
     }
 
-    @PutMapping("api/v1/store/update")
-    public Store updateStore(@Valid @RequestBody Store store) throws ResourceNotFoundException { return service.updateStore(store); }
+    @PutMapping("api/v1/store/update/{id}")
+    public Store updateStore(@Valid @RequestBody Store store, @PathVariable(value = "id") long id)
+            throws ResourceNotFoundException {
+        return service.updateStore(store, id);
+    }
 
     @PutMapping("api/v1/store/update/{id}/count/{count}")
     public Store updateCount(@PathVariable(value = "id") long id, @PathVariable(value = "count") int count) throws ResourceNotFoundException {

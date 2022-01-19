@@ -35,10 +35,14 @@ public class StoreService {
         return store;
     }
 
-    public Store updateStore(Store store) throws ResourceNotFoundException {
-        deleteStore(storeRepository.findById(store.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Store not found for this id :: " + store.getId())));
-        createStore(store);
+    public Store updateStore(Store updatedStore, long id) throws ResourceNotFoundException {
+        Store store = storeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Store not found for this id :: " + id));
+        store.setName(updatedStore.getName());
+        store.setOpening_time(updatedStore.getOpening_time());
+        store.setClosing_time(updatedStore.getClosing_time());
+        store.setMax_capacity(updatedStore.getMax_capacity());
+        storeRepository.save(store);
         return store;
     }
 }
