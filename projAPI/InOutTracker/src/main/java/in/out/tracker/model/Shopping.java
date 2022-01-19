@@ -6,8 +6,6 @@ import java.util.List;
 @Entity
 @Table(name = "shopping")
 public class Shopping {
-
-
     private long id;
     private String name;
     private String opening_time;
@@ -17,6 +15,7 @@ public class Shopping {
     private int people_count;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }

@@ -27,7 +27,15 @@
     width: 30px;
 }
 
+.delete-shop-column {
+    width: 30px;
+}
+
 .edit-shop-button {
+    float: right;
+}
+
+.delete-shop-button {
     float: right;
 }
 
@@ -40,6 +48,11 @@
 }
 
 .edit-shopping-button {
+    float: right;
+    margin-right: 5px;
+}
+
+.delete-shopping-button {
     float: right;
 }
 

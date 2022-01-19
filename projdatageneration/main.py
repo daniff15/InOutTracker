@@ -21,7 +21,7 @@ serviceURL = 'springbootapi:8000/'
 
 try:
     requests.post(f'http://{serviceURL}api/v1/users', json = {
-        "id": 0,
+        "id": 1,
         "type": 1,
         "name": "Admin",
         "username": "admin",
@@ -30,7 +30,7 @@ try:
     })
     
     requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
-        "id": 0,
+        "id": 1,
         "name": "Forum Aveiro",
         "opening_time": "09h00",
         "closing_time": "22h00",
@@ -53,7 +53,7 @@ try:
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 14,"shop_id": 0,"name": "Quebramar","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 28, "people_count": 0})
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 15,"shop_id": 0,"name": "Tiffosi","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 40, "people_count": 0})
 
-    requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
+    requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
         "id": 1,
         "name": "Glicinias Plaza",
         "opening_time": "09h00",
@@ -71,9 +71,6 @@ try:
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 23,"shop_id": 1,"name": "Lefties","opening_time": "09h00", "closing_time": "21h00", "max_capacity": 80, "people_count": 0})
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 24,"shop_id": 1,"name": "New Yorker","opening_time": "09h00", "closing_time": "21h00", "max_capacity": 50, "people_count": 0})
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 25,"shop_id": 1,"name": "Springfield","opening_time": "09h00", "closing_time": "21h00", "max_capacity": 40, "people_count": 0})
-
-
-
 
 
     response_malls = requests.get(f'http://{serviceURL}api/v1/shoppings')
@@ -264,9 +261,14 @@ if __name__ == '__main__':
         numbers_of_iters += 1
 
         #TODO: change this to work with multiple malls
-        stores_capacity = {mall.id: len(mall.inside_mall_ids)}
+        stores_capacity = {
+            'shoppings': {
+                mall1.id: len(mall1.inside_mall_ids)
+            },
+            'stores': {}
+        }
         for store in mall.stores:
-            stores_capacity[store.id] = len(store.inside_store_ids)
+            stores_capacity.get('stores')[store.id] = len(store.inside_store_ids)
 
         produce(stores_capacity)
 
