@@ -10,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="0"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/max_capacity"
         app:layout_constraintTop_toTopOf="@+id/go_to_store_page"

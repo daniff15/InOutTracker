@@ -55,6 +55,16 @@ class MainActivity : AppCompatActivity() {
             "Bimba Y Lola" to R.mipmap.bimba_lola_logo,
             "Boutique dos Relógios" to R.mipmap.boutique_logo,
             "Calzedonia" to R.mipmap.calzedonia_logo,
+            "Decenio" to R.mipmap.decenio_logo,
+            "Quebramar" to R.mipmap.quebramar_logo,
+            "Tiffosi" to R.mipmap.tiffosi_logo,
+            "Worten" to R.mipmap.worten_logo,
+            "Auchan" to R.mipmap.auchan_logo,
+            "C&A" to R.mipmap.ca_logo,
+            "H&M" to R.mipmap.hm_logo,
+            "Cortefiel" to R.mipmap.cortefiel_logo,
+            "Lefties" to R.mipmap.lefties_logo,
+            "New Yorker" to R.mipmap.newyorker_logo,
             "" to R.mipmap.no_image
         ))
 
