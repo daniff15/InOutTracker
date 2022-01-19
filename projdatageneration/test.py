@@ -28,7 +28,7 @@ stores2.append(store2_2)
 stores2.append(store3_2)
 stores2.append(store4_2)
 
-mall1 = Mall(1, "Mall 1", 5, stores1, "09h00", "15h00")
+mall1 = Mall(1, "Mall 1", 5, stores1, "09h00", "23h00")
 mall2 = Mall(2, "Mall 2", 350, stores2 , "10h00", "23h00")
 
 malls = [mall1, mall2]
