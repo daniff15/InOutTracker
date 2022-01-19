@@ -57,7 +57,6 @@
     var queryString = location.search.substring(1);
     var a = queryString.split("|");
     var shoppingId = a[0];
-
     $("#add-shop").html(
         `<a href="add-shop.html?${shoppingId}" class="add-shop-button">
             <button class="btn btn-outline-success my-2 my-sm-0" type="button">Add Shop</button>

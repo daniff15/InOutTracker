@@ -13,7 +13,7 @@ public class Store {
     private String closing_time;
     private int max_capacity;
     private int people_count;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
