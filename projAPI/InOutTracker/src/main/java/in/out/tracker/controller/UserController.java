@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500", "deti-engsoft-08:5500"})
+@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500", "http://deti-engsoft-08:5500"})
 @RestController
 public class UserController {
     @Autowired
