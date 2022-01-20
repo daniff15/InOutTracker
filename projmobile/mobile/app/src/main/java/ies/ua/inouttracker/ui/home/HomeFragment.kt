@@ -71,11 +71,12 @@ class HomeFragment : Fragment() {
         mall.threshold = 2
         store.threshold = 2
 
-        val stores = Datasource().getAllStores()
         val shoppings = Datasource().getAllShoppings()
 
         var selected_store: String = ""
         var selected_mall: String = ""
+
+        var stores = mutableListOf<String>()
 
 
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
@@ -85,7 +86,16 @@ class HomeFragment : Fragment() {
 
         mall.setOnItemClickListener { parent, view, position, id ->
             selected_mall = shoppings[position]
+            selected_store = ""
+            store_capacity.text = "-"
+            store.setText(R.string.empty)
             mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
+
+            stores = mutableListOf()
+            for (store in Datasource().getShoppingStores(Datasource().getShoppingId(selected_mall))!!) stores.add(store.name)
+
+            val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, stores)
+            store.setAdapter(adapter2)
         }
 
         store.setOnItemClickListener { parent, view, position, id ->
