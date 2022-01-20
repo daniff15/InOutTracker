@@ -33,7 +33,7 @@
         };
     
         $.ajax({
-            url: "http://localhost:8000/api/v1/users/login",
+            url: "http://" + self.location.hostname + ":8000/api/v1/users/login",
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
@@ -49,9 +49,9 @@
                 writeCookie("login", JSON.stringify(value), 1);
             }
             if(data["type"] == 0)
-                window.location.href = "http://127.0.0.1:5500/shoppings.html";
+                window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
             else if(data["type"] == 1)
-                window.location.href = "http://127.0.0.1:5500/admin-shoppings.html";
+                window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
         });
     
         event.preventDefault();

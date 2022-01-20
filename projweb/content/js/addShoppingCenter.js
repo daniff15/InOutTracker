@@ -9,18 +9,19 @@
         };
         
         $.ajax({
-            url: "http://localhost:8000/api/v1/shoppings",
+            url: "http://" + self.location.hostname + ":8000/api/v1/shoppings",
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
         }).done(function (data) {
             console.log(data);
-            window.location.href = "http://127.0.0.1:5500/admin-shoppings.html";
+            window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
         });
-    
+        
         event.preventDefault();
     });
-
+    
+    console.log(self.location.hostname);
     $(function() {
         $('.time').datetimepicker({
             format: 'HH:mm',

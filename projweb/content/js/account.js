@@ -51,6 +51,6 @@
 
     $("#logout-btn").click(function() {
         delete_cookie("login");
-        window.location.href = "http://127.0.0.1:5500/shoppings.html";
+        window.location.href = "http://" + self.location.hostname + "/shoppings.html";
     });
 });

@@ -25,7 +25,7 @@
 
     (function worker() {
         $.ajax({
-            url: 'http://localhost:8000/api/v1/shoppings', 
+            url: "http://" + self.location.hostname + ":8000/api/v1/shoppings", 
             success: function(data) {
                 showShoppings(data);
             },
@@ -64,7 +64,7 @@
     $(document).on("click", ".delete-shopping-button", function() {
         var shoppingId = $(this).parent().parent().attr("id");
         $.ajax({
-            url: "http://localhost:8000/api/v1/shoppings/" + shoppingId,
+            url: "http://" + self.location.hostname + ":8000/api/v1/shoppings/" + shoppingId,
             type: "DELETE",
         }).done(function (data) {
             console.log(data);

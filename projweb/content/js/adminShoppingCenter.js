@@ -28,7 +28,7 @@
     
     (function worker() {
         $.ajax({
-            url: 'http://localhost:8000/api/v1/stores', 
+            url: "http://" + self.location.hostname + ":8000/api/v1/stores", 
             success: function(data) {
                 showStores(data);
             },
@@ -73,7 +73,7 @@
     $(document).on("click", ".delete-shop-button", function() {
         var shopId = $(this).parent().parent().attr("id");
         $.ajax({
-            url: "http://localhost:8000/api/v1/stores/" + shopId,
+            url: "http://" + self.location.hostname + ":8000/api/v1/stores/" + shopId,
             type: "DELETE",
         }).done(function (data) {
             console.log(data);

@@ -9,13 +9,13 @@
         };
     
         $.ajax({
-            url: "http://localhost:8000/api/v1/users",
+            url: "http://" + self.location.hostname + ":8000/api/v1/users",
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
         }).done(function (data) {
             console.log(data);
-            window.location.href = "http://127.0.0.1:5500/login.html"
+            window.location.href = "http://" + self.location.hostname + ":5500/login.html"
         });
     
         event.preventDefault();
