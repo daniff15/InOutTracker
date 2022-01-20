@@ -33,6 +33,12 @@ public class ShoppingController {
         return service.getShoppingById(id);
     }
 
+    @GetMapping("/api/v1/shopping/{id}/stores")
+    public List<Store> getStoresInShopping(@PathVariable(value = "id") long id)
+            throws ResourceNotFoundException {
+        return service.getStoresInShopping(id); 
+    }
+
     @PutMapping("api/v1/shopping/update/{id}")
     public Shopping updateShopping(@Valid @RequestBody Shopping shopping, @PathVariable(value = "id") long id)
             throws ResourceNotFoundException {

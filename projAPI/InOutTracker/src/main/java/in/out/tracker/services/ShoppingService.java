@@ -32,6 +32,13 @@ public class ShoppingService {
         return ResponseEntity.ok().body(shoppings);
     }
 
+    public List<Store> getStoresInShopping(long id)
+            throws ResourceNotFoundException {
+        Shopping shopping = shoppingRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Shopping not found for this id :: " + id));
+        return shopping.getStores();
+    }
+
     public Shopping createShopping(Shopping shopping) {
         return shoppingRepository.save(shopping);
     }
