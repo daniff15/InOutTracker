@@ -60,6 +60,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val store_capacity: TextView = view.findViewById(R.id.store_count)
         val mall_capacity: TextView = view.findViewById(R.id.mall_count)
+        val details: Button = view.findViewById(R.id.store_details)
+
+        details.visibility = View.GONE
 
         val mall: AutoCompleteTextView = view.findViewById(R.id.choose_mall)
         val store: AutoCompleteTextView = view.findViewById(R.id.choose_store)
@@ -89,6 +92,7 @@ class HomeFragment : Fragment() {
             selected_store = ""
             store_capacity.text = "-"
             store.setText(R.string.empty)
+            details.visibility = View.GONE
             mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
 
             stores = mutableListOf()
@@ -100,6 +104,8 @@ class HomeFragment : Fragment() {
 
         store.setOnItemClickListener { parent, view, position, id ->
             selected_store = stores[position]
+            details.visibility = View.VISIBLE
+            Datasource().setCurrentStore(Datasource().getStoreFromMallAndStoreName(selected_mall, selected_store))
             store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
         }
 
@@ -109,6 +115,10 @@ class HomeFragment : Fragment() {
 
         actv_store.setOnClickListener {
             store.showDropDown()
+        }
+
+        details.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_storePageFragment)
         }
 
         // Create the Handler object (on the main thread by default)

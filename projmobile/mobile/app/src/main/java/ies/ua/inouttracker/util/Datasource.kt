@@ -98,6 +98,13 @@ public class Datasource {
         return -1
     }
 
+    fun getStoreFromMallAndStoreName (mall: String, store_name: String): Store {
+        val mall_id = getShoppingId(mall)
+        for (store in stores)
+            if (store_name == store.name && store.shop_id == mall_id) return store
+        return Store(-1, -1, "Not Found", "00h00", "00h00", 0, 0)
+    }
+
     fun getStoreCurrentCount(STORE: String): String {
         for (store in stores)
             if (store.name == STORE)
