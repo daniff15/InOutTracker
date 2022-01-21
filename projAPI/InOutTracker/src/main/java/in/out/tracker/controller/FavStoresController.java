@@ -27,5 +27,4 @@ public class FavStoresController {
 
     @DeleteMapping("/api/v1/remove/favorite")
     public void removeFavStore(@Valid @RequestBody FavStores fav) { service.deleteFavStore(fav); }
-
 }

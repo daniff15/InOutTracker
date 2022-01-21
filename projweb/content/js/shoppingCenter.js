@@ -3,20 +3,48 @@
     var a = queryString.split("|");
     var shoppingId = a[0];
     function showStores(stores) {
-        var rows = "";
-        for(var store of stores) {
-            rows +=
-            `<tr>
-                <td>
-                    <button class="btn btn-outline-danger delete-shop-button">
-                        <i class="fa fa-heart" aria-hidden="true"></i>
-                    </button>
-                </td>
-                <th scope="row" style="vertical-align: middle;">${store.name}</th>
-                <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
-            </tr>`
+        if(isLoggedIn) {
+            var head = 
+                `<thead>
+                    <tr>
+                        <th scope="col" class="delete-shop-column"></th>
+                        <th scope="col">Shop Name</th>
+                        <th scope="col" class="text-right">Capacity</th>
+                    </tr>
+                </thead>`
+            var body = "<tbody>";
+            for(var store of stores) {
+                body +=
+                `<tr id="${store.id}">
+                    <td>
+                        <button class="btn btn-outline-danger fav-shop-button">
+                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <th scope="row" style="vertical-align: middle;">${store.name}</th>
+                    <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
+                </tr>`
+            }
+            body += "</tbody>"
+        }else {
+            var head = 
+                `<thead>
+                    <tr>
+                        <th scope="col">Shop Name</th>
+                        <th scope="col" class="text-right">Capacity</th>
+                    </tr>
+                </thead>`
+            var body = "<tbody>";
+            for(var store of stores) {
+                body +=
+                `<tr id="${store.id}">
+                    <th scope="row" style="vertical-align: middle;">${store.name}</th>
+                    <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
+                </tr>`
+            }
+            body += "</tbody>"
         }
-        $('#stores').html(rows);
+        $('#stores').html(head + body);
     }
     
     (function worker() {
@@ -47,13 +75,31 @@
         return '';
     }
 
+    var isLoggedIn = false;
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
+        isLoggedIn = true;
         $("#account").html(
             `<li class="nav-item">
                 <a class="nav-link" href="account.html">${user["username"]}</a>
             </li>`
         );
     }
+
+    $(document).on("click", ".fav-shop-button", function() {
+        var shopId = $(this).parent().parent().attr("id");
+        var data = {
+            user_id: user["id"],
+            store_id: shopId,
+        };
+        $.ajax({
+            url: "http://" + self.location.hostname + ":8000/api/v1/add/favorite",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+        }).done(function (data) {
+            console.log(data);
+        });
+    });
 });

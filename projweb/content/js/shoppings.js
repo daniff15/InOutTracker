@@ -10,7 +10,7 @@
                         <h4 class="card-title">${shopping.name}</h4>
                         <h5>${shopping.people_count} / ${shopping.max_capacity}</h5>
                         <p>Open: ${shopping.opening_time}-${shopping.closing_time}</p>
-                        <a href="shopping-center.html?${shopping.id}" class="btn btn-primary">Go somewhere</a>
+                        <a href="shopping-center.html?${shopping.id}" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>`
