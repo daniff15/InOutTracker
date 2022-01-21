@@ -77,6 +77,20 @@ public class InOutTrackerApplication {
 					out.close();
 					httpCon.getInputStream();
 				}
+				JSONObject waiting_stores = json.getJSONObject("waiting_stores");
+				for(Iterator it = stores.keys(); it.hasNext(); ) {
+					String element = (String) it.next();
+					String people = stores.getString(element);
+					URL url = new URL("http://127.0.0.1:8000/api/v1/store/update/" + element + "/waiting/" + people);
+					HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+					httpCon.setDoOutput(true);
+					httpCon.setRequestMethod("PUT");
+					OutputStreamWriter out = new OutputStreamWriter(
+							httpCon.getOutputStream());
+					out.write("Resource content");
+					out.close();
+					httpCon.getInputStream();
+				}
 				consumer.acknowledge(msg);
 			} catch (PulsarClientException e) {
 				System.err.println(e);

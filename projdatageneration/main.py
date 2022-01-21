@@ -265,10 +265,12 @@ if __name__ == '__main__':
             'shoppings': {
                 mall.id: len(mall.inside_mall_ids)
             },
-            'stores': {}
+            'stores': {},
+            'waiting_stores': {}
         }
         for store in mall.stores:
             stores_capacity.get('stores')[store.id] = len(store.inside_store_ids)
+            stores_capacity.get('waiting_stores')[store.id] = len(store.waiting_store_ids)
 
         produce(stores_capacity)
 

@@ -38,6 +38,12 @@ public class StoreController {
         return service.updateCount(id, count);
     }
 
+    @PutMapping("api/v1/store/update/{id}/waiting/{count}")
+    public Store updateWaiting(@PathVariable(value = "id") long id, @PathVariable(value = "count") int count)
+            throws ResourceNotFoundException {
+        return service.updateWaiting(id, count);
+    }
+
     @PostMapping("api/v1/stores")
     public Store addStore(@Valid @RequestBody Store store) { return service.createStore(store); }
 
