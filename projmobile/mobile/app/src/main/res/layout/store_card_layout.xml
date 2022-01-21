@@ -9,23 +9,22 @@
         android:id="@+id/current_capacity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
         android:layout_marginTop="16dp"
-        android:text="0"
         android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/store_logo"
-        app:layout_constraintTop_toTopOf="@+id/go_to_store_page" />
+        app:layout_constraintStart_toStartOf="@+id/max_capacity"
+        app:layout_constraintTop_toTopOf="@+id/go_to_store_page"
+        tools:visibility="invisible" />
 
     <TextView
         android:id="@+id/max_capacity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="0"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/go_to_store_page"
-        app:layout_constraintStart_toEndOf="@+id/store_logo" />
+        app:layout_constraintEnd_toEndOf="@+id/go_to_store_page" />
 
     <Button
         android:id="@+id/go_to_store_page"
@@ -54,6 +53,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="2dp"
         android:background="?android:attr/listDivider"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/max_capacity"
         app:layout_constraintEnd_toEndOf="@+id/max_capacity"
         app:layout_constraintStart_toStartOf="@+id/max_capacity"

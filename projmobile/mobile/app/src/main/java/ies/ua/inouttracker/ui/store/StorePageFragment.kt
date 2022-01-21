@@ -68,11 +68,13 @@ class StorePageFragment() : Fragment() {
         val current = view.findViewById<TextView>(R.id.mall_count_current_count)
         val max = view.findViewById<TextView>(R.id.mall_count_current_count2)
         val info_button = view.findViewById<ImageButton>(R.id.info)
+        val opening_hours = view.findViewById<TextView>(R.id.opening_hours)
 
         Datasource().getStoreLogo(store.name)?.let { store_logo.setImageResource(it) }
         store_name.text = store.name
         current.text = store.people_count.toString()
         max.text = store.max_capacity.toString()
+        opening_hours.text = store.opening_time + " - " + store.closing_time
 
         if (store in Datasource().getFollowing().keys) follow.text = "Unfollow"
 

@@ -11,7 +11,7 @@ var stores_dict: HashMap<Int, Store> = hashMapOf()
 var shoppings: MutableList<Shopping> = mutableListOf()
 var storesName: MutableList<String> = mutableListOf()
 var shoppingsName: MutableList<String> = mutableListOf()
-var favorite: MutableList<Store> = mutableListOf()
+var favorite: MutableSet<Store> = mutableSetOf()
 var following: HashMap<Store, Int> = hashMapOf()
 var current_store: Store = Store(0,0, "", "", "", 0, 0)
 var loggedin: Boolean = false
@@ -71,17 +71,38 @@ public class Datasource {
 
     fun setAllStores(stores_list: List<Store>) {
         stores = stores_list as MutableList<Store>
+        val new_shopping_stores = mutableMapOf<Int, MutableList<Store>>() as HashMap<Int, MutableList<Store>>
         for (store in stores) {
             if (store.name != null && store.name !in storesName) {
                 storesName.add(store.name)
             }
             stores_dict[store.id] = store
-            if (store.shop_id in shopping_stores){
-                shopping_stores[store.shop_id]?.add(store)
+            if (store.shop_id in new_shopping_stores){
+                new_shopping_stores[store.shop_id]?.add(store)
             } else{
-                shopping_stores[store.shop_id] = mutableListOf(store)
+                new_shopping_stores[store.shop_id] = mutableListOf(store)
             }
         }
+        shopping_stores = new_shopping_stores
+
+    }
+
+    fun getShoppingStores(mall_id: Int): MutableList<Store>? {
+        return shopping_stores[mall_id]
+    }
+
+    fun getShoppingId(name: String): Int {
+        for(shopping in shoppings){
+            if (shopping.name == name) return shopping.id
+        }
+        return -1
+    }
+
+    fun getStoreFromMallAndStoreName (mall: String, store_name: String): Store {
+        val mall_id = getShoppingId(mall)
+        for (store in stores)
+            if (store_name == store.name && store.shop_id == mall_id) return store
+        return Store(-1, -1, "Not Found", "00h00", "00h00", 0, 0)
     }
 
     fun getStoreCurrentCount(STORE: String): String {
@@ -134,7 +155,7 @@ public class Datasource {
         stores_logos = store_logos
     }
 
-    fun getFavorite(): MutableList<Store> { return favorite }
+    fun getFavorite(): MutableSet<Store> { return favorite }
     fun addFavorite(store: Store) { favorite.add(store) }
     fun removeFavorite(store: Store) { favorite.remove(store) }
     fun getShoppingById(shopId: Int): String {
