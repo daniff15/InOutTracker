@@ -120,4 +120,29 @@
         app:layout_constraintTop_toTopOf="@+id/follow_button"
         app:srcCompat="@drawable/info" />
 
+    <TextView
+        android:id="@+id/textView_openingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Opening Hours"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/store_page_max"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toEndOf="@+id/store_page_current"
+        app:layout_constraintTop_toBottomOf="@+id/mall_count_current_count2" />
+
+    <TextView
+        android:id="@+id/opening_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="00h00 - 00h00"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textView_openingHours"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_openingHours"
+        app:layout_constraintTop_toBottomOf="@+id/textView_openingHours" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

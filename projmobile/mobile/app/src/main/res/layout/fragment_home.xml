@@ -130,4 +130,15 @@
         app:layout_constraintStart_toStartOf="@+id/choose_mall"
         tools:layout_editor_absoluteY="59dp" />
 
+    <Button
+        android:id="@+id/store_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Details"
+        app:layout_constraintEnd_toStartOf="@+id/store_count"
+        app:layout_constraintStart_toEndOf="@+id/mall_count"
+        app:layout_constraintTop_toTopOf="@+id/store_count"
+        tools:visibility="invisible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

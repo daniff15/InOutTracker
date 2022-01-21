@@ -60,6 +60,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val store_capacity: TextView = view.findViewById(R.id.store_count)
         val mall_capacity: TextView = view.findViewById(R.id.mall_count)
+        val details: Button = view.findViewById(R.id.store_details)
+
+        details.visibility = View.GONE
 
         val mall: AutoCompleteTextView = view.findViewById(R.id.choose_mall)
         val store: AutoCompleteTextView = view.findViewById(R.id.choose_store)
@@ -71,11 +74,12 @@ class HomeFragment : Fragment() {
         mall.threshold = 2
         store.threshold = 2
 
-        val stores = Datasource().getAllStores()
         val shoppings = Datasource().getAllShoppings()
 
         var selected_store: String = ""
         var selected_mall: String = ""
+
+        var stores = mutableListOf<String>()
 
 
         val adapter1: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, shoppings)
@@ -85,11 +89,23 @@ class HomeFragment : Fragment() {
 
         mall.setOnItemClickListener { parent, view, position, id ->
             selected_mall = shoppings[position]
+            selected_store = ""
+            store_capacity.text = "-"
+            store.setText(R.string.empty)
+            details.visibility = View.GONE
             mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
+
+            stores = mutableListOf()
+            for (store in Datasource().getShoppingStores(Datasource().getShoppingId(selected_mall))!!) stores.add(store.name)
+
+            val adapter2: ArrayAdapter<String> = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, stores)
+            store.setAdapter(adapter2)
         }
 
         store.setOnItemClickListener { parent, view, position, id ->
             selected_store = stores[position]
+            details.visibility = View.VISIBLE
+            Datasource().setCurrentStore(Datasource().getStoreFromMallAndStoreName(selected_mall, selected_store))
             store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
         }
 
@@ -101,6 +117,10 @@ class HomeFragment : Fragment() {
             store.showDropDown()
         }
 
+        details.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_storePageFragment)
+        }
+
         // Create the Handler object (on the main thread by default)
         val handler = Handler()
         // Define the code block to be executed
@@ -109,11 +129,11 @@ class HomeFragment : Fragment() {
                 //updateDB(selfcont)
                 if (selected_store != "") store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
                 if (selected_mall != "") mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
-                createCards(view)
+                //createCards(view)
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 1000)
+                handler.postDelayed(this, 5000)
             }
         }
         // Start the initial runnable task by posting through the handler
@@ -123,7 +143,7 @@ class HomeFragment : Fragment() {
     private fun createCards(view: View?){
         val rv = view?.findViewById<RecyclerView>(R.id.home_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
-
+        
         for (store in Datasource().getFavorite()){
             var new_store = Datasource().getStoreById(store.id)
             if (new_store != null) {

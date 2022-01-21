@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>in.out.tracker</groupId>
 	<artifactId>InOutTracker</artifactId>
-	<version>0.0.1</version>
+	<version>1.0</version>
 	<name>InOutTracker</name>
 	<description>SpringBoot API for InOutTracker</description>
 	<properties>
