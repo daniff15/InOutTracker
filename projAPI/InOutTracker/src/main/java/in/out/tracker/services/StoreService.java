@@ -39,6 +39,14 @@ public class StoreService {
         return store;
     }
 
+    public Store updateWaiting(long store_id, int people) throws ResourceNotFoundException {
+        Store store = storeRepository.findById(store_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Store not found for this id :: " + store_id));
+        store.setWaiting(people);
+        storeRepository.save(store);
+        return store;
+    }
+
     public Store updateStore(Store updatedStore, long id) throws ResourceNotFoundException {
         Store store = storeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Store not found for this id :: " + id));
