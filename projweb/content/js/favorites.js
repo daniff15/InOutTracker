@@ -51,4 +51,20 @@
             getStore(favorites[i]);
         }
     }
+
+    $(document).on("click", ".fav-shop-button", function() {
+        var shopId = $(this).parent().parent().attr("id");
+        var data = {
+            user_id: user["id"],
+            store_id: shopId,
+        };
+        $.ajax({
+            url: "http://" + self.location.hostname + ":8000/api/v1/remove/favorite",
+            type: "DELETE",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+        }).done(function (data) {
+            location.reload();
+        });
+    });
 });
