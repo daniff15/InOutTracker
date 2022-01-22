@@ -23,6 +23,7 @@ class LoginDataSource {
                 if(password == ret.second.password){
                     val user = LoggedInUser(java.util.UUID.randomUUID().toString(), " " + ret.second.name)
                     Datasource().setCurrentUserId(ret.second.id)
+                    Datasource().setLoggedIn(true, username)
                     lateinit var viewModel: MainViewModel
                     val self = Datasource().getSELF()
                     val repository = Repository()
@@ -55,6 +56,7 @@ class LoginDataSource {
                 viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
                 val user_id = getId()
                 Datasource().setCurrentUserId(user_id)
+                Datasource().setLoggedIn(true, username)
                 viewModel.saveUser(User(user_id,0, username, username, password))
                 viewModel.myResponse_SaveUser.observe(self, { response ->
 
