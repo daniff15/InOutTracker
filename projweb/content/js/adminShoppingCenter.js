@@ -3,7 +3,6 @@
     var a = queryString.split("|");
     var shoppingId = a[0];
     function showStores(stores) {
-
         var rows = "";
         for(var store of stores) {
             rows +=

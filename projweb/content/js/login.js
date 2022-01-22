@@ -45,6 +45,7 @@
                     name: data["name"],
                     username: data["username"],
                     email: data["email"],
+                    id: data["id"],
                 }
                 writeCookie("login", JSON.stringify(value), 1);
             }

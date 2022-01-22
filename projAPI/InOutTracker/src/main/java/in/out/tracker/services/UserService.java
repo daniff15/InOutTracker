@@ -53,6 +53,7 @@ public class UserService {
         response.put("name", dbUser.getName());
         response.put("username", dbUser.getUsername());
         response.put("email", dbUser.getEmail());
+        response.put("id", String.valueOf(dbUser.getId()));
 
         return response;
     }

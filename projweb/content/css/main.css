@@ -39,6 +39,10 @@
     float: right;
 }
 
+.fav-shop-button {
+    float: right;
+}
+
 .table-cell {
     vertical-align: middle !important;
 }
