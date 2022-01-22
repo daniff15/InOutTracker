@@ -273,13 +273,14 @@ if __name__ == '__main__':
                 mall.id: len(mall.inside_mall_ids)
             },
             'stores': {},
-            'waiting_stores': {}
+            'waiting_stores': {},
+            'daily_info': {}
         }
         for store in mall.stores:
             stores_capacity.get('stores')[store.id] = len(store.inside_store_ids)
             stores_capacity.get('waiting_stores')[store.id] = len(store.waiting_store_ids)
 
-        produce(stores_capacity)
+        #produce(stores_capacity)
 
 
         for shopping in malls:
@@ -295,11 +296,13 @@ if __name__ == '__main__':
             print("--------------END--------------")
 
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
-        if numbers_of_iters == 5:
+        if numbers_of_iters == 1:
+            print(day_info)
             numbers_of_iters = 0
             if hours_of_day == [23 , 45]:
                 #End of the day
-                produce(day_info)
+                stores_capacity['daily_info'] = day_info
+                produce(stores_capacity)
                 hours_of_day = [00 , 00]
                 day_info = {}
             elif hours_of_day[1] != 45:
