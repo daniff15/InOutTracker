@@ -54,11 +54,15 @@
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        $("#account").html(
-            `<li class="nav-item">
-                <a class="nav-link" href="account.html">${user["username"]}</a>
-            </li>`
-        );
+        if(user["type"] == 0) {
+            window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
+        }else {
+            $("#account").html(
+                `<li class="nav-item">
+                    <a class="nav-link" href="account.html">${user["username"]}</a>
+                </li>`
+            );
+        }
     }
 
     $(document).on("click", ".delete-shopping-button", function() {

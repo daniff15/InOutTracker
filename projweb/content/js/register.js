@@ -39,6 +39,10 @@
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        $("#register").html("");
+        if(user["type"] == 0) {
+            window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
+        }else {
+            window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
+        }
     }
 });

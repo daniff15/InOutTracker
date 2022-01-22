@@ -49,10 +49,14 @@
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        $("#account").html(
-            `<li class="nav-item">
-                <a class="nav-link" href="account.html">${user["username"]}</a>
-            </li>`
-        );
+        if(user["type"] == 0) {
+            $("#account").html(
+                `<li class="nav-item">
+                    <a class="nav-link" href="account.html">${user["username"]}</a>
+                </li>`
+            );
+        }else {
+            window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
+        }
     }
 });
