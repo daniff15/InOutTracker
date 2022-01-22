@@ -137,6 +137,7 @@
                 console.log(data);
             });
         }else {
+            favorites.splice(favorites.indexOf(shopId));
             $.ajax({
                 url: "http://" + self.location.hostname + ":8000/api/v1/remove/favorite",
                 type: "DELETE",
