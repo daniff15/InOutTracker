@@ -27,7 +27,7 @@
     
     (function worker() {
         $.ajax({
-            url: "http://" + self.location.hostname + ":8000/api/v1/stores", 
+            url: "http://" + self.location.hostname + ":8000/api/v1/shopping/" + shoppingId + "/stores",
             success: function(data) {
                 showStores(data);
             },
