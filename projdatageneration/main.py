@@ -1,3 +1,4 @@
+
 import random
 import requests
 from simulate import *
@@ -12,12 +13,12 @@ import datetime
 
 
 try:
-	client = pulsar.Client('pulsar://pulsarclient:6650')
+	client = pulsar.Client('pulsar://localhost:6650')
 	producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
 except requests.exceptions.ConnectionError:
     print("Broker is not Running")
     exit(1)
-serviceURL = 'springbootapi:8000/'
+serviceURL = 'localhost:8000/'
 
 try:
     requests.post(f'http://{serviceURL}api/v1/users', json = {
@@ -108,6 +109,9 @@ if __name__ == '__main__':
     #In case the store or mall are closed, do nothing
     numbers_of_iters = 0
 
+    day_info = {}
+    hour_info = {}
+
     while True:
         #Choose the mall (random)
 
@@ -189,6 +193,10 @@ if __name__ == '__main__':
                 else:
                     #!Supostamente ja entra quando nao respeita
                     store.enterStore(mall.people_id)
+                    if store.id in hour_info:
+                        hour_info[store.id] += 1
+                    else:
+                        hour_info[store.id] = 1
                 mall.people_id += 1
 
         elif val == 2:
@@ -260,7 +268,6 @@ if __name__ == '__main__':
         #To see when to increase the hours_of_day    
         numbers_of_iters += 1
 
-        #TODO: change this to work with multiple malls
         stores_capacity = {
             'shoppings': {
                 mall.id: len(mall.inside_mall_ids)
@@ -291,14 +298,20 @@ if __name__ == '__main__':
         if numbers_of_iters == 5:
             numbers_of_iters = 0
             if hours_of_day == [23 , 45]:
+                #End of the day
+                produce(day_info)
                 hours_of_day = [00 , 00]
+                day_info = {}
             elif hours_of_day[1] != 45:
                 hours_of_day[1] += 15
             elif hours_of_day[1] == 45:
+                #End of an hour
+                day_info[hours_of_day[0]] = hour_info
+                hour_info = {}
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
 
-        print("HOURS OF DAY  - " , hours_of_day)
+        print("HOURS OF DAY  - " , day_info)
         print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
         time.sleep(0.025)
