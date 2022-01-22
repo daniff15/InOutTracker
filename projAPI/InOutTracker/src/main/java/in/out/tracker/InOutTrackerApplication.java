@@ -48,6 +48,7 @@ public class InOutTrackerApplication {
 			try {
 				String message = new String(msg.getData());
 				JSONObject json = new JSONObject(message);
+				//System.out.println(json);
 				JSONObject shoppings = json.getJSONObject("shoppings");
 				for(Iterator it = shoppings.keys(); it.hasNext(); ) {
 					String element = (String) it.next();
@@ -78,7 +79,7 @@ public class InOutTrackerApplication {
 					httpCon.getInputStream();
 				}
 				JSONObject waiting_stores = json.getJSONObject("waiting_stores");
-				for(Iterator it = stores.keys(); it.hasNext(); ) {
+				for(Iterator it = waiting_stores.keys(); it.hasNext(); ) {
 					String element = (String) it.next();
 					String people = stores.getString(element);
 					URL url = new URL("http://127.0.0.1:8000/api/v1/store/update/" + element + "/waiting/" + people);
@@ -90,6 +91,27 @@ public class InOutTrackerApplication {
 					out.write("Resource content");
 					out.close();
 					httpCon.getInputStream();
+				}
+				JSONObject daily_info = json.getJSONObject("daily_info");
+				if (daily_info.length() > 0) System.out.println(daily_info);
+				for(Iterator it = daily_info.keys(); it.hasNext(); ) {
+					String hour = (String) it.next();
+					JSONObject hours = daily_info.getJSONObject(hour);
+					for(Iterator el = hours.keys(); el.hasNext(); ) {
+						String store = (String) el.next();
+						int total_people = hours.getInt(store);
+						/URL url = new URL("http://127.0.0.1:8000/api/v1/store/update/" + element + "/waiting/" + people);
+						 HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+						 httpCon.setDoOutput(true);
+						 httpCon.setRequestMethod("PUT");
+						 OutputStreamWriter out = new OutputStreamWriter(
+						 httpCon.getOutputStream());
+						 out.write("Resource content");
+						 out.close();
+						 httpCon.getInputStream();
+
+					}
+
 				}
 				consumer.acknowledge(msg);
 			} catch (PulsarClientException e) {
