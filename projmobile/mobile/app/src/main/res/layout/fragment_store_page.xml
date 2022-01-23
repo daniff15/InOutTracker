@@ -42,11 +42,11 @@
         android:id="@+id/store_page_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:text="Current"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/store_page_logo"
+        app:layout_constraintEnd_toEndOf="@+id/mall_count_current_count2"
+        app:layout_constraintStart_toStartOf="@+id/mall_count_current_count"
         app:layout_constraintTop_toBottomOf="@+id/store_page_info" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
-        android:text="Maximum"
+        android:text="Waiting"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/store_page_current"
         app:layout_constraintStart_toEndOf="@+id/store_page_current"
@@ -65,12 +65,10 @@
         android:id="@+id/mall_count_current_count2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="15"
+        android:text="0"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/mall_count_current_count"
-        app:layout_constraintEnd_toEndOf="@+id/store_page_max"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="@+id/store_page_max"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="@+id/mall_count_current_count"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -79,11 +77,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="7"
+        android:text="0"
         android:textSize="50sp"
-        app:layout_constraintEnd_toEndOf="@+id/store_page_current"
-        app:layout_constraintHorizontal_bias="0.274"
-        app:layout_constraintStart_toStartOf="@+id/store_page_current"
+        app:layout_constraintStart_toStartOf="@+id/store_page_logo"
         app:layout_constraintTop_toBottomOf="@+id/store_page_current" />
 
     <TextView
@@ -100,13 +96,13 @@
 
     <Button
         android:id="@+id/follow_button"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Follow"
         app:layout_constraintEnd_toEndOf="@+id/favorite"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/store_page_name"
+        app:layout_constraintStart_toStartOf="@+id/store_page_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -127,9 +123,8 @@
         android:layout_marginTop="36dp"
         android:text="Opening Hours"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/store_page_max"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toEndOf="@+id/store_page_current"
+        app:layout_constraintEnd_toEndOf="@+id/store_page_info"
+        app:layout_constraintStart_toStartOf="@+id/store_page_info"
         app:layout_constraintTop_toBottomOf="@+id/mall_count_current_count2" />
 
     <TextView
@@ -144,5 +139,26 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textView_openingHours"
         app:layout_constraintTop_toBottomOf="@+id/textView_openingHours" />
+
+    <TextView
+        android:id="@+id/waiting_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mall_count_current_count2"
+        app:layout_constraintEnd_toEndOf="@+id/store_page_max"
+        app:layout_constraintStart_toStartOf="@+id/store_page_max"
+        app:layout_constraintTop_toTopOf="@+id/mall_count_current_count2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mall_count_current_count"
+        app:layout_constraintStart_toEndOf="@+id/mall_count_current_count"
+        app:layout_constraintTop_toTopOf="@+id/mall_count_current_count" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
