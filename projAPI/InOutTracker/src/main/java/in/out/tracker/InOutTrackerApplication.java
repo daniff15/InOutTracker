@@ -72,8 +72,8 @@ public class InOutTrackerApplication {
 					out.close();
 					httpCon.getInputStream();
 				}
-				JSONObject waiting_stores = json.getJSONObject("waiting_stores");
 
+				JSONObject waiting_stores = json.getJSONObject("waiting_stores");
 				for(Iterator it = waiting_stores.keys(); it.hasNext(); ) {
 					String element = (String) it.next();
 					String people = stores.getString(element);
@@ -88,8 +88,7 @@ public class InOutTrackerApplication {
 					httpCon.getInputStream();
 				}
 				JSONObject daily_info = json.getJSONObject("daily_info");
-				day.getAndIncrement();
-				if (daily_info.length() > 0) System.out.println(daily_info);
+				if (daily_info.length() > 0) day.getAndIncrement();
 				for(Iterator it = daily_info.keys(); it.hasNext(); ) {
 					String hour = (String) it.next();
 					JSONObject hours = daily_info.getJSONObject(hour);
