@@ -162,46 +162,53 @@ class MainActivity : AppCompatActivity() {
             for (store in Datasource().getFollowing().keys) {
                 var title: String = ""
                 var content: String = ""
+                var notify = false
                 if (Datasource().getIsEmpty_check() && store.people_count == 0) {
+                    notify = true
                     title = "${store.name} is Empty"
                     content = "Now it's a good time to do your shopping"
                 } else if (Datasource().getIsFull_check() && store.people_count == store.max_capacity){
+                    notify = true
                     title = "${store.name} is at Full Capacity"
                     content = "Maybe you should wait a little"
-                } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage()/100))){
+                } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage().toDouble()/100))){
+                    notify = true
                     title = "There's only ${store.people_count} people at ${store.name}"
                     content = "Maybe it's a good time to go there"
                 }
-                var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
-                    .setSmallIcon(R.drawable.notification_bell)
-                    .setContentTitle(title)
-                    .setContentText(content)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                if (notify){
+                    var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
+                        .setSmallIcon(R.drawable.notification_bell)
+                        .setContentTitle(title)
+                        .setContentText(content)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val channel = NotificationChannel(
-                        "Notify",
-                        "Notify",
-                        NotificationManager.IMPORTANCE_DEFAULT
-                    ).apply {
-                        description = "description"
-                    }
-                    // Register the channel with the system
-                    val notificationManager: NotificationManager =
-                        Datasource().getSELF()
-                            ?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManager.createNotificationChannel(channel)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val channel = NotificationChannel(
+                            "Notify",
+                            "Notify",
+                            NotificationManager.IMPORTANCE_DEFAULT
+                        ).apply {
+                            description = "description"
+                        }
+                        // Register the channel with the system
+                        val notificationManager: NotificationManager =
+                            Datasource().getSELF()
+                                ?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                        notificationManager.createNotificationChannel(channel)
 
-                    Datasource().removeFollowing(store)
+                        Datasource().removeFollowing(store)
 
-                    with(applicationContext?.let { it1 -> NotificationManagerCompat.from(it1) }) {
-                        // notificationId is a unique int for each notification that you must define
-                        if (follow_not != null) {
-                            this?.notify(0, follow_not.build())
+                        with(applicationContext?.let { it1 -> NotificationManagerCompat.from(it1) }) {
+                            // notificationId is a unique int for each notification that you must define
+                            if (follow_not != null) {
+                                this?.notify(0, follow_not.build())
+                            }
                         }
                     }
                 }
+
             }
         }
     }
