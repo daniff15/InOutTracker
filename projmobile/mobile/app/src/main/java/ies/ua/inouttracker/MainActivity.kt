@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 5000)
+                handler.postDelayed(this, 1000)
             }
         }
         // Start the initial runnable task by posting through the handler
@@ -158,20 +158,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun notify_user() {
-        //TODO: add constraints checked on settings
         if (Datasource().getFollowing().isNotEmpty() && Datasource().getNotified()) {
             for (store in Datasource().getFollowing().keys) {
                 var title: String = ""
                 var content: String = ""
                 if (Datasource().getIsEmpty_check() && store.people_count == 0) {
-                    title = "There's only ${store.people_count} people at ${store.name}"
-                    content = "Maybe it's a good time to go there"
+                    title = "${store.name} is Empty"
+                    content = "Now it's a good time to do your shopping"
                 } else if (Datasource().getIsFull_check() && store.people_count == store.max_capacity){
                     title = "${store.name} is at Full Capacity"
                     content = "Maybe you should wait a little"
                 } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage()/100))){
-                    title = "${store.name} is Empty"
-                    content = "Now it's a good time to do your shopping"
+                    title = "There's only ${store.people_count} people at ${store.name}"
+                    content = "Maybe it's a good time to go there"
                 }
                 var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
                     .setSmallIcon(R.drawable.notification_bell)
