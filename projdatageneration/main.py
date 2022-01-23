@@ -280,7 +280,7 @@ if __name__ == '__main__':
             stores_capacity.get('stores')[store.id] = len(store.inside_store_ids)
             stores_capacity.get('waiting_stores')[store.id] = len(store.waiting_store_ids)
 
-        #produce(stores_capacity)
+        produce(stores_capacity)
 
 
         for shopping in malls:
@@ -296,8 +296,7 @@ if __name__ == '__main__':
             print("--------------END--------------")
 
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
-        if numbers_of_iters == 1:
-            print(day_info)
+        if numbers_of_iters == 200:
             numbers_of_iters = 0
             if hours_of_day == [23 , 45]:
                 #End of the day
