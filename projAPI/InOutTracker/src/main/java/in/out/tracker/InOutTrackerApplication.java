@@ -1,20 +1,13 @@
 package in.out.tracker;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import in.out.tracker.exception.ResourceNotFoundException;
-import in.out.tracker.services.FavStoresService;
 import in.out.tracker.services.ShoppingService;
 import in.out.tracker.services.StoreService;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.MessageListener;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
-import org.apache.pulsar.shade.org.apache.avro.data.Json;
-import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -26,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootApplication
 public class InOutTrackerApplication {
@@ -33,6 +27,7 @@ public class InOutTrackerApplication {
 	public static void main(String[] args) throws PulsarClientException {
 		StoreService storeService = new StoreService();
 		ShoppingService shoppingService = new ShoppingService();
+		AtomicInteger day = new AtomicInteger();
 
 		ConfigurableApplicationContext ctx =
 				SpringApplication.run(InOutTrackerApplication.class, args);
@@ -48,7 +43,6 @@ public class InOutTrackerApplication {
 			try {
 				String message = new String(msg.getData());
 				JSONObject json = new JSONObject(message);
-				//System.out.println(json);
 				JSONObject shoppings = json.getJSONObject("shoppings");
 				for(Iterator it = shoppings.keys(); it.hasNext(); ) {
 					String element = (String) it.next();
@@ -79,6 +73,7 @@ public class InOutTrackerApplication {
 					httpCon.getInputStream();
 				}
 				JSONObject waiting_stores = json.getJSONObject("waiting_stores");
+
 				for(Iterator it = waiting_stores.keys(); it.hasNext(); ) {
 					String element = (String) it.next();
 					String people = stores.getString(element);
@@ -93,6 +88,7 @@ public class InOutTrackerApplication {
 					httpCon.getInputStream();
 				}
 				JSONObject daily_info = json.getJSONObject("daily_info");
+				day.getAndIncrement();
 				if (daily_info.length() > 0) System.out.println(daily_info);
 				for(Iterator it = daily_info.keys(); it.hasNext(); ) {
 					String hour = (String) it.next();
@@ -100,18 +96,16 @@ public class InOutTrackerApplication {
 					for(Iterator el = hours.keys(); el.hasNext(); ) {
 						String store = (String) el.next();
 						int total_people = hours.getInt(store);
-						/URL url = new URL("http://127.0.0.1:8000/api/v1/store/update/" + element + "/waiting/" + people);
-						 HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-						 httpCon.setDoOutput(true);
-						 httpCon.setRequestMethod("PUT");
-						 OutputStreamWriter out = new OutputStreamWriter(
-						 httpCon.getOutputStream());
-						 out.write("Resource content");
-						 out.close();
-						 httpCon.getInputStream();
-
+						URL url = new URL("http://127.0.0.1:8000/api/v1/add/daily/" + store + "/" + day + "/"+ hour + "/" + total_people);
+						HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+						httpCon.setDoOutput(true);
+						httpCon.setRequestMethod("POST");
+						OutputStreamWriter out = new OutputStreamWriter(
+						httpCon.getOutputStream());
+						out.write("Resource content");
+						out.close();
+						httpCon.getInputStream();
 					}
-
 				}
 				consumer.acknowledge(msg);
 			} catch (PulsarClientException e) {
