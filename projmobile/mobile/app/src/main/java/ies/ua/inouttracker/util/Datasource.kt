@@ -13,7 +13,7 @@ var storesName: MutableList<String> = mutableListOf()
 var shoppingsName: MutableList<String> = mutableListOf()
 var favorite: MutableSet<Store> = mutableSetOf()
 var following: HashMap<Store, Int> = hashMapOf()
-var current_store: Store = Store(0,0, "", "", "", 0, 0)
+var current_store: Store = Store(0,0, "", "", "", 0, 0, 0)
 var loggedin: Boolean = false
 var current_user: String = ""
 var current_user_id: Int = -1
@@ -102,7 +102,7 @@ public class Datasource {
         val mall_id = getShoppingId(mall)
         for (store in stores)
             if (store_name == store.name && store.shop_id == mall_id) return store
-        return Store(-1, -1, "Not Found", "00h00", "00h00", 0, 0)
+        return Store(-1, -1, "Not Found", "00h00", "00h00", 0, 0, 0)
     }
 
     fun getStoreCurrentCount(STORE: String): String {
@@ -223,5 +223,12 @@ public class Datasource {
 
     fun setCurrentUserId(id: Int) {
         current_user_id = id
+    }
+
+    fun getStoreCurrentWaiting(STORE: String): String {
+        for (store in stores)
+            if (store.name == STORE)
+                return store.waiting.toString()
+        return "0"
     }
 }

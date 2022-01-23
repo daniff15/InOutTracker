@@ -8,5 +8,6 @@ data class Store(
     val closing_time: String,
     val max_capacity: Int,
     val people_count: Int,
+    val waiting: Int
 ) {
 }
