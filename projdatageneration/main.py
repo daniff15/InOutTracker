@@ -36,7 +36,7 @@ try:
         "opening_time": "09h00",
         "closing_time": "22h00",
         "max_capacity": 1500,
-        "people_count": 0, "waiting": 0, "waiting": 0
+        "people_count": 0, "waiting": 0
     })
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 1,"shop_id": 1,"name": "Levi's","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 15, "people_count": 0, "waiting": 0, "waiting": 0})
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 2,"shop_id": 1,"name": "FNAC","opening_time": "10h00", "closing_time": "22h00", "max_capacity": 50, "people_count": 0, "waiting": 0, "waiting": 0})
