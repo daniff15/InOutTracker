@@ -25,6 +25,7 @@ import ies.ua.inouttracker.R
 import ies.ua.inouttracker.data.model.LoggedInUser
 import ies.ua.inouttracker.repository.Repository
 import ies.ua.inouttracker.ui.model.FavStores
+import ies.ua.inouttracker.ui.model.Store
 import ies.ua.inouttracker.ui.model.User
 import ies.ua.inouttracker.util.Datasource
 import java.util.*
@@ -141,6 +142,10 @@ class LoginFragment : Fragment() {
     ){
         val appContext = context?.applicationContext ?: return
         var message = ""
+        var put = true
+        var favorites_added: MutableList<Store> = mutableListOf()
+
+        Log.d("UsernamePassword",username + password)
 
         lateinit var viewModel: MainViewModel
         val self = Datasource().getSELF()
@@ -165,7 +170,10 @@ class LoginFragment : Fragment() {
                         //Add Cached Favorites to DB
                         viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
                         for (favorite in Datasource().getFavorite()){
-                            viewModel.saveFav(FavStores(ret.second.id, favorite.id))
+                            if (favorite !in favorites_added) {
+                                favorites_added.add(favorite)
+                                viewModel.saveFav(FavStores(ret.second.id, favorite.id))
+                            }
                             viewModel.myResponse_FavStores.observe(self, { response ->
                             })
                         }
@@ -194,26 +202,35 @@ class LoginFragment : Fragment() {
                 viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
                 viewModel.getUsers()
                 viewModel.myResponse_Users.observe(self, { response ->
-                    for (user in response){
-                        if (user.id > user_id) user_id = user.id
+                    if (put){
+                        for (user in response){
+                            if (user.id > user_id) user_id = user.id
+                        }
+                        user_id += 1
+                        Datasource().setCurrentUserId(user_id)
                     }
-                    user_id += 1
+
                     lateinit var viewModel: MainViewModel
                     val self = Datasource().getSELF()
                     val repository = Repository()
                     val viewModelFactory = MainViewModelFactory(repository)
                     viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
                     val user = LoggedInUser(java.util.UUID.randomUUID().toString(), " $username")
-                    Datasource().setCurrentUserId(user_id)
                     Datasource().setLoggedIn(true, username)
-                    viewModel.saveUser(User(user_id,0, username, username, password))
+                    if (put) {
+                        viewModel.saveUser(User(user_id,0, username, username, password))
+                        put = false
+                    }
                     viewModel.myResponse_SaveUser.observe(self, { response ->
 
                     })
                     for (favorite in Datasource().getFavorite()){
-                        viewModel.saveFav(FavStores(user_id, favorite.id))
-                        viewModel.myResponse_FavStores.observe(self, { response ->
-                        })
+                        if (favorite !in favorites_added){
+                            favorites_added.add(favorite)
+                            viewModel.saveFav(FavStores(user_id, favorite.id))
+                            viewModel.myResponse_FavStores.observe(self, { response ->
+                            })
+                        }
                     }
                 })
             }
