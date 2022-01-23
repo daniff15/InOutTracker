@@ -76,7 +76,7 @@ public class InOutTrackerApplication {
 				JSONObject waiting_stores = json.getJSONObject("waiting_stores");
 				for(Iterator it = waiting_stores.keys(); it.hasNext(); ) {
 					String element = (String) it.next();
-					String people = stores.getString(element);
+					String people = waiting_stores.getString(element);
 					URL url = new URL("http://127.0.0.1:8000/api/v1/store/update/" + element + "/waiting/" + people);
 					HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
 					httpCon.setDoOutput(true);
