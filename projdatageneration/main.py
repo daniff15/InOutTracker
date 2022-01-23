@@ -38,11 +38,11 @@ try:
         "max_capacity": 1500,
         "people_count": 0, "waiting": 0
     })
-    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 1,"shop_id": 1,"name": "Levi's","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 15, "people_count": 0, "waiting": 0, "waiting": 0})
-    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 2,"shop_id": 1,"name": "FNAC","opening_time": "10h00", "closing_time": "22h00", "max_capacity": 50, "people_count": 0, "waiting": 0, "waiting": 0})
-    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 3,"shop_id": 1,"name": "Sport Zone","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 155, "people_count": 0, "waiting": 0, "waiting": 0})
-    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 4,"shop_id": 1,"name": "Zara","opening_time": "10h00", "closing_time": "22h00", "max_capacity": 140, "people_count": 0, "waiting": 0, "waiting": 0})
-    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 5,"shop_id": 1,"name": "Pull & Bear", "opening_time": "09h00", "closing_time": "21h00", "max_capacity": 36, "people_count": 0, "waiting": 0, "waiting": 0})
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 1,"shop_id": 1,"name": "Levi's","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 15, "people_count": 0, "waiting": 0})
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 2,"shop_id": 1,"name": "FNAC","opening_time": "10h00", "closing_time": "22h00", "max_capacity": 50, "people_count": 0, "waiting": 0})
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 3,"shop_id": 1,"name": "Sport Zone","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 155, "people_count": 0, "waiting": 0})
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 4,"shop_id": 1,"name": "Zara","opening_time": "10h00", "closing_time": "22h00", "max_capacity": 140, "people_count": 0, "waiting": 0})
+    requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 5,"shop_id": 1,"name": "Pull & Bear", "opening_time": "09h00", "closing_time": "21h00", "max_capacity": 36, "people_count": 0, "waiting": 0})
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 6,"shop_id": 1,"name": "Bershka","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 36, "people_count": 0, "waiting": 0})
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 7,"shop_id": 1,"name": "Springfield","opening_time": "09h00", "closing_time": "22h00", "max_capacity": 40, "people_count": 0, "waiting": 0})
     requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 8,"shop_id": 1,"name": "Claire's","opening_time": "10h00", "closing_time": "20h00", "max_capacity": 14, "people_count": 0, "waiting": 0})
