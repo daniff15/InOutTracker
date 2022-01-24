@@ -5,7 +5,7 @@ It allows people to see if the mall is overloaded with other people so they can 
 
 ## How it runs
 
-Our service has a MySQL database and a pulsar standalone client running in the background. After this two components are running we start the SpringBoot API which will connect to the Database and connect a consumer to the pulsar client. After that, we start the data generation script that simulates real life flow for one mall (at the moment). In this python script we have to connect to the api and pulsar client. There's a producer for the message broker and in this script we populate the DB with a few data just for demonstration purposes. It periodically sends messages to the message broker (pulsar) through the created producer. The API consumer receives this messages and updates the Database with the new information that later will be accesses via mobile and web apps that get database info from the API.
+Our service has a MySQL database and a pulsar standalone client running in the background. After these two components are running we start the SpringBoot API which will connect to the Database and create a pulsar consumer. After that, we start the data generation python script that simulates real life flow for some shoppings and their stores. In this script we have to connect to the api and pulsar client. There's a producer for the message broker and in this script we generate a few data just for demonstration purposes. It periodically sends messages to the message broker (pulsar) through the created producer. The API consumer receives these messages and updates the database with the new information that later will be accessed via mobile and web apps that get database info from the API.
 
 ## How to run
 
