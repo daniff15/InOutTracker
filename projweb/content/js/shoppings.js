@@ -10,7 +10,7 @@
                         <h4 class="card-title">${shopping.name}</h4>
                         <h5>${shopping.people_count} / ${shopping.max_capacity}</h5>
                         <p>Open: ${shopping.opening_time}-${shopping.closing_time}</p>
-                        <a href="shopping-center.html?${shopping.id}" class="btn btn-primary">Go somewhere</a>
+                        <a href="shopping-center.html?${shopping.id}" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>`
@@ -49,10 +49,14 @@
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        $("#account").html(
-            `<li class="nav-item">
-                <a class="nav-link" href="account.html">${user["username"]}</a>
-            </li>`
-        );
+        if(user["type"] == 0) {
+            $("#account").html(
+                `<li class="nav-item">
+                    <a class="nav-link" href="account.html">${user["username"]}</a>
+                </li>`
+            );
+        }else {
+            window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
+        }
     }
 });

@@ -13,6 +13,7 @@ public class Store {
     private String closing_time;
     private int max_capacity;
     private int people_count;
+    private int waiting;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +45,9 @@ public class Store {
     @Column(name = "people_count", nullable = true)
     public int getPeople_count() { return people_count; }
     public void setPeople_count(int people_count) { this.people_count = people_count; }
+
+    @Column(name = "waiting", nullable = true)
+    public int getWaiting() { return waiting; }
+    public void setWaiting(int waiting) { this.waiting = waiting; }
 
 }

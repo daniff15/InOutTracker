@@ -25,7 +25,11 @@ public class UserService {
         return ResponseEntity.ok().body(users);
     }
 
-    public User createUser(User user) { return userRepository.save(user);}
+    public User createUser(User user) {
+        User dbUser = userRepository.findByEmail(user.getUsername());
+        if (dbUser == null) return userRepository.save(user);
+        return user;
+    }
 
     public Map<String, String> loginUser(User user) {
         String email = user.getEmail();
@@ -53,6 +57,7 @@ public class UserService {
         response.put("name", dbUser.getName());
         response.put("username", dbUser.getUsername());
         response.put("email", dbUser.getEmail());
+        response.put("id", String.valueOf(dbUser.getId()));
 
         return response;
     }

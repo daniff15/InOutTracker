@@ -34,7 +34,10 @@ public class FavStoresService {
         return userFavStores;
     }
 
-    public FavStores createFavRelation(FavStores relation){ return favStoresRepository.save(relation); }
+    public FavStores createFavRelation(FavStores relation){
+        if (getAllFavStores().contains(relation)) return relation;
+        return favStoresRepository.save(relation);
+    }
 
     public void deleteFavStore(FavStores fav) {
         List<FavStores> allFavStores = getAllFavStores();

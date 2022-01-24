@@ -66,13 +66,16 @@ class StorePageFragment() : Fragment() {
         val store_logo = view.findViewById<ImageView>(R.id.store_page_logo)
         val follow = view.findViewById<Button>(R.id.follow_button)
         val current = view.findViewById<TextView>(R.id.mall_count_current_count)
+        val waiting = view.findViewById<TextView>(R.id.waiting_count)
         val max = view.findViewById<TextView>(R.id.mall_count_current_count2)
         val info_button = view.findViewById<ImageButton>(R.id.info)
+        val opening_hours = view.findViewById<TextView>(R.id.opening_hours)
 
         Datasource().getStoreLogo(store.name)?.let { store_logo.setImageResource(it) }
         store_name.text = store.name
         current.text = store.people_count.toString()
         max.text = store.max_capacity.toString()
+        opening_hours.text = store.opening_time + " - " + store.closing_time
 
         if (store in Datasource().getFollowing().keys) follow.text = "Unfollow"
 
@@ -180,6 +183,7 @@ class StorePageFragment() : Fragment() {
             override fun run() {
                 //updateDB()
                 current.text = Datasource().getStoreCurrentCount(store.name)
+                waiting.text = Datasource().getStoreCurrentWaiting(store.name)
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object

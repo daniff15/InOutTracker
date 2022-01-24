@@ -144,7 +144,7 @@ class NotificationsFragment : Fragment() {
             editor.commit()
         }
         empty.setOnClickListener {
-            Datasource().setCapacity_check(capacity_custom.isChecked)
+            Datasource().setIsEmpty_check(empty.isChecked)
             val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             val editor = pref.edit()
             val gson = Gson()
@@ -155,7 +155,7 @@ class NotificationsFragment : Fragment() {
             editor.commit()
         }
         full.setOnClickListener {
-            Datasource().setCapacity_check(capacity_custom.isChecked)
+            Datasource().setIsFull_check(full.isChecked)
             val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             val editor = pref.edit()
             val gson = Gson()

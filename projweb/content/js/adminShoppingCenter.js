@@ -3,7 +3,6 @@
     var a = queryString.split("|");
     var shoppingId = a[0];
     function showStores(stores) {
-
         var rows = "";
         for(var store of stores) {
             rows +=
@@ -28,7 +27,7 @@
     
     (function worker() {
         $.ajax({
-            url: "http://" + self.location.hostname + ":8000/api/v1/stores", 
+            url: "http://" + self.location.hostname + ":8000/api/v1/shopping/" + shoppingId + "/stores",
             success: function(data) {
                 showStores(data);
             },
@@ -57,11 +56,15 @@
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        $("#account").html(
-            `<li class="nav-item">
-                <a class="nav-link" href="account.html">${user["username"]}</a>
-            </li>`
-        );
+        if(user["type"] == 0) {
+            window.location.href = "http://" + self.location.hostname + ":5500/shopping-center.html?" + shoppingId;
+        }else {
+            $("#account").html(
+                `<li class="nav-item">
+                    <a class="nav-link" href="account.html">${user["username"]}</a>
+                </li>`
+            );
+        }
     }
 
     $("#add-shop").html(

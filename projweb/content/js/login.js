@@ -45,6 +45,7 @@
                     name: data["name"],
                     username: data["username"],
                     email: data["email"],
+                    id: data["id"],
                 }
                 writeCookie("login", JSON.stringify(value), 1);
             }
@@ -60,6 +61,10 @@
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        $("#login").html("");
+        if(user["type"] == 0) {
+            window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
+        }else {
+            window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
+        }
     }
 });

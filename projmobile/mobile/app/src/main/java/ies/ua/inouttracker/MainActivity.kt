@@ -45,6 +45,26 @@ class MainActivity : AppCompatActivity() {
             "FNAC" to R.mipmap.fnac_logo,
             "Mi Store" to R.mipmap.mi_logo,
             "Sport Zone" to R.mipmap.sport_zone_logo,
+            "Levi's" to R.mipmap.levis_logo,
+            "Zara" to R.mipmap.zara_logo,
+            "Pull & Bear" to R.mipmap.pull_bear_logo,
+            "Bershka" to R.mipmap.bershka_logo,
+            "Springfield" to R.mipmap.springfield_logo,
+            "Claire's" to R.mipmap.claires_logo,
+            "Body Shop" to R.mipmap.body_shop_logo,
+            "Bimba Y Lola" to R.mipmap.bimba_lola_logo,
+            "Boutique dos Relógios" to R.mipmap.boutique_logo,
+            "Calzedonia" to R.mipmap.calzedonia_logo,
+            "Decenio" to R.mipmap.decenio_logo,
+            "Quebramar" to R.mipmap.quebramar_logo,
+            "Tiffosi" to R.mipmap.tiffosi_logo,
+            "Worten" to R.mipmap.worten_logo,
+            "Auchan" to R.mipmap.auchan_logo,
+            "C&A" to R.mipmap.ca_logo,
+            "H&M" to R.mipmap.hm_logo,
+            "Cortefiel" to R.mipmap.cortefiel_logo,
+            "Lefties" to R.mipmap.lefties_logo,
+            "New Yorker" to R.mipmap.newyorker_logo,
             "" to R.mipmap.no_image
         ))
 
@@ -138,51 +158,57 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun notify_user() {
-        //TODO: add constraints checked on settings
         if (Datasource().getFollowing().isNotEmpty() && Datasource().getNotified()) {
             for (store in Datasource().getFollowing().keys) {
                 var title: String = ""
                 var content: String = ""
+                var notify = false
                 if (Datasource().getIsEmpty_check() && store.people_count == 0) {
-                    title = "There's only ${store.people_count} people at ${store.name}"
-                    content = "Maybe it's a good time to go there"
-                } else if (Datasource().getIsFull_check() && store.people_count == store.max_capacity){
-                    title = "${store.name} is at Full Capacity"
-                    content = "Maybe you should wait a little"
-                } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage()/100))){
+                    notify = true
                     title = "${store.name} is Empty"
                     content = "Now it's a good time to do your shopping"
+                } else if (Datasource().getIsFull_check() && store.people_count == store.max_capacity){
+                    notify = true
+                    title = "${store.name} is at Full Capacity"
+                    content = "Maybe you should wait a little"
+                } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage().toDouble()/100))){
+                    notify = true
+                    title = "There's only ${store.people_count} people at ${store.name}"
+                    content = "Maybe it's a good time to go there"
                 }
-                var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
-                    .setSmallIcon(R.drawable.notification_bell)
-                    .setContentTitle(title)
-                    .setContentText(content)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                if (notify){
+                    var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
+                        .setSmallIcon(R.drawable.notification_bell)
+                        .setContentTitle(title)
+                        .setContentText(content)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val channel = NotificationChannel(
-                        "Notify",
-                        "Notify",
-                        NotificationManager.IMPORTANCE_DEFAULT
-                    ).apply {
-                        description = "description"
-                    }
-                    // Register the channel with the system
-                    val notificationManager: NotificationManager =
-                        Datasource().getSELF()
-                            ?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManager.createNotificationChannel(channel)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val channel = NotificationChannel(
+                            "Notify",
+                            "Notify",
+                            NotificationManager.IMPORTANCE_DEFAULT
+                        ).apply {
+                            description = "description"
+                        }
+                        // Register the channel with the system
+                        val notificationManager: NotificationManager =
+                            Datasource().getSELF()
+                                ?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                        notificationManager.createNotificationChannel(channel)
 
-                    Datasource().removeFollowing(store)
+                        Datasource().removeFollowing(store)
 
-                    with(applicationContext?.let { it1 -> NotificationManagerCompat.from(it1) }) {
-                        // notificationId is a unique int for each notification that you must define
-                        if (follow_not != null) {
-                            this?.notify(0, follow_not.build())
+                        with(applicationContext?.let { it1 -> NotificationManagerCompat.from(it1) }) {
+                            // notificationId is a unique int for each notification that you must define
+                            if (follow_not != null) {
+                                this?.notify(0, follow_not.build())
+                            }
                         }
                     }
                 }
+
             }
         }
     }

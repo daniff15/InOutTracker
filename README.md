@@ -20,6 +20,16 @@ This script will:
 - Run the data generation script to simulate real life data
 - Run the webapp
 
+## Application endpoints
+
+Open **webapp** at: `deti-engsoft-08:5500/shoppings.html`
+
+- To use the app as admin login to the following account:
+  - Email: `admin@inouttracker.com`
+  - Password: `adminpass`
+
+**API** is at port `8000`
+
 ## Students identification 
 
 98188 - Daniel Francisco - Architect
@@ -43,3 +53,6 @@ https://github.com/daniff15/InOutTracker/projects
 
 Report Editable Version
 https://docs.google.com/document/d/16kg7lIpYdTnfPisO5DxJrdOrjkCGBFBsKNpyiTpw5MI/edit?usp=sharing
+
+Slides Editable Version
+https://docs.google.com/presentation/d/1ToChaujgk7Sp9dD28xwv_9YVa4XuHqFhX5cwqzSPtXs/edit#slide=id.g10f55be7511_0_10
