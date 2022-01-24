@@ -167,25 +167,29 @@ class LoginFragment : Fragment() {
                         val self = Datasource().getSELF()
                         val repository = Repository()
                         val viewModelFactory = MainViewModelFactory(repository)
-                        //Add Cached Favorites to DB
                         viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
-                        for (favorite in Datasource().getFavorite()){
-                            if (favorite !in favorites_added) {
-                                favorites_added.add(favorite)
-                                viewModel.saveFav(FavStores(ret.second.id, favorite.id))
-                            }
-                            viewModel.myResponse_FavStores.observe(self, { response ->
-                            })
-                        }
+
                         //Get Favorites from the DB
                         viewModel.getFavorites(ret.second.id)
                         viewModel.myResponse_UserFavorites.observe(self, { response ->
                             for (shop_id in response.body()!!){
+                                Datasource().getStoreById(shop_id)?.let { favorites_added.add(it) }
                                 if (Datasource().getStoreById(shop_id) !in Datasource().getFavorite())
                                     Datasource().getStoreById(shop_id)
                                         ?.let { Datasource().addFavorite(it) }
                             }
                         })
+
+                        //Add Cached Favorites to DB
+                        for (favorite in Datasource().getFavorite()){
+                            if (favorite !in favorites_added) {
+                                favorites_added.add(favorite)
+                                viewModel.saveFav(FavStores(ret.second.id, favorite.id))
+                                viewModel.myResponse_FavStores.observe(self, { response ->
+                                })
+                            }
+                        }
+
                         message = "Welcome! " + ret.second.username
                     } else {
                         //Password is wrong
