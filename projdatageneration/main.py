@@ -13,7 +13,7 @@ from numpy import ma
 import datetime
 
 try:
-    client = pulsar.Client('pulsar://localhost:6650')
+    client = pulsar.Client('pulsar://pulsarclient:6650')
     producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
     consumer = client.subscribe('persistent://public/default/ns1/updates', 'updates')
 except requests.exceptions.ConnectionError:
@@ -113,9 +113,10 @@ def consume():
 if __name__ == '__main__':
     UPDATE = False
     thread = Thread(target = consume)
-    thread.start()
     populate_db()
     malls = fetchDBInfo()
+    thread.start()
+
     #1-enter_mall; 2-exit_mall; 3-wait_mall; 4-no_wait_mall
     pop = [1, 2, 3, 4]
     weights = [0.30, 0.23, 0.23, 0.23]
@@ -317,6 +318,9 @@ if __name__ == '__main__':
 
         
         for shopping in malls:
+            for store in shopping.stores:
+                print(store.store_name)
+            '''
             print("--------------START--------------")
             print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
             print("Inside mall - ", shopping.inside_mall_ids)
@@ -327,7 +331,7 @@ if __name__ == '__main__':
                 print("WAITING ", store.store_name, " - ", store.waiting_store_ids)
                 print("LEN - ", len(store.inside_store_ids))
             print("--------------END--------------")
-        
+        '''
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 200:
             numbers_of_iters = 0
@@ -346,7 +350,7 @@ if __name__ == '__main__':
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
 
-        print("DAILY INFO  - " , day_info)
-        print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
+        #print("DAILY INFO  - " , day_info)
+        #print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
         time.sleep(0.025)
