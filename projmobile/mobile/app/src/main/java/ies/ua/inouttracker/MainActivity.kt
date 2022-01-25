@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         var first_control = true
 
         Datasource().setSELF(this)
-        Datasource().setStoreLogos(hashMapOf(
+        Datasource().setStoreLogos(hashMapOf( //TODO: do this on datasource
             "FNAC" to R.mipmap.fnac_logo,
             "Mi Store" to R.mipmap.mi_logo,
             "Sport Zone" to R.mipmap.sport_zone_logo,
@@ -173,8 +173,13 @@ class MainActivity : AppCompatActivity() {
                     content = "Maybe you should wait a little"
                 } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage().toDouble()/100))){
                     notify = true
-                    title = "There's only ${store.people_count} people at ${store.name}"
-                    content = "Maybe it's a good time to go there"
+                    if (store.people_count == 0){
+                        title = "${store.name} is Empty"
+                        content = "Now it's a good time to do your shopping"
+                    } else{
+                        title = "There's only ${store.people_count} people at ${store.name}"
+                        content = "Maybe it's a good time to go there"
+                    }
                 }
                 if (notify){
                     var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
