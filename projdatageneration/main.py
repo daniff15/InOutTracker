@@ -318,9 +318,6 @@ if __name__ == '__main__':
 
         
         for shopping in malls:
-            for store in shopping.stores:
-                print(store.store_name)
-            '''
             print("--------------START--------------")
             print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
             print("Inside mall - ", shopping.inside_mall_ids)
@@ -331,7 +328,7 @@ if __name__ == '__main__':
                 print("WAITING ", store.store_name, " - ", store.waiting_store_ids)
                 print("LEN - ", len(store.inside_store_ids))
             print("--------------END--------------")
-        '''
+
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 200:
             numbers_of_iters = 0
