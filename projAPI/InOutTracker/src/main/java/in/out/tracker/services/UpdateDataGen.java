@@ -1,4 +1,4 @@
-package in.out.tracker.services.produce;
+package in.out.tracker.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,17 +15,25 @@ import java.util.Map;
 @Service
 public class UpdateDataGen {
 
-    String serviceURL = "localhost";
+    String serviceURL = "pulsar://pulsarclient:6650";
     PulsarClient client = PulsarClient.builder()
             .serviceUrl(serviceURL)
             .build();
     private Producer<String> producer = client.newProducer(Schema.STRING)
-            .topic("updates")
+            .topic("persistent://public/default/ns1/updates")
             .create();
 
     public UpdateDataGen() throws PulsarClientException {
     }
 
+    public void informDataGen(String str){
+        try {
+            String json = str;
+            producer.send(json);
+        } catch (PulsarClientException e) {
+            e.printStackTrace();
+        }
+    }
     public void informDataGen(){
         try {
             String json = "update";

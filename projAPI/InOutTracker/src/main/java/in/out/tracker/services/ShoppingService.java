@@ -4,6 +4,7 @@ import in.out.tracker.exception.ResourceNotFoundException;
 import in.out.tracker.model.Shopping;
 import in.out.tracker.model.Store;
 import in.out.tracker.repository.ShoppingRepository;
+import org.apache.pulsar.client.api.PulsarClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +40,18 @@ public class ShoppingService {
         return shopping.getStores();
     }
 
-    public Shopping createShopping(Shopping shopping) {
-        return shoppingRepository.save(shopping);
+    public Shopping createShopping(Shopping shopping) throws PulsarClientException {
+        Shopping newShopping = shoppingRepository.save(shopping);
+        new UpdateDataGen().informDataGen("newShopping: " + newShopping.getName());
+        return newShopping;
     }
 
     public void deleteShopping(long id)
-            throws ResourceNotFoundException {
+            throws ResourceNotFoundException, PulsarClientException {
         Shopping shopping = shoppingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Shopping not found for this id :: " + id));
         shoppingRepository.delete(shopping);
+        new UpdateDataGen().informDataGen("delete: " + id);
+
     }
 
     public Shopping updateCount(long shopping_id, int people) throws ResourceNotFoundException {
@@ -57,14 +62,16 @@ public class ShoppingService {
         return shopping;
     }
 
-    public Shopping updateShopping(Shopping updatedShopping, long id) throws ResourceNotFoundException {
+    public Shopping updateShopping(Shopping updatedShopping, long id) throws ResourceNotFoundException, PulsarClientException {
         Shopping shopping = shoppingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Shopping not found for this id :: " + id));
         shopping.setName(updatedShopping.getName());
         shopping.setOpening_time(updatedShopping.getOpening_time());
         shopping.setClosing_time(updatedShopping.getClosing_time());
         shopping.setMax_capacity(updatedShopping.getMax_capacity());
+        shopping.setPeople_count(updatedShopping.getPeople_count());
         shoppingRepository.save(shopping);
+        new UpdateDataGen().informDataGen("update: " + updatedShopping.getName());
         return shopping;
     }
 }
