@@ -102,9 +102,7 @@ def consume():
         msg = consumer.receive()
         try:
             print("Received message '{}' id='{}'".format(msg.data(), msg.message_id()))
-            print(UPDATE)
             UPDATE = True
-            print(UPDATE)
             consumer.acknowledge(msg)
         except:
             print("Message failed to be processed")
