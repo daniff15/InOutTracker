@@ -135,6 +135,8 @@ if __name__ == '__main__':
     day_info = {}
     hour_info = {}
 
+    start = time.time()
+
     while True:
         if UPDATE:
             malls = fetchDBInfo()
@@ -306,18 +308,21 @@ if __name__ == '__main__':
             'daily_info': {}
         }
         send = False
-        for store in mall.stores:
-            inside = len(store.inside_store_ids)
-            waiting = len(store.waiting_store_ids)
-            stores_capacity.get('stores')[store.id] = inside
-            stores_capacity.get('waiting_stores')[store.id] = waiting
-            send = True if inside + waiting > 0 else False
+        if (time.time() - start > 1):
+            start = time.time()
+            for store in mall.stores:
+                inside = len(store.inside_store_ids)
+                waiting = len(store.waiting_store_ids)
+                stores_capacity.get('stores')[store.id] = inside
+                stores_capacity.get('waiting_stores')[store.id] = waiting
+                if (not send):
+                    send = True if inside + waiting > 0 else False
 
         
         if (send):
             produce(stores_capacity)
 
-        
+
         for shopping in malls:
             print("--------------START--------------")
             print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
