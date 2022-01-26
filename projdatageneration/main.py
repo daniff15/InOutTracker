@@ -57,8 +57,8 @@ try:
     requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
         "id": 2,
         "name": "Glicinias Plaza",
-        "opening_time": "22h00",
-        "closing_time": "09h00",
+        "opening_time": "09h00",
+        "closing_time": "22h00",
         "max_capacity": 1200,
         "people_count": 0, "waiting": 0
     })
