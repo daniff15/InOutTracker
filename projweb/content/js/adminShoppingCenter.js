@@ -6,7 +6,7 @@
         var rows = "";
         for(var store of stores) {
             rows +=
-            `<tr id="${store.id}">
+            `<tr id="${store.id}" class="clickable-row" data-href="shop-analytics.html?${store.id}|${store.name}">
                 <td>
                     <button class="btn btn-danger delete-shop-button" type="button">
                         <i class="fa fa-trash" aria-hidden="true"></i>
@@ -25,7 +25,7 @@
         }
         $('#stores').html(rows);
     }
-    
+
     (function worker() {
         $.ajax({
             url: "http://" + self.location.hostname + ":8000/api/v1/shopping/" + shoppingId + "/stores",
@@ -82,5 +82,9 @@
         }).done(function (data) {
             console.log(data);
         });
+    });
+
+    $(document).on("click", ".clickable-row", function() {
+        window.location = $(this).data("href");
     });
 });

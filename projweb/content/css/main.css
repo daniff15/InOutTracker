@@ -65,3 +65,18 @@
     text-align: right; 
     padding-right: 40px;
 }
+
+.chart-container {
+    width: 500px;
+    height: 400px;
+    margin: auto;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.clickable-row:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.05);
+}

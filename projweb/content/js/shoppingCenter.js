@@ -38,7 +38,7 @@
             var body = "<tbody>";
             for(var store of stores) {
                 body +=
-                `<tr id="${store.id}">
+                `<tr id="${store.id}" class="clickable-row" data-href="shop-analytics.html?${store.id}|${store.name}">
                     <td>
                         <button class="btn btn-outline-danger fav-shop-button">`
                 if(!containsObject(store.id, favorites)) {
@@ -68,7 +68,7 @@
             var body = "<tbody>";
             for(var store of stores) {
                 body +=
-                `<tr id="${store.id}">
+                `<tr id="${store.id}" class="clickable-row" data-href="shop-analytics.html?${store.id}|${store.name}">
                     <th scope="row" style="vertical-align: middle;">${store.name}</th>
                     <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
                     <td class="text-right" style="vertical-align: middle;">${store.waiting}</td>
@@ -145,5 +145,9 @@
                 console.log(data);
             });
         }
+    });
+
+    $(document).on("click", ".clickable-row", function() {
+        window.location = $(this).data("href");
     });
 });
