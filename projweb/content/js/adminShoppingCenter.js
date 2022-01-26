@@ -20,6 +20,7 @@
                 </td>
                 <th scope="row">${store.name}</th>
                 <td class="text-right">${store.people_count}/${store.max_capacity}</td>
+                <td class="text-right">${store.waiting}</td>
             </tr>`
         }
         $('#stores').html(rows);
