@@ -6,12 +6,12 @@ import javax.persistence.*;
 @Table(name = "daily_info")
 public class DailyInfo {
     private long id;
-    private long day;
+    private String day;
     private long hour;
     private long storeid;
     private long count;
 
-    public DailyInfo(long storeid, long day, long hour, long count) {
+    public DailyInfo(long storeid, String day, long hour, long count) {
         this.storeid = storeid;
         this.day = day;
         this.hour = hour;
@@ -29,8 +29,8 @@ public class DailyInfo {
     public void setId(long id){ this.id= id; }
 
     @Column(name = "day", nullable = false)
-    public long getDay() { return day; }
-    public void setDay(long day) { this.day = day; }
+    public String getDay() { return day; }
+    public void setDay(String day) { this.day = day; }
 
     @Column(name = "hour", nullable = false)
     public long getHour() { return hour; }

@@ -143,9 +143,11 @@ class HomeFragment : Fragment() {
     private fun createCards(view: View?){
         val rv = view?.findViewById<RecyclerView>(R.id.home_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
+
+        Log.d("FAVORITES", Datasource().getFavorite().toString())
         
-        for (store in Datasource().getFavorite()){
-            var new_store = Datasource().getStoreById(store.id)
+        for (id in Datasource().listFavoriteID()){
+            var new_store = Datasource().getStoreById(id)
             if (new_store != null) {
                 Datasource().getStoreLogo(new_store.name)?.let {
                     StoreCard(new_store.id,

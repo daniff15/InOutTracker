@@ -14,11 +14,11 @@ public class DailyInfoService {
 
     public List<DailyInfo> getAll() { return dailyInfoRepository.findAll(); }
 
-    public List<DailyInfo> getStoreDayInfo(long storeid, long day) throws ResourceNotFoundException {
+    public List<DailyInfo> getStoreDayInfo(long storeid, String day) throws ResourceNotFoundException {
         return dailyInfoRepository.findByStoreidAndDay(storeid, day);
     }
 
-    public long getStoreHourInfo(long storeid, long day, long hour) throws ResourceNotFoundException {
+    public long getStoreHourInfo(long storeid, String day, long hour) throws ResourceNotFoundException {
         return dailyInfoRepository.findByStoreidAndDayAndHour(storeid, day, hour).getCount();
     }
 

@@ -2,6 +2,7 @@ package ies.ua.inouttracker.util
 
 import android.util.Log
 import ies.ua.inouttracker.MainActivity
+import ies.ua.inouttracker.R
 import ies.ua.inouttracker.ui.model.Shopping
 import ies.ua.inouttracker.ui.model.Store
 
@@ -151,8 +152,33 @@ public class Datasource {
     }
     fun getSELF(): MainActivity? { return SELF }
     fun setSELF(self: MainActivity){ SELF = self}
-    fun setStoreLogos(store_logos: HashMap<String, Int>){
-        stores_logos = store_logos
+    fun setStoreLogos(){
+        stores_logos = hashMapOf(
+            "FNAC" to R.mipmap.fnac_logo,
+            "Mi Store" to R.mipmap.mi_logo,
+            "Sport Zone" to R.mipmap.sport_zone_logo,
+            "Levi's" to R.mipmap.levis_logo,
+            "Zara" to R.mipmap.zara_logo,
+            "Pull & Bear" to R.mipmap.pull_bear_logo,
+            "Bershka" to R.mipmap.bershka_logo,
+            "Springfield" to R.mipmap.springfield_logo,
+            "Claire's" to R.mipmap.claires_logo,
+            "Body Shop" to R.mipmap.body_shop_logo,
+            "Bimba Y Lola" to R.mipmap.bimba_lola_logo,
+            "Boutique dos Relógios" to R.mipmap.boutique_logo,
+            "Calzedonia" to R.mipmap.calzedonia_logo,
+            "Decenio" to R.mipmap.decenio_logo,
+            "Quebramar" to R.mipmap.quebramar_logo,
+            "Tiffosi" to R.mipmap.tiffosi_logo,
+            "Worten" to R.mipmap.worten_logo,
+            "Auchan" to R.mipmap.auchan_logo,
+            "C&A" to R.mipmap.ca_logo,
+            "H&M" to R.mipmap.hm_logo,
+            "Cortefiel" to R.mipmap.cortefiel_logo,
+            "Lefties" to R.mipmap.lefties_logo,
+            "New Yorker" to R.mipmap.newyorker_logo,
+            "" to R.mipmap.no_image
+        )
     }
 
     fun getFavorite(): MutableSet<Store> { return favorite }
@@ -188,6 +214,12 @@ public class Datasource {
             list_ids += store.id.toString() + ","
         return list_ids
     }
+    fun listFavoriteID(): Set<Int> {
+        var list_ids = mutableListOf<Int>()
+        for (store in getFavorite())
+            list_ids.add(store.id)
+        return list_ids.toSet()
+    }
 
     fun loadFavorite(fav_ids: String) {
         var ids = fav_ids.split(',')
@@ -204,9 +236,10 @@ public class Datasource {
         return current_store
     }
 
-    fun setLoggedIn(b: Boolean, username: String) {
+    fun setLoggedIn(b: Boolean, username: String, user_id: Int = -1) {
         loggedin = b
         current_user = username
+        if (user_id != -1) current_user_id = user_id
     }
 
     fun isLoggedIn(): Boolean {

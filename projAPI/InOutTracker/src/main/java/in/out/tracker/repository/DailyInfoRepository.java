@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DailyInfoRepository extends JpaRepository<DailyInfo, Long> {
-    List<DailyInfo> findByStoreidAndDay(long storeid, long day);
+    List<DailyInfo> findByStoreidAndDay(long storeid, String day);
 
-    DailyInfo findByStoreidAndDayAndHour(long storeid, long day, long hour);
+    DailyInfo findByStoreidAndDayAndHour(long storeid, String day, long hour);
 }
