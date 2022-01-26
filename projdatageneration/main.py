@@ -58,8 +58,8 @@ def populate_db():
         requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
             "id": 2,
             "name": "Glicinias Plaza",
-            "opening_time": "09:00",
-            "closing_time": "22:00",
+            "opening_time": "22:00",
+            "closing_time": "09:00",
             "max_capacity": 1200,
             "people_count": 0, "waiting": 0
         })
@@ -206,7 +206,6 @@ if __name__ == '__main__':
                 val = 5
             elif (closing_mall[0] == hours_of_day[0] and closing_mall[1] <= hours_of_day[1]):
                 val = 5
-
 
         if val == 5:
             mall.inside_mall_ids = []
@@ -375,7 +374,9 @@ if __name__ == '__main__':
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
 
-        #print("DAILY INFO  - " , day_info)
-        #print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
+        print("HOURS OF DAY ---- ", hours_of_day)        
+
+        print("DAILY INFO  - " , day_info)
+        print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
         time.sleep(0.025)
