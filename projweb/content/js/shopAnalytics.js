@@ -18,7 +18,7 @@
     getData(currentDate);
 
     function getData(date) {
-        date = date.split('/')[0];
+        // date = date.split('/')[0];
         $.ajax({
             url: "http://" + self.location.hostname + ":8000/api/v1/daily/" + shopId + "/" + date, 
             success: function(data) {
@@ -88,7 +88,7 @@
     }
 
     $('.datepicker').on('change', function() {
-        const date = $('#dateInput').val();
+        const date = $('#dateInput').val().replaceAll('/', '-');
         getData(date);
     });
 
