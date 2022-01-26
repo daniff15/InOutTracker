@@ -27,11 +27,13 @@
     }
     
     $("form").submit(function (event) {
+        event.preventDefault();
+
         var formData = {
             email: $("#email").val(),
             password: $("#password").val(),
         };
-    
+
         $.ajax({
             url: "http://" + self.location.hostname + ":8000/api/v1/users/login",
             type: "POST",
@@ -54,8 +56,6 @@
             else if(data["type"] == 1)
                 window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
         });
-    
-        event.preventDefault();
     });
 
     user = readCookie('login');
