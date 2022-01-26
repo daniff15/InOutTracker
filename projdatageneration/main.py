@@ -58,8 +58,8 @@ def populate_db():
         requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
             "id": 2,
             "name": "Glicinias Plaza",
-            "opening_time": "09:00",
-            "closing_time": "22:00",
+            "opening_time": "22:00",
+            "closing_time": "09:00",
             "max_capacity": 1200,
             "people_count": 0, "waiting": 0
         })
@@ -190,15 +190,22 @@ if __name__ == '__main__':
         for i in range(len(closing_mall)):
             closing_mall[i] = int(closing_mall[i])
 
-        if (opening_mall[0] > hours_of_day[0]): #shopping fechado
-            val = 5
-        elif (opening_mall[0] == hours_of_day[0] and opening_mall[1] > hours_of_day[1]): #shopping fechado
-            val = 5
-        elif (closing_mall[0] < hours_of_day[0]):
-            val = 5
-        elif (closing_mall[0] == hours_of_day[0] and closing_mall[1] <= hours_of_day[1]):
-            val = 5
+        if opening_mall[0] > closing_mall[0]:
+            if (hours_of_day[0] < opening_mall[0] and hours_of_day[0] > closing_mall[0]):
+                val = 5
+            elif (opening_mall[1] != 0 or closing_mall[1] != 0):
+                if (opening_mall[0] > closing_mall[0]) and ((hours_of_day[0] <= opening_mall[0] and opening_mall[1] > hours_of_day[1]) and (hours_of_day[0] > closing_mall[0] and closing_mall[1] <= hours_of_day[1])): 
+                    val = 5
 
+        else:
+            if (opening_mall[0] > hours_of_day[0]): #shopping fechado
+                val = 5
+            elif (opening_mall[0] == hours_of_day[0] and opening_mall[1] > hours_of_day[1]): #shopping fechado
+                val = 5
+            elif (closing_mall[0] < hours_of_day[0]):
+                val = 5
+            elif (closing_mall[0] == hours_of_day[0] and closing_mall[1] <= hours_of_day[1]):
+                val = 5
 
         if val == 5:
             mall.inside_mall_ids = []
@@ -365,6 +372,8 @@ if __name__ == '__main__':
                 hour_info = {}
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
+
+        print("HOURS OF DAY ---- ", hours_of_day)        
 
         print("DAILY INFO  - " , day_info)
         print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
