@@ -1,6 +1,6 @@
 ﻿$(document).ready(function() {
     $("form").submit(function (event) {
-        event.preventDefault();
+        // event.preventDefault();
 
         var formData = {
             type: 0,
@@ -10,7 +10,7 @@
             password: $("#password").val(),
         };
 
-        if (formData.password.length > 6 && formData.email.length > 0 && formData.username.length > 0 && formData.name.length > 0) {
+        if(formData.password.length > 6 && formData.username.length > 0 && formData.name.length > 0) {
             $.ajax({
                 url: "http://" + self.location.hostname + ":8000/api/v1/users",
                 type: "POST",
@@ -20,7 +20,7 @@
                 console.log(data);
                 window.location.href = "http://" + self.location.hostname + ":5500/login.html"
             });
-        } else{
+        }else{
             console.log("error");
             window.location.href = "#"
             
