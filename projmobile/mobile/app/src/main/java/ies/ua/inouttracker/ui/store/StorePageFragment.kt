@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,7 +82,7 @@ class StorePageFragment() : Fragment() {
 
         val fav = view?.findViewById<ImageButton>(R.id.favorite)
 
-        if (store in Datasource().getFavorite()) {
+        if (store.id in Datasource().listFavoriteID()) {
             fav.setImageResource(R.mipmap.hearton)
             fav.tag = R.mipmap.hearton
         }
@@ -128,16 +129,17 @@ class StorePageFragment() : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                lateinit var viewModel: MainViewModel
-                val self = Datasource().getSELF()
-                val repository = Repository()
-                val viewModelFactory = MainViewModelFactory(repository)
-                viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
-                viewModel.removeFav(FavStores(Datasource().getCurrentUserId(), store.id) )
-                viewModel.myResponse_removeFav.observe(self, { response ->
+                if(Datasource().getCurrentUserId() != -1){
+                    lateinit var viewModel: MainViewModel
+                    val self = Datasource().getSELF()
+                    val repository = Repository()
+                    val viewModelFactory = MainViewModelFactory(repository)
+                    viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
+                    viewModel.removeFav(FavStores(Datasource().getCurrentUserId(), store.id) )
+                    viewModel.myResponse_removeFav.observe(self, { response ->
 
-                })
-
+                    })
+                }
             } else {
                 fav.setImageResource(R.mipmap.hearton)
                 fav.tag = R.mipmap.hearton
@@ -148,15 +150,22 @@ class StorePageFragment() : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                lateinit var viewModel: MainViewModel
-                val self = Datasource().getSELF()
-                val repository = Repository()
-                val viewModelFactory = MainViewModelFactory(repository)
-                viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
-                viewModel.saveFav(FavStores(Datasource().getCurrentUserId(), store.id) )
-                viewModel.myResponse_FavStores.observe(self, { response ->
+                if(Datasource().getCurrentUserId() != -1) {
+                    lateinit var viewModel: MainViewModel
+                    val self = Datasource().getSELF()
+                    val repository = Repository()
+                    val viewModelFactory = MainViewModelFactory(repository)
+                    viewModel = self?.let {
+                        ViewModelProvider(
+                            it,
+                            viewModelFactory
+                        ).get(MainViewModel::class.java)
+                    }!!
+                    viewModel.saveFav(FavStores(Datasource().getCurrentUserId(), store.id))
+                    viewModel.myResponse_FavStores.observe(self, { response ->
 
-                })
+                    })
+                }
             }
 
             val pref = requireActivity().getPreferences(Context.MODE_PRIVATE)
