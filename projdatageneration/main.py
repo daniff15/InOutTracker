@@ -77,7 +77,7 @@ def populate_db():
         requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
             "id": 3,
             "name": "Shopping Noturno",
-            "opening_time": "00:00",
+            "opening_time": "22:00",
             "closing_time": "09:00",
             "max_capacity": 300,
             "people_count": 0, "waiting": 0
@@ -333,16 +333,17 @@ if __name__ == '__main__':
             for store in mall.stores:
                 inside = len(store.inside_store_ids)
                 waiting = len(store.waiting_store_ids)
-                stores_capacity.get('stores')[store.id] = inside
-                stores_capacity.get('waiting_stores')[store.id] = waiting
+                stores_capacity.get('stores')[store.id] = inside if len(mall.inside_mall_ids) > 0 else 0
+                stores_capacity.get('waiting_stores')[store.id] = waiting if len(mall.inside_mall_ids) > 0 else 0
                 if (not send):
                     send = True if inside + waiting > 0 else False
 
         
         if (send):
+            print(stores_capacity)
             produce(stores_capacity)
 
-        
+        '''
         for shopping in malls:
             print("--------------START--------------")
             print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
@@ -354,7 +355,7 @@ if __name__ == '__main__':
                 print("WAITING ", store.store_name, " - ", store.waiting_store_ids)
                 print("LEN - ", len(store.inside_store_ids))
             print("--------------END--------------")
-        
+        '''
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 200:
             numbers_of_iters = 0
