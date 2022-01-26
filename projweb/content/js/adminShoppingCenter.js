@@ -18,9 +18,9 @@
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                 </td>
-                <th scope="row">${store.name}</th>
-                <td class="text-right">${store.people_count}/${store.max_capacity}</td>
-                <td class="text-right">${store.waiting}</td>
+                <th scope="row" style="vertical-align: middle;">${store.name}</th>
+                <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
+                <td class="text-right" style="vertical-align: middle;">${store.waiting}</td>
             </tr>`
         }
         $('#stores').html(rows);
