@@ -160,7 +160,7 @@ class LoginFragment : Fragment() {
                     if(password == ret.second.password){
                         val user = LoggedInUser(java.util.UUID.randomUUID().toString(), " " + ret.second.name)
                         Datasource().setCurrentUserId(ret.second.id)
-                        Datasource().setLoggedIn(true, username)
+                        Datasource().setLoggedIn(true, username, ret.second.id)
                         lateinit var viewModel: MainViewModel
                         val self = Datasource().getSELF()
                         val repository = Repository()

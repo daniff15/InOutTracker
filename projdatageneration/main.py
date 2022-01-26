@@ -73,6 +73,18 @@ def populate_db():
         requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 23,"shop_id": 2,"name": "Lefties","opening_time": "09:00", "closing_time": "21:00", "max_capacity": 80, "people_count": 0, "waiting": 0})
         requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 24,"shop_id": 2,"name": "New Yorker","opening_time": "09:00", "closing_time": "21:00", "max_capacity": 50, "people_count": 0, "waiting": 0})
         requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 25,"shop_id": 2,"name": "Springfield","opening_time": "09:00", "closing_time": "21:00", "max_capacity": 40, "people_count": 0, "waiting": 0})
+   
+        requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
+            "id": 3,
+            "name": "Shopping Noturno",
+            "opening_time": "00:00",
+            "closing_time": "09:00",
+            "max_capacity": 300,
+            "people_count": 0, "waiting": 0
+        })
+        requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 26,"shop_id": 3,"name": "Auchan","opening_time": "00:00", "closing_time": "09:00", "max_capacity": 250, "people_count": 0, "waiting": 0})
+        requests.post(f'http://{serviceURL}api/v1/stores', json = {"id": 27,"shop_id": 3,"name": "FNAC","opening_time": "00:00", "closing_time": "09:00", "max_capacity": 50, "people_count": 0, "waiting": 0})
+
     except requests.exceptions.ConnectionError:
         print("Server is not running")
         exit(1)
@@ -135,7 +147,10 @@ if __name__ == '__main__':
     day_info = {}
     hour_info = {}
 
+    start = time.time()
+
     while True:
+        send = False
         if UPDATE:
             malls = fetchDBInfo()
             UPDATE = False
@@ -190,6 +205,7 @@ if __name__ == '__main__':
             mall.waiting_mall_ids = []
             for store in mall.stores:
                 if len(store.inside_store_ids) > 0:
+                    send = True
                     store.inside_store_ids = []
                 if len(store.waiting_store_ids) > 0:
                     store.waiting_store_ids = []
@@ -305,13 +321,15 @@ if __name__ == '__main__':
             'waiting_stores': {},
             'daily_info': {}
         }
-        send = False
-        for store in mall.stores:
-            inside = len(store.inside_store_ids)
-            waiting = len(store.waiting_store_ids)
-            stores_capacity.get('stores')[store.id] = inside
-            stores_capacity.get('waiting_stores')[store.id] = waiting
-            send = True if inside + waiting > 0 else False
+        if (time.time() - start > 1):
+            start = time.time()
+            for store in mall.stores:
+                inside = len(store.inside_store_ids)
+                waiting = len(store.waiting_store_ids)
+                stores_capacity.get('stores')[store.id] = inside
+                stores_capacity.get('waiting_stores')[store.id] = waiting
+                if (not send):
+                    send = True if inside + waiting > 0 else False
 
         
         if (send):
@@ -329,7 +347,7 @@ if __name__ == '__main__':
                 print("WAITING ", store.store_name, " - ", store.waiting_store_ids)
                 print("LEN - ", len(store.inside_store_ids))
             print("--------------END--------------")
-
+        
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 200:
             numbers_of_iters = 0
@@ -348,7 +366,7 @@ if __name__ == '__main__':
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
 
-        #print("DAILY INFO  - " , day_info)
-        #print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
+        print("DAILY INFO  - " , day_info)
+        print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
         time.sleep(0.025)
