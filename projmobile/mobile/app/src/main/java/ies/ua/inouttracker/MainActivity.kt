@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                     notify = true
                     title = "${store.name} is Empty"
                     content = "Now it's a good time to do your shopping"
-                } else if (Datasource().getIsFull_check() && store.people_count == store.max_capacity){
+                } else if (Datasource().getIsFull_check() && store.people_count >= store.max_capacity){
                     notify = true
                     title = "${store.name} is at Full Capacity"
                     content = "Maybe you should wait a little"
