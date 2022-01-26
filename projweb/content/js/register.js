@@ -1,5 +1,7 @@
 ﻿$(document).ready(function() {
     $("form").submit(function (event) {
+        // event.preventDefault();
+
         var formData = {
             type: 0,
             name: $("#name").val(),
@@ -7,18 +9,22 @@
             email: $("#email").val(),
             password: $("#password").val(),
         };
-    
-        $.ajax({
-            url: "http://" + self.location.hostname + ":8000/api/v1/users",
-            type: "POST",
-            data: JSON.stringify(formData),
-            contentType: "application/json",
-        }).done(function (data) {
-            console.log(data);
-            window.location.href = "http://" + self.location.hostname + ":5500/login.html"
-        });
-    
-        event.preventDefault();
+
+        if(formData.password.length > 6 && formData.username.length > 0 && formData.name.length > 0) {
+            $.ajax({
+                url: "http://" + self.location.hostname + ":8000/api/v1/users",
+                type: "POST",
+                data: JSON.stringify(formData),
+                contentType: "application/json",
+            }).done(function (data) {
+                console.log(data);
+                window.location.href = "http://" + self.location.hostname + ":5500/login.html"
+            });
+        }else{
+            console.log("error");
+            window.location.href = "#"
+            
+        }
     });
     
     function readCookie(name) {
