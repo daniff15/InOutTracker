@@ -196,7 +196,7 @@ class StorePageFragment() : Fragment() {
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 1000)
+                handler.postDelayed(this, 1500)
             }
         }
         // Start the initial runnable task by posting through the handler
