@@ -6,15 +6,16 @@
         (month<10 ? '0' : '') + month + '/' +
         d.getFullYear();
     $('#dateInput').val(currentDate)
-
+    
     var queryString = location.search.substring(1);
     var a = queryString.split("|");
     var shopId = a[0];
+    var shopName = a[1].replaceAll("%20", " ").replaceAll("%27", "'");
+    $('#shop-name').html(shopName);
     
     $("#no-data").hide();
     
     getData(currentDate);
-
 
     function getData(date) {
         date = date.split('/')[0];
