@@ -108,9 +108,7 @@ class DashboardFragment : Fragment() {
         val rv = view?.findViewById<RecyclerView>(R.id.stores_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
         val stores = Datasource().getShoppingStores(Datasource().getShoppingId(mall))
-        Log.d("debug",
-            stores.toString()
-        )
+
         if (stores != null) {
             for (store in stores){
                 cards.add(StoreCard(Datasource().getStoreID(store), R.drawable.ic_launcher_background, "", store.name, store.people_count.toString(), store.max_capacity.toString()))
@@ -118,17 +116,10 @@ class DashboardFragment : Fragment() {
         }
 
         if (rv != null) {
-            Log.d("debug",
-                "depois:" + cards.toString()
-            )
+
             rv.layoutManager = LinearLayoutManager(view?.context)
             var adapter = StoreCardAdapter(view.context, cards as ArrayList<StoreCard>)
             rv?.adapter = adapter
-        }
-        else{
-            Log.d("debug",
-                "rv null"
-            )
         }
 
     }

@@ -145,7 +145,6 @@ class LoginFragment : Fragment() {
         var put = true
         var favorites_added: MutableList<Store> = mutableListOf()
 
-        Log.d("UsernamePassword",username + password)
 
         lateinit var viewModel: MainViewModel
         val self = Datasource().getSELF()
@@ -154,7 +153,6 @@ class LoginFragment : Fragment() {
         viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
         viewModel.getUsers()
         viewModel.myResponse_Users.observe(self, { response ->
-            Log.d("LOGIN", "Start")
             var ret: Pair<Boolean, User> = Pair(false, User(-1, 0, "", "", ""))
             for (user in response){
                 if (user.username == username){
@@ -201,7 +199,6 @@ class LoginFragment : Fragment() {
                 }
             }
             if (!ret.first){
-                Log.d("LOGIN", "Not Found")
                 var user_id = -1
                 viewModel = self?.let { ViewModelProvider(it, viewModelFactory).get(MainViewModel::class.java) }!!
                 viewModel.getUsers()
