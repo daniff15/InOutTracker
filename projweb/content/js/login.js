@@ -27,7 +27,7 @@
     }
     
     $("form").submit(function (event) {
-        // event.preventDefault();
+        event.preventDefault();
 
         var formData = {
             email: $("#email").val(),

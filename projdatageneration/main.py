@@ -12,13 +12,13 @@ from numpy import ma
 import datetime
 
 try:
-    client = pulsar.Client('pulsar://localhost:6650')
+    client = pulsar.Client('pulsar://pulsarclient:6650')
     producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
     consumer = client.subscribe('persistent://public/default/ns1/updates', 'updates')
 except requests.exceptions.ConnectionError:
     print("Broker is not Running")
     exit(1)
-serviceURL = 'localhost:8000/'
+serviceURL = 'springbootapi:8000/'
 def populate_db():
     try:
         requests.post(f'http://{serviceURL}api/v1/users', json = {
@@ -366,7 +366,6 @@ if __name__ == '__main__':
                 hour_info = {}
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
-
 
         
         time.sleep(0.025)

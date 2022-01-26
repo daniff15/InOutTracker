@@ -32,6 +32,7 @@
                         <th scope="col" class="delete-shop-column"></th>
                         <th scope="col">Shop Name</th>
                         <th scope="col" class="text-right">Capacity</th>
+                        <th scope="col" class="text-right" style="width: 90px;">Waiting</th>
                     </tr>
                 </thead>`
             var body = "<tbody>";
@@ -50,6 +51,7 @@
                     </td>
                     <th scope="row" style="vertical-align: middle;">${store.name}</th>
                     <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
+                    <td class="text-right" style="vertical-align: middle;">${store.waiting}</td>
                 </tr>`
             }
             body += "</tbody>"
@@ -60,6 +62,7 @@
                     <tr>
                         <th scope="col">Shop Name</th>
                         <th scope="col" class="text-right">Capacity</th>
+                        <th scope="col" class="text-right" style="width: 90px;">Waiting</th>
                     </tr>
                 </thead>`
             var body = "<tbody>";
@@ -68,6 +71,7 @@
                 `<tr id="${store.id}">
                     <th scope="row" style="vertical-align: middle;">${store.name}</th>
                     <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
+                    <td class="text-right" style="vertical-align: middle;">${store.waiting}</td>
                 </tr>`
             }
             body += "</tbody>"
