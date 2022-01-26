@@ -15,7 +15,7 @@ public class DailyInfoService {
     public List<DailyInfo> getAll() { return dailyInfoRepository.findAll(); }
 
 
-    public long getStoreHourInfo(long storeid, long day, long hour) throws ResourceNotFoundException {
+    public long getStoreHourInfo(long storeid, String day, long hour) throws ResourceNotFoundException {
         return dailyInfoRepository.findByStoreidAndDayAndHour(storeid, day, hour).getCount();
     }
 

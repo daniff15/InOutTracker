@@ -18,8 +18,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 @SpringBootApplication
 public class InOutTrackerApplication {
@@ -27,13 +30,20 @@ public class InOutTrackerApplication {
 	public static void main(String[] args) throws PulsarClientException {
 		StoreService storeService = new StoreService();
 		ShoppingService shoppingService = new ShoppingService();
-		AtomicInteger day = new AtomicInteger();
+
+		Date date = new Date();
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, -365);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+		AtomicReference<String> day = new AtomicReference<>(formatter.format(cal.getTime()));
 
 		ConfigurableApplicationContext ctx =
 				SpringApplication.run(InOutTrackerApplication.class, args);
 		String serviceURL = ctx.getEnvironment().getProperty("pulsar.service-url");
 
-		System.out.println(serviceURL);
 
 		PulsarClient client = PulsarClient.builder()
 				.serviceUrl(serviceURL)
@@ -88,7 +98,10 @@ public class InOutTrackerApplication {
 					httpCon.getInputStream();
 				}
 				JSONObject daily_info = json.getJSONObject("daily_info");
-				if (daily_info.length() > 0) day.getAndIncrement();
+				if (daily_info.length() > 0){
+					cal.add(Calendar.DATE, 1);
+					day.set(formatter.format(cal.getTime()));
+				}
 				for(Iterator it = daily_info.keys(); it.hasNext(); ) {
 					String hour = (String) it.next();
 					JSONObject hours = daily_info.getJSONObject(hour);

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DailyInfoRepository extends JpaRepository<DailyInfo, Long> {
-    DailyInfo findByStoreidAndDayAndHour(long storeid, long day, long hour);
+    DailyInfo findByStoreidAndDayAndHour(long storeid, String day, long hour);
 }
