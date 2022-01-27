@@ -35,7 +35,7 @@ def populate_db():
             "id": 1,
             "name": "Forum Aveiro",
             "opening_time": "09:00",
-            "closing_time": "22:00",
+            "closing_time": "23:00",
             "max_capacity": 1500,
             "people_count": 0, "waiting": 0
         })
@@ -58,8 +58,8 @@ def populate_db():
         requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
             "id": 2,
             "name": "Glicinias Plaza",
-            "opening_time": "22:00",
-            "closing_time": "09:00",
+            "opening_time": "09:00",
+            "closing_time": "22:00",
             "max_capacity": 1200,
             "people_count": 0, "waiting": 0
         })
@@ -212,7 +212,24 @@ if __name__ == '__main__':
             mall.waiting_mall_ids = []
             for store in mall.stores:
                 if len(store.inside_store_ids) > 0:
-                    send = True
+                    print(mall.mall_name + " CLOSED")
+                    stores_capacity = {
+                        'shoppings': {
+                            mall.id: len(mall.inside_mall_ids)
+                        },
+                        'stores': {},
+                        'waiting_stores': {},
+                        'daily_info': {}
+                    }
+                    start = time.time()
+                    for store in mall.stores:
+                        inside = len(store.inside_store_ids)
+                        waiting = len(store.waiting_store_ids)
+                        stores_capacity.get('stores')[store.id] = 0
+                        stores_capacity.get('waiting_stores')[store.id] = 0
+
+                    print('sending: ', stores_capacity)
+                    produce(stores_capacity)
                     store.inside_store_ids = []
                 if len(store.waiting_store_ids) > 0:
                     store.waiting_store_ids = []
@@ -374,9 +391,9 @@ if __name__ == '__main__':
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
 
-        print("HOURS OF DAY ---- ", hours_of_day)        
+        #print("HOURS OF DAY ---- ", hours_of_day)        
 
-        print("DAILY INFO  - " , day_info)
-        print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
+        #print("DAILY INFO  - " , day_info)
+        #print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
         time.sleep(0.025)
