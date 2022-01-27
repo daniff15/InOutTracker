@@ -27,18 +27,19 @@
     }
     
     $("form").submit(function (event) {
+        event.preventDefault();
+
         var formData = {
             email: $("#email").val(),
             password: $("#password").val(),
         };
-    
+
         $.ajax({
             url: "http://" + self.location.hostname + ":8000/api/v1/users/login",
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
         }).done(function (data) {
-            console.log(data);
             if(data["status"] == "success") {
                 value = {
                     type: data["type"],
@@ -51,11 +52,11 @@
             }
             if(data["type"] == 0)
                 window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
+            else if(data["type"] == 2)
+                window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
             else if(data["type"] == 1)
                 window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
         });
-    
-        event.preventDefault();
     });
 
     user = readCookie('login');
@@ -63,8 +64,10 @@
         user = JSON.parse(user);
         if(user["type"] == 0) {
             window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
-        }else {
+        }else if(user["type"] == 1) {
             window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
+        }else if(user["type"] == 2) {
+            window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
         }
     }
 });

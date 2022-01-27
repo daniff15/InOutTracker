@@ -296,8 +296,7 @@ paths:
         in: path
         required: true
         schema:
-          type: integer
-          format: int64
+          type: string
       - name: hour
         in: path
         required: true
@@ -431,6 +430,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DailyInfo'
+  /api/v1/daily/{storeid}/{day}:
+    get:
+      tags:
+      - daily-info-controller
+      operationId: getStoreDayInfo
+      parameters:
+      - name: storeid
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: day
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DailyInfo'
   /api/v1/daily/{storeid}/{day}/{hour}:
     get:
       tags:
@@ -447,8 +472,7 @@ paths:
         in: path
         required: true
         schema:
-          type: integer
-          format: int64
+          type: string
       - name: hour
         in: path
         required: true
@@ -591,8 +615,7 @@ components:
           type: integer
           format: int64
         day:
-          type: integer
-          format: int64
+          type: string
         hour:
           type: integer
           format: int64

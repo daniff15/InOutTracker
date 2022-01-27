@@ -20,7 +20,7 @@
             contentType: "application/json",
         }).done(function (data) {
             console.log(data);
-            window.location.href = "http://" + self.location.hostname + ":5500/admin-shopping-center.html";
+            window.location.href = "http://" + self.location.hostname + ":5500/admin-shopping-center.html?" + shoppingId;
         });
     
         event.preventDefault();

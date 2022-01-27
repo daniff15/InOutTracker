@@ -61,6 +61,8 @@ class HomeFragment : Fragment() {
         val store_capacity: TextView = view.findViewById(R.id.store_count)
         val mall_capacity: TextView = view.findViewById(R.id.mall_count)
         val details: Button = view.findViewById(R.id.store_details)
+        var first_control = true
+
 
         details.visibility = View.GONE
 
@@ -69,7 +71,7 @@ class HomeFragment : Fragment() {
         val actv_mall: ImageView = view.findViewById(R.id.actv1)
         val actv_store: ImageView = view.findViewById(R.id.actv)
 
-        createCards(view)
+        //createCards(view)
 
         mall.threshold = 2
         store.threshold = 2
@@ -129,11 +131,15 @@ class HomeFragment : Fragment() {
                 //updateDB(selfcont)
                 if (selected_store != "") store_capacity.text = Datasource().getStoreCurrentCount(selected_store)
                 if (selected_mall != "") mall_capacity.text = Datasource().getShoppingCurrentCount(selected_mall)
+                if (first_control && Datasource().getFavorite().size != 0){
+                    createCards(view)
+                    first_control = false
+                }
                 //createCards(view)
                 //Log.d("Handlers", "Called on main thread")
                 // Repeat this the same runnable code block again another 2 seconds
                 // 'this' is referencing the Runnable object
-                handler.postDelayed(this, 5000)
+                handler.postDelayed(this, 1500)
             }
         }
         // Start the initial runnable task by posting through the handler
@@ -143,9 +149,11 @@ class HomeFragment : Fragment() {
     private fun createCards(view: View?){
         val rv = view?.findViewById<RecyclerView>(R.id.home_rv)
         var cards: MutableList<StoreCard> = mutableListOf<StoreCard>()
+
+        Log.d("FAVORITES", Datasource().getFavorite().toString())
         
-        for (store in Datasource().getFavorite()){
-            var new_store = Datasource().getStoreById(store.id)
+        for (id in Datasource().listFavoriteID()){
+            var new_store = Datasource().getStoreById(id)
             if (new_store != null) {
                 Datasource().getStoreLogo(new_store.name)?.let {
                     StoreCard(new_store.id,

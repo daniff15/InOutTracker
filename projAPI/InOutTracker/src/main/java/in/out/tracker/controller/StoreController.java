@@ -4,6 +4,7 @@ import in.out.tracker.exception.ResourceNotFoundException;
 import in.out.tracker.model.Shopping;
 import in.out.tracker.model.Store;
 import in.out.tracker.services.StoreService;
+import org.apache.pulsar.client.api.PulsarClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class StoreController {
 
     @PutMapping("api/v1/store/update/{id}")
     public Store updateStore(@Valid @RequestBody Store store, @PathVariable(value = "id") long id)
-            throws ResourceNotFoundException {
+            throws ResourceNotFoundException, PulsarClientException {
         return service.updateStore(store, id);
     }
 
@@ -45,9 +46,9 @@ public class StoreController {
     }
 
     @PostMapping("api/v1/stores")
-    public Store addStore(@Valid @RequestBody Store store) { return service.createStore(store); }
+    public Store addStore(@Valid @RequestBody Store store) throws PulsarClientException { return service.createStore(store); }
 
     @DeleteMapping("api/v1/stores/{id}")
     public void removeStore(@PathVariable(value = "id") long id)
-            throws ResourceNotFoundException { service.deleteStore(id); }
+            throws ResourceNotFoundException, PulsarClientException { service.deleteStore(id); }
 }

@@ -5,7 +5,21 @@ It allows people to see if the mall is overloaded with other people so they can 
 
 ## How it runs
 
-Our service has a MySQL database and a pulsar standalone client running in the background. After this two components are running we start the SpringBoot API which will connect to the Database and connect a consumer to the pulsar client. After that, we start the data generation script that simulates real life flow for one mall (at the moment). In this python script we have to connect to the api and pulsar client. There's a producer for the message broker and in this script we populate the DB with a few data just for demonstration purposes. It periodically sends messages to the message broker (pulsar) through the created producer. The API consumer receives this messages and updates the Database with the new information that later will be accesses via mobile and web apps that get database info from the API.
+Our service has a MySQL database and a pulsar standalone client running in the background. After these two components are running we start the SpringBoot API which will connect to the Database and create a pulsar consumer. After that, we start the data generation python script that simulates real life flow for some shoppings and their stores. In this script we have to connect to the api and pulsar client. There's a producer for the message broker and in this script we generate a few data just for demonstration purposes. It periodically sends messages to the message broker (pulsar) through the created producer. The API consumer receives these messages and updates the database with the new information that later will be accessed via mobile and web apps that get database info from the API.
+
+<p align="center"><a href="https://www.youtube.com/watch?v=i0kC00cUypM">
+    <img src="reports/images/webdemo.gif" alt="WebDemo">
+  </a>
+</p>
+
+> Click the image above to see the web app demonstration
+
+<p align="center"><a href="https://www.youtube.com/watch?v=Fk02DnS6e-M">
+    <img src="reports/images/mobiledemo.gif" alt="MobileDemo">
+  </a>
+</p>
+
+> Click the image above to see the mobile app demonstration
 
 ## How to run
 
@@ -32,6 +46,10 @@ Open **webapp** at: `deti-engsoft-08:5500/shoppings.html`
 - To use the app as admin login to the following account:
   - Email: `admin@inouttracker.com`
   - Password: `adminpass`
+
+- To use the app as a security guard login to the following account:
+  - Email: `security@inouttracker.com`
+  - Password: `securitypass`
 
 **API** is at port `8000`
 

@@ -41,32 +41,7 @@ class MainActivity : AppCompatActivity() {
         var first_control = true
 
         Datasource().setSELF(this)
-        Datasource().setStoreLogos(hashMapOf(
-            "FNAC" to R.mipmap.fnac_logo,
-            "Mi Store" to R.mipmap.mi_logo,
-            "Sport Zone" to R.mipmap.sport_zone_logo,
-            "Levi's" to R.mipmap.levis_logo,
-            "Zara" to R.mipmap.zara_logo,
-            "Pull & Bear" to R.mipmap.pull_bear_logo,
-            "Bershka" to R.mipmap.bershka_logo,
-            "Springfield" to R.mipmap.springfield_logo,
-            "Claire's" to R.mipmap.claires_logo,
-            "Body Shop" to R.mipmap.body_shop_logo,
-            "Bimba Y Lola" to R.mipmap.bimba_lola_logo,
-            "Boutique dos Relógios" to R.mipmap.boutique_logo,
-            "Calzedonia" to R.mipmap.calzedonia_logo,
-            "Decenio" to R.mipmap.decenio_logo,
-            "Quebramar" to R.mipmap.quebramar_logo,
-            "Tiffosi" to R.mipmap.tiffosi_logo,
-            "Worten" to R.mipmap.worten_logo,
-            "Auchan" to R.mipmap.auchan_logo,
-            "C&A" to R.mipmap.ca_logo,
-            "H&M" to R.mipmap.hm_logo,
-            "Cortefiel" to R.mipmap.cortefiel_logo,
-            "Lefties" to R.mipmap.lefties_logo,
-            "New Yorker" to R.mipmap.newyorker_logo,
-            "" to R.mipmap.no_image
-        ))
+        Datasource().setStoreLogos()
 
         updateDB()
 
@@ -85,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
                 updateDB()
-                Log.d("DEBUG", "User ID: "+Datasource().getCurrentUserId())
+                //Log.d("DEBUG", "User ID: "+Datasource().getCurrentUserId())
                 if (first_control && Datasource().getFavorite().size == 0){
                     loadData()
                     if (Datasource().getFavorite().size != 0) first_control = false
@@ -167,14 +142,19 @@ class MainActivity : AppCompatActivity() {
                     notify = true
                     title = "${store.name} is Empty"
                     content = "Now it's a good time to do your shopping"
-                } else if (Datasource().getIsFull_check() && store.people_count == store.max_capacity){
+                } else if (Datasource().getIsFull_check() && store.people_count >= store.max_capacity){
                     notify = true
                     title = "${store.name} is at Full Capacity"
                     content = "Maybe you should wait a little"
                 } else if (Datasource().getCapacity_check() && store.people_count <= (store.max_capacity*(Datasource().getPercentage().toDouble()/100))){
                     notify = true
-                    title = "There's only ${store.people_count} people at ${store.name}"
-                    content = "Maybe it's a good time to go there"
+                    if (store.people_count == 0){
+                        title = "${store.name} is Empty"
+                        content = "Now it's a good time to do your shopping"
+                    } else{
+                        title = "There's only ${store.people_count} people at ${store.name}"
+                        content = "Maybe it's a good time to go there"
+                    }
                 }
                 if (notify){
                     var follow_not = NotificationCompat.Builder(applicationContext, "Notify")
