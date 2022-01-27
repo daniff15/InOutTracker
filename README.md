@@ -34,6 +34,11 @@ This script will:
 - Run the data generation script to simulate real life data
 - Run the webapp
 
+## How to run Mobile App
+
+To run the mobile app properly is recommended to run `$ ./run-sh` locally
+and then start the app via Android Studio
+
 ## Application endpoints
 
 Open **webapp** at: `deti-engsoft-08:5500/shoppings.html`
