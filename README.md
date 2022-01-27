@@ -35,6 +35,10 @@ Open **webapp** at: `deti-engsoft-08:5500/shoppings.html`
   - Email: `admin@inouttracker.com`
   - Password: `adminpass`
 
+- To use the app as a security guard login to the following account:
+  - Email: `security@inouttracker.com`
+  - Password: `securitypass`
+
 **API** is at port `8000`
 
 ## Students identification 
