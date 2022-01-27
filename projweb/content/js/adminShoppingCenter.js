@@ -74,7 +74,8 @@
         </a>`
     );
 
-    $(document).on("click", ".delete-shop-button", function() {
+    $(document).on("click", ".delete-shop-button", function(event) {
+        event.stopPropagation();
         var shopId = $(this).parent().parent().attr("id");
         $.ajax({
             url: "http://" + self.location.hostname + ":8000/api/v1/stores/" + shopId,
