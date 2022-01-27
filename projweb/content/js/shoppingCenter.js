@@ -142,7 +142,8 @@
         return false;
     }
 
-    $(document).on("click", ".fav-shop-button", function() {
+    $(document).on("click", ".fav-shop-button", function(event) {
+        event.stopPropagation();
         var shopId = $(this).parent().parent().attr("id");
         var data = {
             user_id: user["id"],
