@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val runnableCode: Runnable = object : Runnable {
             override fun run() {
                 updateDB()
-                Log.d("DEBUG", "User ID: "+Datasource().getCurrentUserId())
+                //Log.d("DEBUG", "User ID: "+Datasource().getCurrentUserId())
                 if (first_control && Datasource().getFavorite().size == 0){
                     loadData()
                     if (Datasource().getFavorite().size != 0) first_control = false

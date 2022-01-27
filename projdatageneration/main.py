@@ -12,13 +12,13 @@ from numpy import ma
 import datetime
 
 try:
-    client = pulsar.Client('pulsar://pulsarclient:6650')
+    client = pulsar.Client('pulsar://localhost:6650')
     producer = client.create_producer(topic = 'persistent://public/default/ns1/people-count')
     consumer = client.subscribe('persistent://public/default/ns1/updates', 'updates')
 except requests.exceptions.ConnectionError:
     print("Broker is not Running")
     exit(1)
-serviceURL = 'springbootapi:8000/'
+serviceURL = 'localhost:8000/'
 def populate_db():
     try:
         requests.post(f'http://{serviceURL}api/v1/users', json = {
@@ -43,7 +43,7 @@ def populate_db():
             "id": 1,
             "name": "Forum Aveiro",
             "opening_time": "09:00",
-            "closing_time": "22:00",
+            "closing_time": "23:00",
             "max_capacity": 1500,
             "people_count": 0, "waiting": 0
         })
@@ -85,7 +85,7 @@ def populate_db():
         requests.post(f'http://{serviceURL}api/v1/shoppings', json = {
             "id": 3,
             "name": "Shopping Noturno",
-            "opening_time": "00:00",
+            "opening_time": "22:00",
             "closing_time": "09:00",
             "max_capacity": 300,
             "people_count": 0, "waiting": 0
@@ -198,22 +198,46 @@ if __name__ == '__main__':
         for i in range(len(closing_mall)):
             closing_mall[i] = int(closing_mall[i])
 
-        if (opening_mall[0] > hours_of_day[0]): #shopping fechado
-            val = 5
-        elif (opening_mall[0] == hours_of_day[0] and opening_mall[1] > hours_of_day[1]): #shopping fechado
-            val = 5
-        elif (closing_mall[0] < hours_of_day[0]):
-            val = 5
-        elif (closing_mall[0] == hours_of_day[0] and closing_mall[1] <= hours_of_day[1]):
-            val = 5
+        if opening_mall[0] > closing_mall[0]:
+            if (hours_of_day[0] < opening_mall[0] and hours_of_day[0] > closing_mall[0]):
+                val = 5
+            elif (opening_mall[1] != 0 or closing_mall[1] != 0):
+                if (opening_mall[0] > closing_mall[0]) and ((hours_of_day[0] <= opening_mall[0] and opening_mall[1] > hours_of_day[1]) and (hours_of_day[0] > closing_mall[0] and closing_mall[1] <= hours_of_day[1])): 
+                    val = 5
 
+        else:
+            if (opening_mall[0] > hours_of_day[0]): #shopping fechado
+                val = 5
+            elif (opening_mall[0] == hours_of_day[0] and opening_mall[1] > hours_of_day[1]): #shopping fechado
+                val = 5
+            elif (closing_mall[0] < hours_of_day[0]):
+                val = 5
+            elif (closing_mall[0] == hours_of_day[0] and closing_mall[1] <= hours_of_day[1]):
+                val = 5
 
         if val == 5:
             mall.inside_mall_ids = []
             mall.waiting_mall_ids = []
             for store in mall.stores:
                 if len(store.inside_store_ids) > 0:
-                    send = True
+                    print(mall.mall_name + " CLOSED")
+                    stores_capacity = {
+                        'shoppings': {
+                            mall.id: len(mall.inside_mall_ids)
+                        },
+                        'stores': {},
+                        'waiting_stores': {},
+                        'daily_info': {}
+                    }
+                    start = time.time()
+                    for store in mall.stores:
+                        inside = len(store.inside_store_ids)
+                        waiting = len(store.waiting_store_ids)
+                        stores_capacity.get('stores')[store.id] = 0
+                        stores_capacity.get('waiting_stores')[store.id] = 0
+
+                    print('sending: ', stores_capacity)
+                    produce(stores_capacity)
                     store.inside_store_ids = []
                 if len(store.waiting_store_ids) > 0:
                     store.waiting_store_ids = []
@@ -334,16 +358,17 @@ if __name__ == '__main__':
             for store in mall.stores:
                 inside = len(store.inside_store_ids)
                 waiting = len(store.waiting_store_ids)
-                stores_capacity.get('stores')[store.id] = inside
-                stores_capacity.get('waiting_stores')[store.id] = waiting
+                stores_capacity.get('stores')[store.id] = inside if len(mall.inside_mall_ids) > 0 else 0
+                stores_capacity.get('waiting_stores')[store.id] = waiting if len(mall.inside_mall_ids) > 0 else 0
                 if (not send):
                     send = True if inside + waiting > 0 else False
 
         
         if (send):
+            print('sending: ', stores_capacity)
             produce(stores_capacity)
 
-
+        '''
         for shopping in malls:
             print("--------------START--------------")
             print("SHOPPING ESCOLHIDO - ", shopping.mall_name)
@@ -355,7 +380,7 @@ if __name__ == '__main__':
                 print("WAITING ", store.store_name, " - ", store.waiting_store_ids)
                 print("LEN - ", len(store.inside_store_ids))
             print("--------------END--------------")
-        
+        '''
         #JUST TO TEST INCREASE ON HOURS_OF_DAY
         if numbers_of_iters == 200:
             numbers_of_iters = 0
@@ -374,7 +399,9 @@ if __name__ == '__main__':
                 hours_of_day[0] += 1
                 hours_of_day[1] = 00
 
-        print("DAILY INFO  - " , day_info)
-        print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
+        #print("HOURS OF DAY ---- ", hours_of_day)        
+
+        #print("DAILY INFO  - " , day_info)
+        #print("-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|")
         
         time.sleep(0.025)
