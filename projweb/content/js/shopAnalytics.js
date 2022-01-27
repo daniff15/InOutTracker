@@ -18,7 +18,6 @@
     getData(currentDate);
 
     function getData(date) {
-        // date = date.split('/')[0];
         $.ajax({
             url: "http://" + self.location.hostname + ":8000/api/v1/daily/" + shopId + "/" + date, 
             success: function(data) {
@@ -34,6 +33,14 @@
         });
     }
 
+    function resetCanvas() {
+        $('#myChart').remove(); // this is my <canvas> element
+        $('.chart-container').append('<canvas id="myChart"><canvas>');
+        canvas = document.querySelector('#myChart');
+        ctx = canvas.getContext('2d');
+        return ctx;
+    };
+
     function showInfo(data) {
         data.sort(function(a, b) {
             return a.hour - b.hour;
@@ -41,12 +48,9 @@
 
         const dataset = data.map(a => a.count);
         const labels = data.map(a => a.hour);
-        console.log(dataset);
-        console.log(labels);
-        console.log(data);
 
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
+        let ctx = resetCanvas();
+        let myChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
@@ -114,15 +118,13 @@
     user = readCookie('login');
     if(user) {
         user = JSON.parse(user);
-        if(user["type"] == 0) {
+        if(user["type"] == 0 || user["type"] == 1) {
             isLoggedIn = true;
             $("#account").html(
                 `<li class="nav-item">
                     <a class="nav-link" href="account.html">${user["username"]}</a>
                 </li>`
             );
-        }else if(user["type"] == 1) {
-            window.location.href = "http://" + self.location.hostname + ":5500/admin-shopping-center.html?" + shoppingId;
         }else if(user["type"] == 2) {
             isSecurity = true;
             isLoggedIn = true;
