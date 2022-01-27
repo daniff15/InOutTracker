@@ -1,4 +1,3 @@
-
 import random
 import requests
 from simulate import *
@@ -29,6 +28,15 @@ def populate_db():
             "username": "admin",
             "email": "admin@inouttracker.com",
             "password": "adminpass",
+        })
+        
+        requests.post(f'http://{serviceURL}api/v1/users', json = {
+            "id": 2,
+            "type": 2,
+            "name": "Security",
+            "username": "security",
+            "email": "security@inouttracker.com",
+            "password": "securitypass",
         })
         
         requests.post(f'http://{serviceURL}api/v1/shoppings', json ={

@@ -14,8 +14,32 @@
                     <a class="nav-link" href="account.html">${user["username"]}</a>
                 </li>`
             );
-        }else {
+        }else if(user["type"] == 1) {
             window.location.href = "http://" + self.location.hostname + ":5500/admin-shopping-center.html?" + shoppingId;
+        }else if(user["type"] == 2) {
+            isSecurity = true;
+            isLoggedIn = true;
+            $("#account").html(
+                `<li class="nav-item">
+                    <a class="nav-link" href="account.html">${user["username"]}</a>
+                </li>`
+            );
+            (function securityWorker() {
+                $.ajax({
+                    url: "http://" + self.location.hostname + ":8000/api/v1/stores", 
+                    success: function(data) {
+                        for(let store of data) {
+                            if(store.people_count > store.max_capacity) {
+                                alert("Too many people at " + store.name);
+                            }
+                        }
+                    },
+                    complete: function() {
+                        // Schedule the next request when the current one's complete
+                        setTimeout(securityWorker, 10000);
+                    }
+                });
+            })();
         }
     }
 
@@ -38,7 +62,7 @@
             var body = "<tbody>";
             for(var store of stores) {
                 body +=
-                `<tr id="${store.id}">
+                `<tr id="${store.id}" class="clickable-row" data-href="shop-analytics.html?${store.id}|${store.name}">
                     <td>
                         <button class="btn btn-outline-danger fav-shop-button">`
                 if(!containsObject(store.id, favorites)) {
@@ -68,7 +92,7 @@
             var body = "<tbody>";
             for(var store of stores) {
                 body +=
-                `<tr id="${store.id}">
+                `<tr id="${store.id}" class="clickable-row" data-href="shop-analytics.html?${store.id}|${store.name}">
                     <th scope="row" style="vertical-align: middle;">${store.name}</th>
                     <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
                     <td class="text-right" style="vertical-align: middle;">${store.waiting}</td>
@@ -145,5 +169,9 @@
                 console.log(data);
             });
         }
+    });
+
+    $(document).on("click", ".clickable-row", function() {
+        window.location = $(this).data("href");
     });
 });

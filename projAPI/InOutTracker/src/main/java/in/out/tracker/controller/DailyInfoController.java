@@ -18,11 +18,16 @@ public class DailyInfoController {
     @GetMapping("api/v1/daily")
     public List<DailyInfo> getAllDailyInfo() { return service.getAll(); }
 
+    @GetMapping("api/v1/daily/{storeid}/{day}")
+    public List<DailyInfo> getStoreDayInfo(@PathVariable(value = "storeid") long id, @PathVariable(value = "day") String day)
+            throws ResourceNotFoundException {
+        return service.getStoreDayInfo(id, day);
+    }
+
     @GetMapping("api/v1/daily/{storeid}/{day}/{hour}")
     public long getStoreHourInfo(@PathVariable(value = "storeid") long id, @PathVariable(value = "day") String day, @PathVariable(value = "hour") long hour) throws ResourceNotFoundException {
         return service.getStoreHourInfo(id, day, hour);
     }
-
 
     @PostMapping("api/v1/add/daily")
     public DailyInfo addStore(@Valid @RequestBody DailyInfo daily) { return service.createDailyInfo(daily); }
@@ -31,5 +36,4 @@ public class DailyInfoController {
     public DailyInfo addStoreWithValues(@PathVariable(value = "storeid") long id, @PathVariable(value = "day") String day, @PathVariable(value = "hour") long hour, @PathVariable(value = "count") long count) {
         return service.createDailyInfo(new DailyInfo(id, day, hour, count));
     }
-
 }

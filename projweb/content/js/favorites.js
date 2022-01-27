@@ -40,6 +40,7 @@
                     </td>
                     <th scope="row" style="vertical-align: middle;">${store.name}</th>
                     <td class="text-right" style="vertical-align: middle;">${store.people_count}/${store.max_capacity}</td>
+                    <td class="text-right" style="vertical-align: middle;">${store.waiting}</td>
                 </tr>`;
                 $("#favorites").html(favorites);
             }
