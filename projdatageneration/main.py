@@ -30,6 +30,15 @@ def populate_db():
             "password": "adminpass",
         })
         
+        requests.post(f'http://{serviceURL}api/v1/users', json = {
+            "id": 2,
+            "type": 2,
+            "name": "Security",
+            "username": "security",
+            "email": "security@inouttracker.com",
+            "password": "securitypass",
+        })
+        
         requests.post(f'http://{serviceURL}api/v1/shoppings', json ={
             "id": 1,
             "name": "Forum Aveiro",

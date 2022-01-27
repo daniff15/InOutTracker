@@ -40,7 +40,6 @@
             data: JSON.stringify(formData),
             contentType: "application/json",
         }).done(function (data) {
-            console.log(data);
             if(data["status"] == "success") {
                 value = {
                     type: data["type"],
@@ -53,6 +52,8 @@
             }
             if(data["type"] == 0)
                 window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
+            else if(data["type"] == 2)
+                window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
             else if(data["type"] == 1)
                 window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
         });
@@ -63,8 +64,10 @@
         user = JSON.parse(user);
         if(user["type"] == 0) {
             window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
-        }else {
+        }else if(user["type"] == 1) {
             window.location.href = "http://" + self.location.hostname + ":5500/admin-shoppings.html";
+        }else if(user["type"] == 2) {
+            window.location.href = "http://" + self.location.hostname + ":5500/shoppings.html";
         }
     }
 });

@@ -95,4 +95,43 @@
     $('.datepicker').datepicker({
         format: 'dd/mm/yyyy'
     });
+
+    user = readCookie('login');
+    if(user) {
+        user = JSON.parse(user);
+        if(user["type"] == 0) {
+            isLoggedIn = true;
+            $("#account").html(
+                `<li class="nav-item">
+                    <a class="nav-link" href="account.html">${user["username"]}</a>
+                </li>`
+            );
+        }else if(user["type"] == 1) {
+            window.location.href = "http://" + self.location.hostname + ":5500/admin-shopping-center.html?" + shoppingId;
+        }else if(user["type"] == 2) {
+            isSecurity = true;
+            isLoggedIn = true;
+            $("#account").html(
+                `<li class="nav-item">
+                    <a class="nav-link" href="account.html">${user["username"]}</a>
+                </li>`
+            );
+            (function securityWorker() {
+                $.ajax({
+                    url: "http://" + self.location.hostname + ":8000/api/v1/stores", 
+                    success: function(data) {
+                        for(let store of data) {
+                            if(store.people_count > store.max_capacity) {
+                                alert("Too many people at " + store.name);
+                            }
+                        }
+                    },
+                    complete: function() {
+                        // Schedule the next request when the current one's complete
+                        setTimeout(securityWorker, 10000);
+                    }
+                });
+            })();
+        }
+    }
 });
